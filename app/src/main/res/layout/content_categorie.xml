@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.project.group.trentomobile.CategorieActivity"
+    tools:showIn="@layout/activity_categorie">
+
+
+        <LinearLayout
+            android:id="@+id/linearMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="50dp"
+            android:background="#05050505"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tt"
+            tools:layout_editor_absoluteX="-55dp"
+            tools:layout_editor_absoluteY="35dp"
+            android:weightSum="1"
+            >
+
+
+            </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,32 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.project.group.trentomobile.MyPreferenceActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/ic_place_black_24dp"
+        android:title="Luoghi" />
+
+    <header
+        android:fragment="com.project.group.trentomobile.MyPreferenceActivity$NotificationPreferenceFragment"
+        android:icon="@drawable/ic_event_black_24dp"
+        android:title="Eventi" />
+
+    <header
+        android:fragment="com.project.group.trentomobile.MyPreferenceActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/ic_library_books_black_24dp"
+        android:title="Notizzie" />
+
+    <header
+        android:fragment="com.project.group.trentomobile.MyPreferenceActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/ic_directions_bus_black_24dp"
+        android:title="Notizzie" />
+
+    <header
+        android:fragment="com.project.group.trentomobile.MyPreferenceActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/ic_vpn_key_black_24dp"
+        android:title="KeyWord" />
+
+
+
+</preference-headers>

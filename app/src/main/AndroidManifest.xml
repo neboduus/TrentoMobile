@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.trentomobile">
+    package="com.project.group.trentomobile">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,17 +11,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.trentomobile.context.MyApplication">
+        android:name=".context.MyApplication">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CategorieActivity"
+            android:label="@string/title_activity_categorie"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity$TileActivity"
+            android:label="@string/title_activity_tile" />
+        <activity
+            android:name=".TailActivity"
+            android:label="@string/title_activity_tail" />
+        <activity
+            android:name=".PorvaTrasporti"
+            android:label="ProvaTrasporti"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MyPreferenceActivity"
+            android:label="@string/title_activity_preference" />
+        <activity
+            android:name=".TipoActivity"
+            android:label="@string/title_activity_tipo"></activity>
     </application>
 
 </manifest>

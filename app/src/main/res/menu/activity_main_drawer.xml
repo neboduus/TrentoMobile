@@ -3,33 +3,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_luoghi"
+            android:icon="@drawable/ic_place_black_24dp"
+            android:title="Luoghi" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_eventi"
+            android:icon="@drawable/ic_event_black_24dp"
+            android:title="Eventi" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_notizzie"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="Notizzie" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_trasporti"
+            android:icon="@drawable/ic_directions_bus_black_24dp"
+            android:title="Trasporti" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Tools">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_preferiti"
+                android:icon="@drawable/ic_star_black_24dp"
+                android:title="Preferiti" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_proponi"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Proponi" />
+            <item
+                android:id="@+id/nav_preferenze"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Preferenze" />
         </menu>
     </item>
 
