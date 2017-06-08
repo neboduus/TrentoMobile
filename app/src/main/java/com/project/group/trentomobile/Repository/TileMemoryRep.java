@@ -11,8 +11,6 @@ import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -64,14 +62,13 @@ public class TileMemoryRep implements Interface_Rep{
         tiles = new ArrayList<Tile>();
 
         tiles =new ArrayList<Tile>();
-        Map<String,Integer> pref_tipi_eventi=p.getPref_Eventi();
-        Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
-        Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
+        Map<String,Boolean> pref_tipi_eventi=p.getPref_Eventi();
+        Map<String,Boolean> pref_tipi_luoghi=p.getPref_Luoghi();
+        Map<String,Boolean> pref_tipi_notizie=p.getPref_Notizie();
    
         for(Notizia t:getNotizie())
         {
-            if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
+            if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && pref_tipi_notizie.get(t.getGenere().getTipo())) {
                 getTiles().add(t);
             } 
         }
@@ -79,31 +76,18 @@ public class TileMemoryRep implements Interface_Rep{
         for(Evento t:getEventi())
         {
             
-               if(pref_tipi_eventi.containsKey(t.getGenere().getTipo()) && (pref_tipi_eventi.get(t.getGenere().getTipo()) > 9)) {
-                   t.peso = pref_tipi_eventi.get(t.getGenere().getTipo());
-                   getTiles().add(t);
+               if(pref_tipi_eventi.containsKey(t.getGenere().getTipo()) && pref_tipi_eventi.get(t.getGenere().getTipo())) {
+                    getTiles().add(t);
                 } 
             
         }
         
         for(Luogo t:getLuoghi())
         {
-            if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
+            if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && pref_tipi_luoghi.get(t.getGenere().getTipo())) {
                 getTiles().add(t);
             } 
         }
-
-        class ComparatorTiles implements Comparator<Tile> {
-            @Override
-            public int compare(Tile o1, Tile o2) {
-                return o2.peso.compareTo(o1.peso);
-            }
-        }
-
-        Collections.sort(tiles, new ComparatorTiles());
-
-
     }
 
     @Override

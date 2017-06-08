@@ -184,7 +184,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
             PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference("generi");
             Preferenze myPreference = null;
             try {
-                myPreference = (Preferenze) InternalStorage.readObject(getActivity());
+                myPreference = (Preferenze) InternalStorage.readObject(getActivity(), "myPreferenze3");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -195,7 +195,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
 
                 final SwitchPreference sw = new SwitchPreference(getActivity());
                 sw.setTitle(g.getTipo());
-                final boolean b = (Boolean)(myPreference.getPref_Luoghi().get(g.getTipo()) > 9);
+                final boolean b = (Boolean)myPreference.getPref_Luoghi().get(g.getTipo());
                 sw.setChecked(b);
                 sw.setDefaultValue(b);
 
@@ -211,10 +211,10 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
 
                      Boolean newB = (Boolean) newValue;
                      myP.getPref_Luoghi().remove(g.getTipo());
-                     myP.getPref_Luoghi().put(g.getTipo(),newB ? 10 : 0);
+                     myP.getPref_Luoghi().put(g.getTipo(),newB);
 
                      try {
-                         InternalStorage.writeObject(getActivity(),myP);
+                         InternalStorage.writeObject(getActivity(),"myPreferenze3",myP);
 
                      } catch (IOException e) {
                          e.printStackTrace();

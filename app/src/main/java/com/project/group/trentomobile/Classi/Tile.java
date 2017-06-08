@@ -17,7 +17,6 @@ public class Tile implements Serializable{
     private String descrizione;
     private String patterImmagine;
     private String URL;
-    public Integer peso;
 
     public Tile( String titolo, String descrizione, String patterImmagine, String Url) {
         this.id = -1;

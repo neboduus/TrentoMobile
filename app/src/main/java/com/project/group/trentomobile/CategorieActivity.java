@@ -45,18 +45,18 @@ public class CategorieActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         Preferenze p = new Preferenze();
-        Map<String,Integer> m =new HashMap<>();
+        Map<String,Boolean> m =new HashMap<>();
 
         if(tipo.equals("notizia")){
-            m.put(categoria,10);
+            m.put(categoria,true);
             p.setPref_Notizie(m);
         }
         if(tipo.equals("evento")){
-            m.put(categoria,10);
+            m.put(categoria,true);
             p.setPref_Eventi(m);
         }
         if(tipo.equals("luogo")){
-            m.put(categoria,10);
+            m.put(categoria,true);
             p.setPref_Luoghi(m);
         }
 
