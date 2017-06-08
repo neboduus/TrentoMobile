@@ -11,33 +11,36 @@ import java.io.ObjectOutputStream;
 
 public final class InternalStorage{
 
+
+    public static String path ="myPreferenze4";
+
     private InternalStorage() {}
 
-    public static void writeObject(Context context, String key, Object object) throws IOException {
+    public static void writeObject(Context context, Object object) throws IOException {
         try {
-            delObject(context,key);
+            delObject(context);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
+        FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(object);
         oos.close();
         fos.close();
     }
 
-    public static Object readObject(Context context, String key) throws IOException,
+    public static Object readObject(Context context) throws IOException,
             ClassNotFoundException {
-        FileInputStream fis = context.openFileInput(key);
+        FileInputStream fis = context.openFileInput(path);
         ObjectInputStream ois = new ObjectInputStream(fis);
         Object object = ois.readObject();
         return object;
     }
 
-    public static boolean delObject(Context context, String key) throws IOException,
+    public static boolean delObject(Context context) throws IOException,
             ClassNotFoundException {
             File dir = context.getFilesDir();
-            File file = new File(dir, key);
+            File file = new File(dir, path);
             boolean deleted = file.delete();
 
         return deleted;

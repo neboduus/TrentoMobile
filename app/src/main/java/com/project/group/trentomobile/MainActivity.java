@@ -1,11 +1,15 @@
 package com.project.group.trentomobile;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,8 +22,19 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.project.group.trentomobile.Classi.Genere_Evento;
+import com.project.group.trentomobile.Classi.Genere_Luogo;
+import com.project.group.trentomobile.Classi.Genere_Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
+import com.project.group.trentomobile.Classi.Tile;
+import com.project.group.trentomobile.Repository.GeneriRepo;
+import com.project.group.trentomobile.Repository.TileMemoryRep;
+import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaTiles;
+
+import java.io.IOException;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -124,20 +139,91 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-
-
-
-
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    protected void onRestart() {
+        super.onRestart();
+
+
+
+
+
+        TileMemoryRep tiles = TileMemoryRep.getInstance();
+
+        int tag =0;
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+
+        for(Tile t : tiles.getTiles()){
+            ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(tag)));
+            tag ++;
         }
+
+        ft.commit();
+
+
+
+
+
+
+        Preferenze myPreference = null;
+        try {
+            //InternalStorage.writeObject(this,"lolk","lolv");
+            myPreference = (Preferenze) InternalStorage.readObject(this);
+            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
+
+        } catch (IOException e) {
+            Log.d("poing", "creato2");
+            myPreference = new Preferenze();
+
+
+            for (Genere_Luogo g: GeneriRepo.getIstance().GeneriLuoghi) {
+                myPreference.addPref_Luoghi_Ture(g.getTipo());
+            }
+            for (Genere_Notizia g: GeneriRepo.getIstance().GeneriNotizie) {
+                myPreference.addPref_Notizie_Ture(g.getTipo());
+            }
+            for (Genere_Evento g: GeneriRepo.getIstance().GeneriEventi) {
+                myPreference.addPref_Eventi_Ture(g.getTipo());
+            }
+
+            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
+
+            try {
+                InternalStorage.writeObject(this,myPreference);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        tiles.Filtra(myPreference);
+
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction;
+        //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
+        tag =0;
+
+        for(Tile t : tiles.getTiles()){
+
+            fragmentTransaction = fragmentManager.beginTransaction();
+
+            Log.d("oooo",t.getTitolo());
+            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(tag));
+            tag ++;
+
+            fragmentTransaction.commit();
+
+        }
+
+
+
+
     }
 
 

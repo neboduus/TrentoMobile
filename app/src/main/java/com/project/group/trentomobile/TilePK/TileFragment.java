@@ -102,6 +102,8 @@ public class TileFragment extends Fragment {
         piedi.setText(data.getURL());
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
 
+
+
         return r;
     }
 
@@ -127,41 +129,28 @@ public class TileFragment extends Fragment {
 
                 Preferenze myPreference = null;
                 try {
-                    myPreference = (Preferenze) InternalStorage.readObject(getActivity(), "myPreferenze3");
+                    myPreference = (Preferenze) InternalStorage.readObject(getActivity());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
-
                     if(data instanceof Notizia){
-
                         Genere_Notizia gn = ((Notizia) data).getGenere();
-                        myPreference.getPref_Notizie().remove(gn.getTipo());
-                        myPreference.getPref_Notizie().put(gn.getTipo(),Boolean.FALSE);
-
-
-
+                        myPreference.getPref_Notizie().put(gn.getTipo(),0);
                     }else
                     if(data instanceof Luogo){
-
                         Genere_Luogo gn = ((Luogo) data).getGenere();
-                        myPreference.getPref_Luoghi().remove(gn.getTipo());
-                        myPreference.getPref_Luoghi().put(gn.getTipo(),Boolean.FALSE);
-
-
+                        myPreference.getPref_Luoghi().put(gn.getTipo(),0);
                     }else
                     if(data instanceof Evento){
-
                         Genere_Evento gn = ((Evento) data).getGenere();
-                        myPreference.getPref_Eventi().remove(gn.getTipo());
-                        myPreference.getPref_Eventi().put(gn.getTipo(),Boolean.FALSE);
-
+                        myPreference.getPref_Eventi().put(gn.getTipo(),0);
                     }
 
                 try {
-                    InternalStorage.writeObject(getActivity(),"myPreferenze3",myPreference);
+                    InternalStorage.writeObject(getActivity(),myPreference);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -175,7 +164,7 @@ public class TileFragment extends Fragment {
 
                 ft.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
 
-                ft.hide(this);
+                ft.remove(this);
 
                 ft.commit();
 
@@ -203,6 +192,5 @@ public class TileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 }
