@@ -149,14 +149,10 @@ public class MainActivity extends AppCompatActivity
 
         TileMemoryRep tiles = TileMemoryRep.getInstance();
 
-        int tag =0;
-
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-
-        for(Tile t : tiles.getTiles()){
-            ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(tag)));
-            tag ++;
+        for(Tile t : TileMemoryRep.getInstance().getTiles()){
+            ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
         }
 
         ft.commit();
@@ -207,15 +203,13 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction;
         //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
-        tag =0;
 
         for(Tile t : tiles.getTiles()){
 
             fragmentTransaction = fragmentManager.beginTransaction();
 
             Log.d("oooo",t.getTitolo());
-            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(tag));
-            tag ++;
+            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
 
             fragmentTransaction.commit();
 

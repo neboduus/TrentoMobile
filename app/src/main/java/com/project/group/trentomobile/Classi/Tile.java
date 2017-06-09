@@ -19,8 +19,11 @@ public class Tile implements Serializable{
     private String URL;
     public Integer peso;
 
+    private static Integer count = 0;
+
     public Tile( String titolo, String descrizione, String patterImmagine, String Url) {
-        this.id = -1;
+        this.id = count;
+        count++;
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.patterImmagine = patterImmagine;

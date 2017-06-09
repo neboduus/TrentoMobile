@@ -50,12 +50,20 @@ public class TileMemoryRep implements Interface_Rep{
         return true;
     }
 
-    public void TuttiTiles(){
+    public ArrayList<Tile> TuttiTiles(){
 
-        tiles =new ArrayList<Tile>();
-        for(Notizia t : getNotizie()) if(t!=null) getTiles().add(t);
-        for(Evento t:getEventi()) if(t!=null) getTiles().add(t);
-        for(Luogo t:getLuoghi()) if(t!=null) getTiles().add(t);
+        ArrayList<Tile> ts =new ArrayList<Tile>();
+        for(Notizia t : getNotizie()) if(t!=null) ts.add(t);
+        for(Evento t:getEventi()) if(t!=null) ts.add(t);
+        for(Luogo t:getLuoghi()) if(t!=null) ts.add(t);
+        return ts;
+    }
+
+    public Tile getTileById(int id){
+        for(Tile t: TuttiTiles()){
+            if(t.getId() == id) return t;
+        }
+        return null;
     }
 
     @Override

@@ -8,7 +8,9 @@ package com.project.group.trentomobile.Classi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -20,6 +22,7 @@ public class Preferenze implements Serializable {
     private Map<String,Integer> Pref_Eventi;
     private Map<String,Integer> Pref_Luoghi;
     private ArrayList<Keyword> Keywords;
+    private Set<Integer> IdsPreferiti;
 
 
     public Preferenze(){
@@ -27,6 +30,7 @@ public class Preferenze implements Serializable {
         Pref_Eventi=new HashMap<String, Integer>();
         Pref_Notizie=new HashMap<String, Integer>();
         Pref_Luoghi=new HashMap<String, Integer>();
+        IdsPreferiti = new HashSet<>();
     }
     /**
      * @return the Pref_Notizie
@@ -94,6 +98,15 @@ public class Preferenze implements Serializable {
      */
     public void setKeywords(ArrayList<Keyword> Keywords) {
         this.Keywords = Keywords;
+    }
+
+
+    public void addPreferiti(int id){
+        IdsPreferiti.add(id);
+    }
+
+    public HashSet<Integer> getIdsPreferiti(){
+        return (HashSet<Integer>) IdsPreferiti;
     }
 
 

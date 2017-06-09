@@ -176,11 +176,11 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
      //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
 
-        int tag =0;
 
         for(Tile t : result.getTiles()){
-            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(tag));
-            tag ++;
+            Log.d("id->", String.valueOf(t.getId())+ "  "+t.getTitolo());
+
+            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
         }
         fragmentTransaction.commit();
 
