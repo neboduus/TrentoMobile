@@ -112,13 +112,6 @@ public class TileMemoryRep implements Interface_Rep{
             } 
         }
 
-
-        for(Fermata t:getFermate())
-        {
-            t.peso = 10;
-            getTiles().add(t);
-        }
-
         class ComparatorTiles implements Comparator<Tile> {
             @Override
             public int compare(Tile o1, Tile o2) {

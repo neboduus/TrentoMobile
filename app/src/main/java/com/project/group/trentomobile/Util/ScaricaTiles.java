@@ -94,17 +94,18 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     a, gn_cronaca, d2));
 
 
-            //FILTRAGGIO FERMATE
+            //FILTRAGGIO FERMATE BUS
 
-            /*
+            Float lat = 46.1421242f;
+            Float lon = 11.1006433f;
+
             SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
-            List<Stop> ls = sqla.getAllStops();
+            List<Stop> nearestStops = sqla.getNearestStops(5, lat, lon);
 
-
-            for(Stop s : ls){
-                tiles.addFermata(new Fermata(s.getName(),s.getDesc(),"lol","lol"));
+            for(Stop stop : nearestStops){
+                tiles.addFermata(new Fermata(stop.getName(),stop.getDesc(),"lol","lol"));
             }
-               */
+
 
             //AGGIUNGO GENERI
             GeneriRepo gr = GeneriRepo.getIstance();

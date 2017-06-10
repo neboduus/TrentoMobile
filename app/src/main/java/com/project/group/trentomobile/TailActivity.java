@@ -32,8 +32,6 @@ public class TailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tail);
-        
-
 
         titolo = (TextView) findViewById(R.id.txtTitolo);
         descrizione = (TextView) findViewById(R.id.txtDescrizione);
@@ -78,6 +76,11 @@ public class TailActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.txtGenere)).setText("Genere Notizzia: "+((Notizia) data).getGenere().getTipo());
             ((TextView) findViewById(R.id.txtData)).setText("Data: "+formatter.format(((Notizia)data).getData().getTimeInMillis()));
             ((TextView) findViewById(R.id.txtAutore)).setText("Autore: "+((Notizia) data).getAutore().getNome());
+        }
+
+        if (data instanceof Fermata){
+            ((TextView) findViewById(R.id.txtGenere)).setText(" "+data.getTitolo());
+            ((TextView) findViewById(R.id.txtAutore)).setText("Descrizione: "+data.getDescrizione());
         }
 
 
