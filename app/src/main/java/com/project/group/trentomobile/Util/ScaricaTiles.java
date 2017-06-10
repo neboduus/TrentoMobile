@@ -10,9 +10,13 @@ import com.project.group.trentomobile.Classi.*;
 import com.project.group.trentomobile.R;
 import com.project.group.trentomobile.Repository.*;
 import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
+import com.project.group.trentomobile.context.MyApplication;
+import com.project.group.trentomobile.transport.Stop;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by postal on 13/05/17.
@@ -85,6 +89,17 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "http://www.ladige.it/sites/www.ladige.it/files/styles/798x457/public/beb%C3%A8_0.jpg?itok=sSmZV6GK",
                     "http://www.ladige.it/news/cronaca/2017/05/13/bonus-future-mamme-gi-mille-domande-trentino",
                     a, gn_cronaca, d2));
+
+
+            //FILTRAGGIO FERMATE
+
+            SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
+            List<Stop> ls = sqla.getAllStops();
+
+
+            for(Stop s : ls){
+                tiles.addFermata(new Fermata(s.getName(),s.getDesc(),"lol","lol"));
+            }
 
 
             //AGGIUNGO GENERI

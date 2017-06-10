@@ -6,6 +6,7 @@
 package com.project.group.trentomobile.Repository;
 
 import com.project.group.trentomobile.Classi.Evento;
+import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
@@ -24,14 +25,17 @@ public class TileMemoryRep implements Interface_Rep{
     private static TileMemoryRep istanza =null;
     
     private ArrayList<Tile> tiles;
+
     private ArrayList<Notizia> Notizie;
     private ArrayList<Luogo> Luoghi;
     private ArrayList<Evento> Eventi;
+    private ArrayList<Fermata> Fermate;
     
     private TileMemoryRep(){
         Eventi=new ArrayList<Evento>();
         Notizie=new ArrayList<Notizia>();
         Luoghi=new ArrayList<Luogo>();
+        Fermate = new ArrayList<>();
     }
     
     public static TileMemoryRep getInstance()
@@ -56,6 +60,7 @@ public class TileMemoryRep implements Interface_Rep{
         for(Notizia t : getNotizie()) if(t!=null) ts.add(t);
         for(Evento t:getEventi()) if(t!=null) ts.add(t);
         for(Luogo t:getLuoghi()) if(t!=null) ts.add(t);
+        for(Fermata t:getFermate()) if(t!=null) ts.add(t);
         return ts;
     }
 
@@ -65,6 +70,9 @@ public class TileMemoryRep implements Interface_Rep{
         }
         return null;
     }
+
+
+
 
     @Override
     public void Filtra(Preferenze p) {
@@ -102,6 +110,13 @@ public class TileMemoryRep implements Interface_Rep{
             } 
         }
 
+
+        for(Fermata t:getFermate())
+        {
+            t.peso = 10;
+            getTiles().add(t);
+        }
+
         class ComparatorTiles implements Comparator<Tile> {
             @Override
             public int compare(Tile o1, Tile o2) {
@@ -114,6 +129,61 @@ public class TileMemoryRep implements Interface_Rep{
 
     }
 
+
+
+    public ArrayList<Tile> getTilesFiltrti(Preferenze p) {
+
+        ArrayList<Tile> ts = new ArrayList<Tile>();
+
+        ts =new ArrayList<Tile>();
+        Map<String,Integer> pref_tipi_eventi=p.getPref_Eventi();
+        Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
+        Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
+
+        for(Notizia t:getNotizie())
+        {
+            if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
+                t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
+                ts.add(t);
+            }
+        }
+
+        for(Evento t:getEventi())
+        {
+
+            if(pref_tipi_eventi.containsKey(t.getGenere().getTipo()) && (pref_tipi_eventi.get(t.getGenere().getTipo()) > 9)) {
+                t.peso = pref_tipi_eventi.get(t.getGenere().getTipo());
+                ts.add(t);
+            }
+
+        }
+
+        for(Luogo t:getLuoghi())
+        {
+            if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
+                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
+                ts.add(t);
+            }
+        }
+
+        for(Fermata t:getFermate())
+        {
+            ts.add(t);
+        }
+
+        class ComparatorTiles implements Comparator<Tile> {
+            @Override
+            public int compare(Tile o1, Tile o2) {
+                return o2.peso.compareTo(o1.peso);
+            }
+        }
+
+        Collections.sort(tiles, new ComparatorTiles());
+
+        return ts;
+
+    }
+
     @Override
     public boolean addEvento(Evento evento) {
         Eventi.add(evento);
@@ -123,6 +193,11 @@ public class TileMemoryRep implements Interface_Rep{
     @Override
     public boolean addLuogo(Luogo luogo) {
         Luoghi.add(luogo);
+        return true;
+    }
+
+    public boolean addFermata(Fermata fermata){
+        Fermate.add(fermata);
         return true;
     }
 
@@ -153,5 +228,10 @@ public class TileMemoryRep implements Interface_Rep{
     public ArrayList<Tile> getTiles() {
         return tiles;
     }
-    
+
+
+    public ArrayList<Fermata> getFermate() {
+        return Fermate;
+    }
+
 }

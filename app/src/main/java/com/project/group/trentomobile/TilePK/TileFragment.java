@@ -2,6 +2,7 @@ package com.project.group.trentomobile.TilePK;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.group.trentomobile.Classi.Evento;
+import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Genere_Notizia;
@@ -102,9 +104,27 @@ public class TileFragment extends Fragment {
         });
         */
 
+        String sPiedi ="";
+        if(data instanceof Notizia){
+            Notizia n = (Notizia) data;
+            sPiedi += "" + n.getAutore().getNome() + " - " + n.getData().getTime();
+        }else
+        if(data instanceof Luogo){
+            Luogo l = (Luogo) data;
+            sPiedi += l.getIndirizzo().getVia();
+        }else
+        if(data instanceof Evento){
+            Evento e = (Evento) data;
+            sPiedi += e.getIndirizzo().getVia() +" - "+e.getData().getTime();
+        }else
+        if(data instanceof Fermata){
+            //SETTA PIEDI
+        }
+
+
         titolo.setText(data.getTitolo());
         corpo.setText(data.getDescrizione());
-        piedi.setText(data.getURL());
+        piedi.setText(sPiedi);
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
 
         return r;
