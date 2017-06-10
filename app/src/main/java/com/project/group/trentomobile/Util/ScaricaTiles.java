@@ -3,6 +3,7 @@ package com.project.group.trentomobile.Util;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,7 +13,9 @@ import com.project.group.trentomobile.Repository.*;
 import com.project.group.trentomobile.TilePK.TileFragment;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
+import com.project.group.trentomobile.transport.Linea;
 import com.project.group.trentomobile.transport.Stop;
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
@@ -93,6 +96,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //FILTRAGGIO FERMATE
 
+            /*
             SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
             List<Stop> ls = sqla.getAllStops();
 
@@ -100,7 +104,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             for(Stop s : ls){
                 tiles.addFermata(new Fermata(s.getName(),s.getDesc(),"lol","lol"));
             }
-
+               */
 
             //AGGIUNGO GENERI
             GeneriRepo gr = GeneriRepo.getIstance();
@@ -132,6 +136,15 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             gr.GeneriEventi.add(ge_Sagra);
             gr.GeneriEventi.add(ge_Teatro);
             gr.GeneriEventi.add(ge_Uni);
+
+            SQLAssetHelper_DB dbHelperTransport = new SQLAssetHelper_DB(MyApplication.getAppContext());
+            List<Linea> autobus = dbHelperTransport.getAllLinee();
+            for (Linea l:autobus){
+                Log.e("bus", l.getShort_name()+" ");
+
+                gr.Autobus.add(new Bus(l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(), l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16)));
+            }
+
             Log.d("ce","12122222222222222222222222");
         }else{
             Log.d("ce","jdsdfhdfhjhdfh");

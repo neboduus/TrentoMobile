@@ -2,6 +2,7 @@ package com.project.group.trentomobile.CategoriePK;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -63,9 +64,15 @@ public class Categoria extends RelativeLayout {
     }
 
     public void setImmagine(String img){
-        new ScaricaImmagine(immagine).execute(img);
-
+        if(!img.isEmpty())
+            new ScaricaImmagine(immagine).execute(img);
     }
+
+    public void setImmagineColor(Integer color){
+        Log.d("colore", String.valueOf(color));
+        this.setBackgroundColor(color);
+    }
+
 
 }
 

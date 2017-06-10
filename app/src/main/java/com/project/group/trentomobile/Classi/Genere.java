@@ -14,6 +14,7 @@ public class Genere implements Serializable {
     public Genere(String tipo) {
         this.id = -1;
         this.tipo = tipo;
+        foto = "";
     }
 
 

@@ -271,7 +271,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         Float lon = cursor.getFloat(5);
 
         Stop s = new Stop(id, code, name, desc, lat, lon);
-        Log.d("stop", s.getId()+ " "+s.getName());
+
         return s;
     }
 

@@ -68,6 +68,10 @@ public class TipoActivity extends AppCompatActivity {
         if(tipo.equals("luogo")){
             generi = GeneriRepo.getIstance().GeneriLuoghi;
         }
+        if(tipo.equals("trasporti")){
+            generi = GeneriRepo.getIstance().Autobus;
+
+        }
 
 
         CategoriaAdapter booksAdapter = new CategoriaAdapter(this, generi);

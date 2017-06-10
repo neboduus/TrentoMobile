@@ -5,6 +5,7 @@
  */
 package com.project.group.trentomobile.Repository;
 
+import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Evento;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Luogo;
@@ -61,6 +62,7 @@ public class TileMemoryRep implements Interface_Rep{
         for(Evento t:getEventi()) if(t!=null) ts.add(t);
         for(Luogo t:getLuoghi()) if(t!=null) ts.add(t);
         for(Fermata t:getFermate()) if(t!=null) ts.add(t);
+
         return ts;
     }
 
