@@ -2,17 +2,17 @@ package com.trentomobile;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.trentomobile.assetsHelper.SQLAssetHelper_DB;
@@ -21,6 +21,9 @@ import com.trentomobile.transport.Linea;
 import com.trentomobile.transport.Orario;
 import com.trentomobile.transport.Stop;
 import com.trentomobile.transport.Trip;
+import com.visuality.f32.temperature.TemperatureUnit;
+import com.visuality.f32.weather.data.entity.Weather;
+import com.visuality.f32.weather.manager.WeatherManager;
 
 import java.util.List;
 
@@ -91,6 +94,29 @@ public class MainActivity extends AppCompatActivity
         for (Orario o: orari){
             Log.d("Orario", "arrivo: "+o.getArrival_time()+" - partenza: "+o.getDeparture_time());
         }
+
+        new WeatherManager("97afef6a27b88c8138c824865619ff56").getCurrentWeatherByCoordinates(
+                46.1421242, // latitude
+                11.1006433, // longitude
+                new WeatherManager.CurrentWeatherHandler() {
+                    @Override
+                    public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
+                        // Handle current weather information
+                        Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
+                                .getValue(TemperatureUnit.CELCIUS)+" gradi C");
+                        Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
+                        Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                        Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
+                        Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
+
+                    }
+
+                    @Override
+                    public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
+                        // Handle error
+                    }
+                }
+        );
 
 
         ListView listStopsView = (ListView) findViewById(R.id.listStops);
