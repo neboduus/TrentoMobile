@@ -2,15 +2,12 @@ package com.project.group.trentomobile.TilePK;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.usage.UsageEvents;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +27,6 @@ import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
-import com.project.group.trentomobile.MainActivity;
 import com.project.group.trentomobile.R;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TailActivity;
@@ -41,11 +37,10 @@ import java.io.IOException;
 
 /**
  * Created by postal on 25/04/17.
+ * Defined Fragment extension for Tile which is a content element of the Pages
  */
 
 public class TileFragment extends Fragment {
-
-
 
     TextView titolo;
     TextView corpo;
@@ -53,9 +48,9 @@ public class TileFragment extends Fragment {
     TextView piedi;
     Button opt;
 
-
-
     private static final String TILE_KEY = "tile_key";
+
+    //it contains a Tile private element which contains data for populating children view elements
     private Tile data;
 
     public static TileFragment newInstance(Tile t) {
@@ -67,29 +62,35 @@ public class TileFragment extends Fragment {
     }
 
 
-
-
     @Nullable
     @Override
+    //the fragment creates its view hierarchy
+    // inflated views become part of the view hierarchy of its containing activity
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        //inflate a new view hierarchy from the specified xml resource
         final View r =  inflater.inflate(R.layout.tile_fragment, container, false);
 
+        //get the construction arguments
+        data = (Tile) getArguments().getSerializable(TILE_KEY);
 
-        data = (Tile) getArguments().getSerializable(
-                TILE_KEY);
-
+        //recover the others xml resources which are tchildrens of R.layout.tile_fragment
         titolo = (TextView) r.findViewById(R.id.titolo);
         corpo = (TextView) r.findViewById(R.id.corpo);
         piedi = (TextView) r.findViewById(R.id.piedi);
         immagine = (ImageView) r.findViewById(R.id.immagine);
         opt = (Button) r.findViewById(R.id.opt);
 
+        //register a context menu to be shown for the given view
         registerForContextMenu(opt);
+
 
         titolo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Intent myIntent = new Intent(getActivity(), TailActivity.class);
+
+                //the name of optional parameters must include a package prefix (Ex. 'com.project.group.trentomobile.TilePK.TileData')
                 myIntent.putExtra("data", data); //Optional parameters
                 getActivity().startActivity(myIntent);
                 return false;
@@ -104,6 +105,7 @@ public class TileFragment extends Fragment {
         });
         */
 
+        //setting the footer with respect to the kind of the data contained in the tile
         String sPiedi ="";
         if(data instanceof Notizia){
             Notizia n = (Notizia) data;
@@ -121,25 +123,22 @@ public class TileFragment extends Fragment {
             //SETTA PIEDI
         }
 
-
         titolo.setText(data.getTitolo());
         corpo.setText(data.getDescrizione());
         piedi.setText(sPiedi);
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
-
         return r;
     }
 
-
+    //creating the menu buttons for the tile
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
+        //should check differentiation with Fermata Tile
         menu.add(data.getId(),1,0,"Condividi");
         menu.add(data.getId(),2,0,"Non mi interessa");
         menu.add(data.getId(),3,0,"Aggiungi ai preferiti");
         menu.add(data.getId(),4,0,"Invia feed-back");
-
-
         /*
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = this.getActivity().getMenuInflater();
@@ -147,15 +146,16 @@ public class TileFragment extends Fragment {
         */
     }
 
-
-
+    //handling the tiles menu item selection
+    //called whenever an item in a context menu is selected
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-
         int idd = item.getGroupId();
         Preferenze myPreference = null;
+
+        //now we are modifying the preferences with respect on the item menu selected in the tile
 
         switch (item.getItemId()) {
             case 1:

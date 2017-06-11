@@ -5,13 +5,13 @@
  */
 package com.project.group.trentomobile.Repository;
 
-import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Evento;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +45,6 @@ public class TileMemoryRep implements Interface_Rep{
       {
         istanza = new TileMemoryRep();
       }
-
       return istanza; 
     }
     
@@ -72,9 +71,6 @@ public class TileMemoryRep implements Interface_Rep{
         }
         return null;
     }
-
-
-
 
     @Override
     public void Filtra(Preferenze p) {
@@ -125,8 +121,7 @@ public class TileMemoryRep implements Interface_Rep{
     }
 
 
-
-    public ArrayList<Tile> getTilesFiltrti(Preferenze p) {
+    public ArrayList<Tile> getTilesFiltrati(Preferenze p) {
 
         ArrayList<Tile> ts = new ArrayList<Tile>();
 

@@ -1,7 +1,6 @@
 package com.project.group.trentomobile;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -9,22 +8,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -41,7 +39,6 @@ import com.project.group.trentomobile.Util.MyLocationListener;
 import com.project.group.trentomobile.Util.ScaricaTiles;
 
 import java.io.IOException;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,11 +61,15 @@ public class MainActivity extends AppCompatActivity
             }
         });*/
 
-
+        //Location service
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
-
         MyLocationListener locationListener = new MyLocationListener();
+
+         /* Checking if has permissions for
+        * ACCESS_COARSE_LOCATION = Allows to access approximate location.
+        * ACCESS_FINE_LOCATION = Allows to access precise location.
+        */
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }else {
+            //Register for location updates
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
@@ -91,18 +93,22 @@ public class MainActivity extends AppCompatActivity
 
 
         final Button btnMenu = (Button) findViewById(R.id.btnMenu);
-
-
+        //it draws the sliding menu
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // tie together the functionality of DrawerLayout and the framework ActionBar
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // standard navigation menu
+        // typically placed inside a DrawerLayout
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //Set a listener that will be notified when a menu item is selected.
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        /** Push object to x-axis position at the start of its container, not changing its size. */
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,23 +116,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         final LinearLayout lm = (LinearLayout) findViewById(R.id.linearMain);
         lm.setOrientation(LinearLayout.VERTICAL);
 
         // create the layout params that will be used to define how your
-        // button will be displayed
+        // button will be displayed (input params: WIDTH & HEIGHT)
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-
         params.setMargins(10, 10, 10, 10);
-
-
         LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         p2.setMargins(10, 10, 10, 10);
 
-
+        //creates a drawable element to draw on the screen
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(3, Color.GRAY);
@@ -175,37 +176,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-
-
-
-
-
+        //recover all the content of the main activity which is all the Tiles
         TileMemoryRep tiles = TileMemoryRep.getInstance();
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-
+        //recover the fragment manager and remove all the fragments which are the Tiles
+        FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
         for(Tile t : TileMemoryRep.getInstance().getTiles()){
             ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
         }
+        ft.commit();    //commit changes of the MainActivity
 
-        ft.commit();
-
-
-
-
-
-
+        //recovery of possible new preferences
         Preferenze myPreference = null;
         try {
             //InternalStorage.writeObject(this,"lolk","lolv");
             myPreference = (Preferenze) InternalStorage.readObject(this);
-            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
-
         } catch (IOException e) {
-            Log.d("poing", "creato2");
+            //manage the possibility of having not setted the preferences
+            //create default preferences
             myPreference = new Preferenze();
-
-
             for (Genere_Luogo g: GeneriRepo.getIstance().GeneriLuoghi) {
                 myPreference.addPref_Luoghi_Ture(g.getTipo());
             }
@@ -216,43 +204,28 @@ public class MainActivity extends AppCompatActivity
                 myPreference.addPref_Eventi_Ture(g.getTipo());
             }
 
-            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
-
             try {
                 InternalStorage.writeObject(this,myPreference);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-
+        //filter the content with respect to Preferences
         tiles.Filtra(myPreference);
-
-
-        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction;
+        FragmentManager fragmentManager = getFragmentManager();
         //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
-
+        //show the new content
         for(Tile t : tiles.getTiles()){
-
             fragmentTransaction = fragmentManager.beginTransaction();
-
-            Log.d("oooo",t.getTitolo());
             fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
-
             fragmentTransaction.commit();
 
         }
-
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -276,32 +249,25 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    //
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    //handling event ItemSelected on navigation items
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_luoghi) {
-
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "luogo"); //Optional parameters
             MainActivity.this.startActivity(myIntent);
-
         }else if (id == R.id.nav_preferenze) {
             Intent myIntent = new Intent(MainActivity.this, MyPreferenceActivity.class);
             myIntent.putExtra("key", 1); //Optional parameters
             MainActivity.this.startActivity(myIntent);
-
-        }
-
-        else if (id == R.id.nav_eventi) {
+        }else if (id == R.id.nav_eventi) {
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "evento");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
-
         } else if (id == R.id.nav_notizzie) {
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "notizia");  //Optional parameters

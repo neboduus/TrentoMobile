@@ -21,8 +21,6 @@ public class CorpoLayout extends LinearLayout {
         super(context);
 
         this.setOrientation(LinearLayout.HORIZONTAL);
-
-
         params = new LinearLayout.LayoutParams
                 (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -36,29 +34,13 @@ public class CorpoLayout extends LinearLayout {
         product.setText(corpo);
         product.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT,100.0f));
         this.addView(product);
-
-
-
-
-
-
-
-
         ImageView foto = new ImageView(context);
 
         foto.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
-
         new ScaricaImmagine((ImageView) foto).execute(urlFoto);
 
-
-
-
-
-
         this.addView(foto);
-
-
     }
 
 

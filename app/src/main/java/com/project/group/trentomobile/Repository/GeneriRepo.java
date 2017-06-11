@@ -1,7 +1,6 @@
 package com.project.group.trentomobile.Repository;
 
 import com.project.group.trentomobile.Classi.Bus;
-import com.project.group.trentomobile.Classi.Genere;
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Genere_Notizia;
@@ -17,8 +16,6 @@ public class GeneriRepo {
     public ArrayList<Genere_Notizia> GeneriNotizie;
     public ArrayList<Genere_Luogo> GeneriLuoghi;
     public ArrayList<Genere_Evento> GeneriEventi;
-    public ArrayList<Genere> Generi;
-
     public ArrayList<Bus> Autobus;
 
     static private GeneriRepo istance;
@@ -28,7 +25,6 @@ public class GeneriRepo {
         GeneriLuoghi = new ArrayList<>();
         GeneriEventi = new ArrayList<>();
         Autobus = new ArrayList<>();
-
     }
 
     public void addGenere_Notizia(Genere_Notizia g){

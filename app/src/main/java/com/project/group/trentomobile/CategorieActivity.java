@@ -60,7 +60,7 @@ public class CategorieActivity extends AppCompatActivity {
             p.setPref_Luoghi(m);
         }
 
-        ArrayList<Tile> tiles = TileMemoryRep.getInstance().getTilesFiltrti(p);
+        ArrayList<Tile> tiles = TileMemoryRep.getInstance().getTilesFiltrati(p);
 
 
         for(Tile t : tiles){

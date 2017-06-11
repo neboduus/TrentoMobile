@@ -8,9 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
+/*
+ * Stores preferences internally on private space
+ */
 public final class InternalStorage{
-
 
     public static String path ="myPreferenze7";
 

@@ -70,7 +70,6 @@ public class TipoActivity extends AppCompatActivity {
         }
         if(tipo.equals("trasporti")){
             generi = GeneriRepo.getIstance().Autobus;
-
         }
 
 
