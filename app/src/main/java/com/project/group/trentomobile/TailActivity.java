@@ -3,6 +3,8 @@ package com.project.group.trentomobile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.project.group.trentomobile.Classi.*;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
@@ -20,12 +23,22 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class TailActivity extends AppCompatActivity {
+
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class TailActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private TextView titolo;
     private TextView descrizione;
     private ImageView immagine;
     private TextView URL;
+    private GoogleMap mMap;
+    Tile data;
 
 
     @Override
@@ -39,7 +52,7 @@ public class TailActivity extends AppCompatActivity {
         URL = (TextView) findViewById(R.id.txtURL);
 
         Bundle bundle = getIntent().getExtras();
-        Tile data = (Tile) bundle.getSerializable("data");
+        data = (Tile) bundle.getSerializable("data");
 
         titolo.setText(data.getTitolo());
         descrizione.setText(data.getDescrizione());
@@ -117,10 +130,13 @@ public class TailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        if(data instanceof Luogo) {
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }
 
-
-
-       // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
     }
 
     @Override
@@ -130,5 +146,27 @@ public class TailActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(data instanceof Luogo) {
+            mMap = googleMap;
+            // Add a marker in Sydney and move the camera
+            LatLng Trento = new LatLng(((Luogo)data).getIndirizzo().getLat(), ((Luogo)data).getIndirizzo().getLng());
+            mMap.addMarker(new MarkerOptions().position(Trento).title(data.getTitolo()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(((Luogo)data).getIndirizzo().getLat(), ((Luogo)data).getIndirizzo().getLng()), 17));
+
+        }
+
+    }
 
 }

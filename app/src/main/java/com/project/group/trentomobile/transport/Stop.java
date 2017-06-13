@@ -7,8 +7,8 @@ public class Stop {
     private String code;
     private String name;
     private String desc;
-    private Float lat;
-    private Float lon;
+    private Double lat;
+    private Double lon;
     private Double trip_id;
     private Integer direction_id;
 
@@ -17,7 +17,7 @@ public class Stop {
     public Stop() {
     }
 
-    public Stop(Integer id, String code, String name, String desc, Float lat, Float lon) {
+    public Stop(Integer id, String code, String name, String desc, Double lat, Double lon) {
         this.setCode(code);
         this.setId(id);
         this.setDesc(desc);
@@ -26,12 +26,12 @@ public class Stop {
         this.setName(name);
     }
 
-    public Stop(String code, String name, String desc, Float lat, Float lon) {
+    public Stop(String code, String name, String desc, Double lat, Double lon) {
         this.setCode(code != null?code:"");
         this.setId(-1);
         this.setDesc(desc != null?desc:"");
-        this.setLat(Float.valueOf(lat != null?lat.floatValue():-1.0F));
-        this.setLon(Float.valueOf(lon != null?lon.floatValue():-1.0F));
+        this.setLat(Double.valueOf(lat != null?lat.doubleValue():-1.0D));
+        this.setLon(Double.valueOf(lon != null?lon.doubleValue():-1.0D));
     }
 
     public Integer getId() {
@@ -66,19 +66,19 @@ public class Stop {
         this.desc = desc;
     }
 
-    public Float getLat() {
+    public Double getLat() {
         return this.lat;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Float getLon() {
+    public Double getLon() {
         return this.lon;
     }
 
-    public void setLon(Float lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 

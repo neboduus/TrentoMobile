@@ -86,7 +86,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stop.setDirection_id(cursor.getInt(6));
             stop.setTrip_id(cursor.getDouble(6));
             stops_andata.add(stop);
@@ -103,7 +103,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stop.setTrip_id(cursor.getDouble(6));
             stops_ritorno.add(stop);
             cursor.moveToNext();
@@ -215,7 +215,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
     }
 
-    public List<Stop> getNearestStops(int many, Float userLat, Float userLon){
+    public List<Stop> getNearestStops(int many, Double userLat, Double userLon){
         Log.d("DB", "getting nearest stops");
         List<Stop> stops = new ArrayList<>();
 
@@ -226,7 +226,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stops.add(stop);
             cursor.moveToNext();
         }
@@ -267,8 +267,8 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         String code = cursor.getString(1);
         String name = cursor.getString(2);
         String desc = cursor.getString(3);
-        Float lat = cursor.getFloat(4);
-        Float lon = cursor.getFloat(5);
+        Double lat = cursor.getDouble(4);
+        Double lon = cursor.getDouble(5);
 
         Stop s = new Stop(id, code, name, desc, lat, lon);
 

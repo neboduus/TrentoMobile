@@ -36,6 +36,10 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
     @Override
     protected TileMemoryRep doInBackground(Preferenze... params) {
 
+        //PRENDI LA TUA POSIZIONE
+        GetMyPosition pos = GetMyPosition.getIstanceAndUpdate(myActivity);
+
+
         TileMemoryRep tiles = TileMemoryRep.getInstance();
 
         if(tiles.getNotizie().isEmpty()) {
@@ -80,7 +84,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "Alla fine ho trovato un gatto incima alla mia casa con del pelo molto bello che non mi dispiace anche perchè è bello morbido al tatto.",
                     "http://www.solegemello.net/gatto.jpg", "http://www.google.com", a, gn_ludico, d));
 
-            Indirizzo ind = new Indirizzo(1.f, 1.f, "Piazza Dante");
+            Indirizzo ind = new Indirizzo(46.071537d, 11.120346d, "Piazza Dante");
             tiles.addLuogo(new Luogo(ind, gl_Monumenti, "Monumento di dante", "sdjilhcu hudshad uashdjh asjkdhsj hdjsf hfjkhsd jkfhjksd hjksd hjksdfhjk hadjksh jksdh jkhdk fhjksdf",
                     "http://www.meteotrentino.it/images/hp/img-32.gif?27052017", "http://www.google.com"));
 
@@ -96,8 +100,10 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //FILTRAGGIO FERMATE BUS
 
-            Float lat = 46.1421242f;
-            Float lon = 11.1006433f;
+            while (pos.lat == null);
+
+            Double lat = pos.lat;
+            Double lon = pos.lng;
 
             SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
             List<Stop> nearestStops = sqla.getNearestStops(5, lat, lon);

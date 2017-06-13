@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 public class Indirizzo implements Serializable {
     private Integer id;    
-    private Float lat;
-    private Float lng;
+    private Double lat;
+    private Double lng;
     private String via;
 
-    public Indirizzo( Float lat, Float lng, String via) {
+    public Indirizzo( Double lat, Double lng, String via) {
         this.id = -1;
         this.lat = lat;
         this.lng = lng;
@@ -41,28 +41,28 @@ public class Indirizzo implements Serializable {
     /**
      * @return the lat
      */
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
     /**
      * @param lat the lat to set
      */
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
     /**
      * @return the lng
      */
-    public Float getLng() {
+    public Double getLng() {
         return lng;
     }
 
     /**
      * @param lng the lng to set
      */
-    public void setLng(Float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 

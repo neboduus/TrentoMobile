@@ -30,7 +30,7 @@ public class PorvaTrasporti extends AppCompatActivity
         MyApplication context = new MyApplication();
         SQLAssetHelper_DB dbHelper = new SQLAssetHelper_DB(MyApplication.getAppContext());
 
-        List<Stop> nearestStops = dbHelper.getNearestStops(5, 46.1421242f,11.1006433f);
+        List<Stop> nearestStops = dbHelper.getNearestStops(5, 46.1421242d,11.1006433d);
         Stop nearestStop = nearestStops.get(4);
 
         List<Orario> orariNearest = dbHelper.getNearestOrarioFromStop(nearestStop, "16:37:00");

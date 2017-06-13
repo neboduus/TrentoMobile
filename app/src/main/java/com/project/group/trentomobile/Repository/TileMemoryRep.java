@@ -158,7 +158,9 @@ public class TileMemoryRep implements Interface_Rep{
 
         for(Fermata t:getFermate())
         {
-            ts.add(t);
+            if(true) { //CONTROLLO PREFERENZE
+                ts.add(t);
+            }
         }
 
         class ComparatorTiles implements Comparator<Tile> {
