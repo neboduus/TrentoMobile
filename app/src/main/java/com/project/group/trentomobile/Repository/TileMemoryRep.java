@@ -166,7 +166,7 @@ public class TileMemoryRep implements Interface_Rep{
         for(Luogo t:getLuoghi())
         {
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
+                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
                 ts.add(t);
             }
         }

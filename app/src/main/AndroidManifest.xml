@@ -40,6 +40,10 @@
             android:name=".MainActivity$TileActivity"
             android:label="@string/title_activity_tile" />
         <activity
+            android:name=".PreferitiActivity"
+            android:label="Preferiti"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".TailActivity"
             android:label="@string/title_activity_tail" />
         <activity

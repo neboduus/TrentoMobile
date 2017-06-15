@@ -254,10 +254,10 @@ public class MainActivity extends AppCompatActivity
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "trasporti");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
-        } /*else if (id == R.id.nav_manage) {
-
-
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_preferiti) {
+            Intent myIntent = new Intent(MainActivity.this, PreferitiActivity.class);
+            MainActivity.this.startActivity(myIntent);
+        } /*else if (id == R.id.nav_share) {
 
 
 

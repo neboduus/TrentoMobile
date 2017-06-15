@@ -6,24 +6,24 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
-import com.project.group.trentomobile.CategoriePK.Categoria;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.Util.InternalStorage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-
-public class CategorieActivity extends AppCompatActivity {
+public class PreferitiActivity extends AppCompatActivity {
 
     ArrayList<Tile> tiles;
 
@@ -47,36 +47,32 @@ public class CategorieActivity extends AppCompatActivity {
         });
 
 
-        Bundle bundle = getIntent().getExtras();
-        String categoria =  (String) bundle.getSerializable("categoria");
-        String tipo =  (String) bundle.getSerializable("tipo");
-
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Preferenze p = new Preferenze();
-        Map<String,Integer> m =new HashMap<>();
-
-        if(tipo.equals("notizia")){
-            m.put(categoria,10);
-            p.setPref_Notizie(m);
-        }
-        if(tipo.equals("evento")){
-            m.put(categoria,10);
-            p.setPref_Eventi(m);
-        }
-        if(tipo.equals("luogo")){
-            m.put(categoria,10);
-            p.setPref_Luoghi(m);
+        Preferenze myPreference = null;
+        try {
+            myPreference = (Preferenze) InternalStorage.readObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        tiles = TileMemoryRep.getInstance().getTilesFiltrati(p);
+        tiles = new ArrayList<>();
+
+        for(int idP : myPreference.getIdsPreferiti()){
+            Log.d("id preferito", String.valueOf(idP));
+            Tile t = TileMemoryRep.getInstance().getTileById(idP);
+            tiles.add(t);
+        }
 
 
         for(Tile t : tiles){
             fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t));
         }
         fragmentTransaction.commit();
+
 
 
     }
