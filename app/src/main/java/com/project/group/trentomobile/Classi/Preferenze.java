@@ -23,6 +23,7 @@ public class Preferenze implements Serializable {
     private Map<String,Integer> Pref_Luoghi;
     private ArrayList<Keyword> Keywords;
     private Set<Integer> IdsPreferiti;
+    private Integer Pref_Trasporti;
 
 
     public Preferenze(){
@@ -31,6 +32,7 @@ public class Preferenze implements Serializable {
         Pref_Notizie=new HashMap<String, Integer>();
         Pref_Luoghi=new HashMap<String, Integer>();
         IdsPreferiti = new HashSet<>();
+        Pref_Trasporti = 5;
     }
     /**
      * @return the Pref_Notizie
@@ -67,6 +69,12 @@ public class Preferenze implements Serializable {
     public void addPref_Eventi_Ture(String Pref_Evento) {
         this.Pref_Eventi.put(Pref_Evento,10);
     }
+
+    public void setPref_Trasporti_Ture() {
+        this.Pref_Trasporti=10;
+    }
+
+    public Integer getPref_Trasporti(){return Pref_Trasporti;}
 
     public void addPref_Notizie_Ture(String Pref_Notizie) {
         this.Pref_Notizie.put(Pref_Notizie,10);

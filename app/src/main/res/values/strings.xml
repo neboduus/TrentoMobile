@@ -176,4 +176,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_tipo">TipoActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>

@@ -14,7 +14,9 @@ import com.project.group.trentomobile.TilePK.TileFragment;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
 import com.project.group.trentomobile.transport.Linea;
+import com.project.group.trentomobile.transport.Orario;
 import com.project.group.trentomobile.transport.Stop;
+import com.project.group.trentomobile.transport.Trip;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.io.IOException;
@@ -100,16 +102,35 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //FILTRAGGIO FERMATE BUS
 
-            while (pos.lat == null);
+            GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
 
-            Double lat = pos.lat;
-            Double lon = pos.lng;
+            while(myPosition.lat == null); //ASPETTA FINCHE NON HA LA POSIZIONE
 
-            SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
-            List<Stop> nearestStops = sqla.getNearestStops(5, lat, lon);
+            SQLAssetHelper_DB  sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
 
-            for(Stop stop : nearestStops){
-                tiles.addFermata(new Fermata(stop.getName(),stop.getDesc(),"lol","lol"));
+            Log.d("aAAAAAAAAAAAAA", String.valueOf(myPosition.lat));
+
+            List<Stop> ls = sqlDB.getNearestStops(3, myPosition.lat, myPosition.lng);
+
+            for(Stop s : ls){
+
+                List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
+                String corpo="";
+
+                int count = 1;
+
+                for(Orario o : lo){
+                    o.getArrival_time();
+                    Trip t = sqlDB.getTripById(o.getTrip_id());
+                    Linea l = sqlDB.getLineaById(t.getRoute_id());
+
+                    corpo+="Bus:"+l.getShort_name()+"\n\tpartenza:"+o.getArrival_time()+"\n\t"+"direzione:"+(t.getDirection_id() ? "andata" :"ritorno")+"\n";
+
+                    if(count==0) break;
+                    count--;
+                }
+
+                tiles.addFermata(new Fermata(s.getName(),corpo,"http://www.homemade-preschool.com/images/school-bus-racing-front.png","http://images.clipartpanda.com/clipart-bus-17816-simple-bus-clip-art.png"));
             }
 
 
@@ -180,6 +201,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             for (Genere_Evento g: GeneriRepo.getIstance().GeneriEventi) {
                 myPreference.addPref_Eventi_Ture(g.getTipo());
             }
+
+            myPreference.setPref_Trasporti_Ture();
 
             Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
 

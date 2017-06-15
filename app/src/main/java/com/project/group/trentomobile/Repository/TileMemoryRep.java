@@ -108,6 +108,16 @@ public class TileMemoryRep implements Interface_Rep{
             } 
         }
 
+        if(p.getPref_Trasporti()>9)
+            for(Fermata t:getFermate())
+            {
+                if(true) { //CONTROLLO PREFERENZE
+                    t.peso = p.getPref_Trasporti();
+                    getTiles().add(t);
+                }
+            }
+
+
         class ComparatorTiles implements Comparator<Tile> {
             @Override
             public int compare(Tile o1, Tile o2) {
@@ -156,6 +166,7 @@ public class TileMemoryRep implements Interface_Rep{
             }
         }
 
+        if(p.getPref_Trasporti()>9)
         for(Fermata t:getFermate())
         {
             if(true) { //CONTROLLO PREFERENZE
