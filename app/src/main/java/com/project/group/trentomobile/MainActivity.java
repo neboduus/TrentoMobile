@@ -34,6 +34,8 @@ import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.Repository.GeneriRepo;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+import com.project.group.trentomobile.Util.GetMyPosition;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.MyLocationListener;
 import com.project.group.trentomobile.Util.ScaricaTiles;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         });*/
 
 
-
+        Log.d("distanza prova---------------->", String.valueOf(CoordinateToMetri.disgeod(46.067197, 11.121376, 46.068518, 11.120078)));
 
         final Button btnMenu = (Button) findViewById(R.id.btnMenu);
         //it draws the sliding menu
@@ -184,6 +186,10 @@ public class MainActivity extends AppCompatActivity
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(this);
+        myPreference.setMylat(myPosition.lat);
+        myPreference.setMyLng(myPosition.lng);
 
         //filter the content with respect to Preferences
         tiles.Filtra(myPreference);

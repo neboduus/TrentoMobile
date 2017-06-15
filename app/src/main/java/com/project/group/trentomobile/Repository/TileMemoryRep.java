@@ -11,6 +11,9 @@ import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+import com.project.group.trentomobile.Util.GetMyPosition;
+import com.project.group.trentomobile.context.MyApplication;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,31 +84,31 @@ public class TileMemoryRep implements Interface_Rep{
         Map<String,Integer> pref_tipi_eventi=p.getPref_Eventi();
         Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
         Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
-   
+
         for(Notizia t:getNotizie())
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
                 getTiles().add(t);
-            } 
+            }
         }
 
         for(Evento t:getEventi())
         {
-            
+
                if(pref_tipi_eventi.containsKey(t.getGenere().getTipo()) && (pref_tipi_eventi.get(t.getGenere().getTipo()) > 9)) {
                    t.peso = pref_tipi_eventi.get(t.getGenere().getTipo());
                    getTiles().add(t);
-                } 
-            
+                }
+
         }
-        
+
         for(Luogo t:getLuoghi())
         {
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
+                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
                 getTiles().add(t);
-            } 
+            }
         }
 
         if(p.getPref_Trasporti()>9)
@@ -140,10 +143,12 @@ public class TileMemoryRep implements Interface_Rep{
         Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
         Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
 
+
         for(Notizia t:getNotizie())
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
+
                 ts.add(t);
             }
         }
@@ -161,7 +166,7 @@ public class TileMemoryRep implements Interface_Rep{
         for(Luogo t:getLuoghi())
         {
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
+                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
                 ts.add(t);
             }
         }

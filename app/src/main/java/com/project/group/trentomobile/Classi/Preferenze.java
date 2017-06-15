@@ -25,6 +25,9 @@ public class Preferenze implements Serializable {
     private Set<Integer> IdsPreferiti;
     private Integer Pref_Trasporti;
 
+    private Double Mylat;
+    private Double MyLng;
+
 
     public Preferenze(){
     
@@ -117,5 +120,21 @@ public class Preferenze implements Serializable {
         return (HashSet<Integer>) IdsPreferiti;
     }
 
+
+    public Double getMylat() {
+        return Mylat;
+    }
+
+    public Double getMyLng() {
+        return MyLng;
+    }
+
+    public void setMylat(Double mylat) {
+        Mylat = mylat;
+    }
+
+    public void setMyLng(Double myLng) {
+        MyLng = myLng;
+    }
 
 }

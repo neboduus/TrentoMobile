@@ -134,6 +134,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             }
 
 
+
+
             //AGGIUNGO GENERI
             GeneriRepo gr = GeneriRepo.getIstance();
 
@@ -217,6 +219,11 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             e.printStackTrace();
         }
 
+
+        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
+
+        myPreference.setMylat(myPosition.lat);
+        myPreference.setMyLng(myPosition.lng);
 
         tiles.Filtra(myPreference);
 
