@@ -34,6 +34,8 @@ import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by postal on 25/04/17.
@@ -105,11 +107,13 @@ public class TileFragment extends Fragment {
         });
         */
 
+
         //setting the footer with respect to the kind of the data contained in the tile
         String sPiedi ="";
         if(data instanceof Notizia){
             Notizia n = (Notizia) data;
-            sPiedi += "" + n.getAutore().getNome() + " - " + n.getData().getTime();
+            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+            sPiedi += "" + n.getAutore().getNome() + " - " + formatter.format(n.getData().getTimeInMillis());
         }else
         if(data instanceof Luogo){
             Luogo l = (Luogo) data;
@@ -117,7 +121,8 @@ public class TileFragment extends Fragment {
         }else
         if(data instanceof Evento){
             Evento e = (Evento) data;
-            sPiedi += e.getIndirizzo().getVia() +" - "+e.getData().getTime();
+            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd hh:mm");
+            sPiedi += e.getIndirizzo().getVia() +" - "+formatter.format(e.getData().getTimeInMillis());
         }else
         if(data instanceof Fermata){
             //SETTA PIEDI
@@ -158,7 +163,7 @@ public class TileFragment extends Fragment {
         //now we are modifying the preferences with respect on the item menu selected in the tile
 
         switch (item.getItemId()) {
-            case 1:
+            case 1: //CONDIVIDI
 
                 Tile t = TileMemoryRep.getInstance().getTileById(idd);
 
@@ -169,7 +174,7 @@ public class TileFragment extends Fragment {
                 startActivity(sendIntent);
             return true;
 
-            case 2:
+            case 2: //NON MI INTERESSA
 
                 try {
                     myPreference = (Preferenze) InternalStorage.readObject(getActivity());
@@ -219,7 +224,7 @@ public class TileFragment extends Fragment {
 
                 return true;
 
-            case 3 :
+            case 3 : //AGGIUNGI A PREFERITI
 
                 myPreference = null;
                 try {
@@ -248,7 +253,7 @@ public class TileFragment extends Fragment {
 
             return true;
 
-            case 4:
+            case 4: //FEEDBACK
 
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");

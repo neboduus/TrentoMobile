@@ -5,6 +5,7 @@
  */
 package com.project.group.trentomobile.Repository;
 
+import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Evento;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Luogo;
@@ -15,6 +16,7 @@ import com.project.group.trentomobile.Util.CoordinateToMetri;
 import com.project.group.trentomobile.Util.GetMyPosition;
 import com.project.group.trentomobile.context.MyApplication;
 
+import android.text.format.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -78,7 +80,10 @@ public class TileMemoryRep implements Interface_Rep{
     @Override
     public void Filtra(Preferenze p) {
 
-        tiles = new ArrayList<Tile>();
+        //Get actual tima
+        Time actualTime = new Time();
+        actualTime.setToNow();
+
 
         tiles =new ArrayList<Tile>();
         Map<String,Integer> pref_tipi_eventi=p.getPref_Eventi();
@@ -107,6 +112,12 @@ public class TileMemoryRep implements Interface_Rep{
         {
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
+                if(t.getOrario()!=null){
+                    if(actualTime.after(t.getOrario().apre) && actualTime.before(t.getOrario().chiude)){
+                        t.peso -= 10;
+                    }
+                }
+
                 getTiles().add(t);
             }
         }
@@ -115,8 +126,9 @@ public class TileMemoryRep implements Interface_Rep{
             for(Fermata t:getFermate())
             {
                 if(true) { //CONTROLLO PREFERENZE
-                    t.peso = p.getPref_Trasporti();
-                    getTiles().add(t);
+                    t.peso = p.getPref_Trasporti()+ (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Fermata)t).getIndirizzo().getLat(),((Fermata)t).getIndirizzo().getLng()));;
+                    //if(t.peso>0)
+                        getTiles().add(t);
                 }
             }
 

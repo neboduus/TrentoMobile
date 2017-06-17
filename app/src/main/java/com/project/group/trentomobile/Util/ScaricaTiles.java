@@ -116,6 +116,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
                 List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
                 String corpo="";
+                Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
 
                 int count = 1;
 
@@ -130,7 +131,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     count--;
                 }
 
-                tiles.addFermata(new Fermata(s.getName(),corpo,"http://www.homemade-preschool.com/images/school-bus-racing-front.png","http://images.clipartpanda.com/clipart-bus-17816-simple-bus-clip-art.png"));
+                tiles.addFermata(new Fermata(s.getName(),corpo,"http://www.homemade-preschool.com/images/school-bus-racing-front.png","http://images.clipartpanda.com/clipart-bus-17816-simple-bus-clip-art.png",indirizzo));
             }
 
 

@@ -105,7 +105,7 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(data instanceof Evento){
             ((TextView) findViewById(R.id.txtIndirizzo)).setText("Indirizzo: "+((Evento)data).getIndirizzo().getVia());
-            ((TextView) findViewById(R.id.txtData)).setText("Data: "+((Evento)data).getData().toString());
+            ((TextView) findViewById(R.id.txtData)).setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
             ((TextView) findViewById(R.id.txtGenere)).setText("Genere Evento: "+((Evento) data).getGenere().getTipo());
         }
 
@@ -117,7 +117,6 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (data instanceof Fermata){
             ((TextView) findViewById(R.id.txtGenere)).setText(" "+data.getTitolo());
-            ((TextView) findViewById(R.id.txtAutore)).setText("Descrizione: "+data.getDescrizione());
         }
 
 
@@ -154,7 +153,7 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
-        if(data instanceof Luogo) {
+        if(data instanceof Indirizzabile) {
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
@@ -181,13 +180,13 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if(data instanceof Luogo) {
+        if(data instanceof Indirizzabile) {
             mMap = googleMap;
             // Add a marker in Sydney and move the camera
-            LatLng Trento = new LatLng(((Luogo)data).getIndirizzo().getLat(), ((Luogo)data).getIndirizzo().getLng());
+            LatLng Trento = new LatLng(((Indirizzabile)data).getIndirizzo().getLat(), ((Indirizzabile)data).getIndirizzo().getLng());
             mMap.addMarker(new MarkerOptions().position(Trento).title(data.getTitolo()));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(((Luogo)data).getIndirizzo().getLat(), ((Luogo)data).getIndirizzo().getLng()), 17));
+                    new LatLng(((Indirizzabile)data).getIndirizzo().getLat(), ((Indirizzabile)data).getIndirizzo().getLng()), 17));
 
         }
 

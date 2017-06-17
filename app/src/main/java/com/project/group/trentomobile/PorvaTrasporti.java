@@ -84,7 +84,7 @@ public class PorvaTrasporti extends AppCompatActivity
 
         //orari
         for (Orario o: orari){
-            Log.d("Orario", "arrivo: "+o.getArrival_time()+" - partenza: "+o.getDeparture_time());
+            Log.d("AperturaChiusura", "arrivo: "+o.getArrival_time()+" - partenza: "+o.getDeparture_time());
         }
 
 

@@ -270,13 +270,20 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_preferiti) {
             Intent myIntent = new Intent(MainActivity.this, PreferitiActivity.class);
             MainActivity.this.startActivity(myIntent);
-        } /*else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_proponi) {
 
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"sptanco@gmail.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "Proposal for tile");
+            i.putExtra(Intent.EXTRA_TEXT   , "Good morning, I have a proposal for a tile:\n");
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
 
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
