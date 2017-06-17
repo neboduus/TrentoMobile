@@ -131,7 +131,10 @@ public class TileFragment extends Fragment {
         titolo.setText(data.getTitolo());
         corpo.setText(data.getDescrizione());
         piedi.setText(sPiedi);
-        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), "tileid"+data.getId());
+        String nomeImg = "tileid"+data.getId();
+        if(data instanceof Fermata)
+                nomeImg ="bus2";
+        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
         return r;
     }
 

@@ -22,6 +22,7 @@ import java.net.URL;
 
 public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
+    Bitmap busImg;
 
     public ScaricaImmagine(ImageView bmImage) {
         this.bmImage = bmImage;
@@ -36,6 +37,12 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
         SaveLoadImg sli = SaveLoadImg.getIstance();
 
         if(urls.length == 2) {
+
+            if(urls[1].equals("bus2")) {
+                if(busImg != null)
+                    return busImg;
+            }
+
             Bitmap b = sli.loadImageFromStorage(urls[1]);
             if (b != null) {
                 Log.d("immagine", "in memoria");

@@ -131,7 +131,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     count--;
                 }
 
-                tiles.addFermata(new Fermata(s.getName(),corpo,"http://www.homemade-preschool.com/images/school-bus-racing-front.png","http://images.clipartpanda.com/clipart-bus-17816-simple-bus-clip-art.png",indirizzo));
+                tiles.addFermata(new Fermata(s.getId(),s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
             }
 
 
@@ -173,7 +173,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             for (Linea l:autobus){
                 Log.e("bus", l.getShort_name()+" ");
 
-                gr.Autobus.add(new Bus(l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(), l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16)));
+                if(l.getColor()!="none")
+                    gr.Autobus.add(new Bus(l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(), l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16)));
             }
 
             Log.d("ce","12122222222222222222222222");
@@ -231,6 +232,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         //tiles.TuttiTiles();
         return tiles;
     }
+
+
 
     protected void onPostExecute(TileMemoryRep result) {
 

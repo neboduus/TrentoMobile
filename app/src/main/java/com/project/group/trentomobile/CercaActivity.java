@@ -52,12 +52,17 @@ public class CercaActivity extends AppCompatActivity {
         tiles = new ArrayList<>();
 
 
-        ///MODIFICARE
-        /*for(int idP : myPreference.getIdsPreferiti()){
-            Log.d("id preferito", String.valueOf(idP));
-            Tile t = TileMemoryRep.getInstance().getTileById(idP);
-            tiles.add(t);
-        }*/
+        Bundle bundle = getIntent().getExtras();
+        String cerca =  (String) bundle.getString("cerca");
+
+
+        for(Tile tile : TileMemoryRep.getInstance().getTiles()){
+            //Cerca nel titolo e in base alla categoria
+            if(tile.getTitolo().contains(cerca))
+            {
+                tiles.add(tile);
+            }
+        }
 
 
         for(Tile t : tiles){

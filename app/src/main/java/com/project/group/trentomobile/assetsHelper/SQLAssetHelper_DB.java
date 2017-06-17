@@ -23,6 +23,7 @@ import java.util.List;
 public class SQLAssetHelper_DB extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "trasportiTrento_new.db";
     private static final int DATABASE_VERSION = 1;
+    private Stop stopsById;
 
     public SQLAssetHelper_DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -93,6 +94,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
             cursor.moveToNext();
         }
 
+        /*
         String selectStatement2 = "select S._id, S.stop_code, S.stop_name, S.stop_desc, S.stop_lat, S.stop_lon, T.trip_id " +
                 "from trips as T, stop_times as ST, stop as S " +
                 "where ST.stop_id=S._id"+
@@ -107,12 +109,12 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
             stop.setTrip_id(cursor.getDouble(6));
             stops_ritorno.add(stop);
             cursor.moveToNext();
-        }
+        }*/
 
         cursor.close();
 
         liste.add(stops_andata);
-        liste.add(stops_ritorno);
+        //liste.add(stops_ritorno);
         return liste;
     }
 
@@ -284,5 +286,27 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         values.put("stop_lon", stop.getLon());
         values.put("stop_name", stop.getName());
         return values;
+    }
+
+    public Stop getStopsById(Integer id) {
+        Log.d("DB", "stops");
+        Stop stop = null;
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+
+        String selectStatement = "SELECT _id, stop_code, stop_name, stop_desc, stop_lat, stop_lon FROM Stop WHERE _id="+id;
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()) {
+            stop = this.cursorToStop(cursor);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return stop;
     }
 }

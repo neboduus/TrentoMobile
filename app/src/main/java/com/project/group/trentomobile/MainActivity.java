@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Genere_Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
+import com.project.group.trentomobile.Classi.UpdateRequest;
 import com.project.group.trentomobile.Repository.GeneriRepo;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TilePK.TileFragment;
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
-                //AGGIUNGI BUNDLE
+                myIntent.putExtra("cerca",((AutoCompleteTextView)findViewById(R.id.txtCerca)).getText().toString());//Optional parameters
                 MainActivity.this.startActivity(myIntent);
             }
         });
@@ -163,58 +165,60 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        //recover all the content of the main activity which is all the Tiles
-        TileMemoryRep tiles = TileMemoryRep.getInstance();
-        //recover the fragment manager and remove all the fragments which are the Tiles
-        FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
-        for(Tile t : TileMemoryRep.getInstance().getTiles()){
-            ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
-        }
-        ft.commit();    //commit changes of the MainActivity
 
-        //recovery of possible new preferences
-        Preferenze myPreference = null;
-        try {
-            //InternalStorage.writeObject(this,"lolk","lolv");
-            myPreference = (Preferenze) InternalStorage.readObject(this);
-        } catch (IOException e) {
-            //manage the possibility of having not setted the preferences
-            //create default preferences
-            myPreference = new Preferenze();
-            for (Genere_Luogo g: GeneriRepo.getIstance().GeneriLuoghi) {
-                myPreference.addPref_Luoghi_Ture(g.getTipo());
+        if(UpdateRequest.getInstance().isRequestUpadte()) {
+            //recover all the content of the main activity which is all the Tiles
+            TileMemoryRep tiles = TileMemoryRep.getInstance();
+            //recover the fragment manager and remove all the fragments which are the Tiles
+            FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
+            for (Tile t : TileMemoryRep.getInstance().getTiles()) {
+                ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
             }
-            for (Genere_Notizia g: GeneriRepo.getIstance().GeneriNotizie) {
-                myPreference.addPref_Notizie_Ture(g.getTipo());
-            }
-            for (Genere_Evento g: GeneriRepo.getIstance().GeneriEventi) {
-                myPreference.addPref_Eventi_Ture(g.getTipo());
-            }
+            ft.commit();    //commit changes of the MainActivity
 
+            //recovery of possible new preferences
+            Preferenze myPreference = null;
             try {
-                InternalStorage.writeObject(this,myPreference);
-            } catch (IOException e1) {
-                e1.printStackTrace();
+                //InternalStorage.writeObject(this,"lolk","lolv");
+                myPreference = (Preferenze) InternalStorage.readObject(this);
+            } catch (IOException e) {
+                //manage the possibility of having not setted the preferences
+                //create default preferences
+                myPreference = new Preferenze();
+                for (Genere_Luogo g : GeneriRepo.getIstance().GeneriLuoghi) {
+                    myPreference.addPref_Luoghi_Ture(g.getTipo());
+                }
+                for (Genere_Notizia g : GeneriRepo.getIstance().GeneriNotizie) {
+                    myPreference.addPref_Notizie_Ture(g.getTipo());
+                }
+                for (Genere_Evento g : GeneriRepo.getIstance().GeneriEventi) {
+                    myPreference.addPref_Eventi_Ture(g.getTipo());
+                }
+
+                try {
+                    InternalStorage.writeObject(this, myPreference);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(this);
-        myPreference.setMylat(myPosition.lat);
-        myPreference.setMyLng(myPosition.lng);
+            GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(this);
+            myPreference.setMylat(myPosition.lat);
+            myPreference.setMyLng(myPosition.lng);
 
-        //filter the content with respect to Preferences
-        tiles.Filtra(myPreference);
-        FragmentTransaction fragmentTransaction;
-        FragmentManager fragmentManager = getFragmentManager();
-        //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
-        //show the new content
-        for(Tile t : tiles.getTiles()){
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
-            fragmentTransaction.commit();
-
+            //filter the content with respect to Preferences
+            tiles.Filtra(myPreference);
+            FragmentTransaction fragmentTransaction;
+            FragmentManager fragmentManager = getFragmentManager();
+            //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
+            //show the new content
+            for (Tile t : tiles.getTiles()) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
+                fragmentTransaction.commit();
+            }
         }
     }
 

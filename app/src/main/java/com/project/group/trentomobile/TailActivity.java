@@ -1,5 +1,6 @@
 package com.project.group.trentomobile;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,17 +8,21 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.project.group.trentomobile.Classi.*;
+import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
 import com.project.group.trentomobile.context.MyApplication;
@@ -34,7 +39,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TailActivity extends FragmentActivity implements OnMapReadyCallback{
+public class TailActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private TextToSpeech t1;
     private TextView titolo;
@@ -63,6 +68,8 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
         descrizione.setText(data.getDescrizione());
         URL.setText("SITO WEB");
         final String stringURL = data.getURL();
+
+        LinearLayout main = (LinearLayout) findViewById(R.id.mainLinearTile);
 
 
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -101,6 +108,11 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
         if(data instanceof Luogo){
             ((TextView) findViewById(R.id.txtIndirizzo)).setText("Indirizzo: "+((Luogo)data).getIndirizzo().getVia());
             ((TextView) findViewById(R.id.txtGenere)).setText("Genere Luogo: "+((Luogo) data).getGenere().getTipo());
+
+            View datatxt = ((TextView) findViewById(R.id.txtData));
+            ((ViewGroup) datatxt.getParent()).removeView(datatxt);
+            View autoretxt = ((TextView) findViewById(R.id.txtAutore));
+            ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
         }
 
         if(data instanceof Evento){
@@ -113,14 +125,15 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
             ((TextView) findViewById(R.id.txtGenere)).setText("Genere Notizzia: "+((Notizia) data).getGenere().getTipo());
             ((TextView) findViewById(R.id.txtData)).setText("Data: "+formatter.format(((Notizia)data).getData().getTimeInMillis()));
             ((TextView) findViewById(R.id.txtAutore)).setText("Autore: "+((Notizia) data).getAutore().getNome());
+            View namebar = ((TextView) findViewById(R.id.txtIndirizzo));
+            ((ViewGroup) namebar.getParent()).removeView(namebar);
         }
 
         if (data instanceof Fermata){
+            ((TextView) findViewById(R.id.txtGenere)).setText("Fermata");
             ((TextView) findViewById(R.id.txtGenere)).setText(" "+data.getTitolo());
         }
 
-
-        ((TextView) findViewById(R.id.txtGenere)).setText("lllllllll"+data.peso);
 
         //AGGIORNA PREFERENZE
 
@@ -153,10 +166,16 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
+
         if(data instanceof Indirizzabile) {
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
+        }else{
+            Fragment f = getSupportFragmentManager().findFragmentById(R.id.map);
+
+            getSupportFragmentManager().beginTransaction().hide(f).remove(f).commit();
+
         }
 
         // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

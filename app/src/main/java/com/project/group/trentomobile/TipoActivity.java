@@ -61,15 +61,19 @@ public class TipoActivity extends AppCompatActivity {
 
         if(tipo.equals("notizia")){
             generi = GeneriRepo.getIstance().GeneriNotizie;
+            setTitle("Notizie");
         }
         if(tipo.equals("evento")){
             generi = GeneriRepo.getIstance().GeneriEventi;
+            setTitle("Eventi");
         }
         if(tipo.equals("luogo")){
             generi = GeneriRepo.getIstance().GeneriLuoghi;
+            setTitle("Luoghi");
         }
         if(tipo.equals("trasporti")){
             generi = GeneriRepo.getIstance().Autobus;
+            setTitle("Trasporti");
         }
 
 
@@ -85,6 +89,7 @@ public class TipoActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(mActivity, CategorieActivity.class);
                 myIntent.putExtra("categoria", ((Categoria)v).getNome()); //Optional parameters
                 myIntent.putExtra("tipo", tipo); //Optional parameters
+                myIntent.putExtra("img", ((Categoria)v).img);
                 mActivity.startActivity(myIntent);
 
 

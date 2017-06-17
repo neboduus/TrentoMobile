@@ -1,6 +1,7 @@
 package com.project.group.trentomobile.Repository;
 
 import com.project.group.trentomobile.Classi.Bus;
+import com.project.group.trentomobile.Classi.Genere;
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Genere_Notizia;
@@ -36,6 +37,7 @@ public class GeneriRepo {
             istance = new GeneriRepo();
         return istance;
     }
+
 
 
 

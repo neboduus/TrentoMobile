@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Preferenze;
+import com.project.group.trentomobile.Classi.UpdateRequest;
 import com.project.group.trentomobile.Repository.GeneriRepo;
 import com.project.group.trentomobile.Util.InternalStorage;
 
@@ -208,6 +209,8 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
                 sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                  @Override
                  public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+
+                     UpdateRequest.getInstance().requestUpdate();
 
                      Boolean newB = (Boolean) newValue;
                      myP.getPref_Luoghi().remove(g.getTipo());
