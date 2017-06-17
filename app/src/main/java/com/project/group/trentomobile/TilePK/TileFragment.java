@@ -126,7 +126,7 @@ public class TileFragment extends Fragment {
         titolo.setText(data.getTitolo());
         corpo.setText(data.getDescrizione());
         piedi.setText(sPiedi);
-        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
+        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), "tileid"+data.getId());
         return r;
     }
 

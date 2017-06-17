@@ -65,7 +65,7 @@ public class Categoria extends RelativeLayout {
 
     public void setImmagine(String img){
         if(!img.isEmpty())
-            new ScaricaImmagine(immagine).execute(img);
+            new ScaricaImmagine(immagine).execute(img, nome);
     }
 
     public void setImmagineColor(Integer color){

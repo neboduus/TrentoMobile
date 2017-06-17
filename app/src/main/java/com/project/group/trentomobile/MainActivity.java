@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.location.LocationManager;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
@@ -38,6 +40,7 @@ import com.project.group.trentomobile.Util.CoordinateToMetri;
 import com.project.group.trentomobile.Util.GetMyPosition;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.MyLocationListener;
+import com.project.group.trentomobile.Util.SaveLoadImg;
 import com.project.group.trentomobile.Util.ScaricaTiles;
 
 import java.io.IOException;
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity
         }
         */
 
+
         Preferenze p = new Preferenze();
         //INIZZIALIZZAZIONE TILES
         new ScaricaTiles(this).execute(p);
@@ -141,6 +145,15 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
         */
 
+
+        findViewById(R.id.btnCerca).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
+                //AGGIUNGI BUNDLE
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
 
 
 
@@ -271,9 +284,31 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        Log.d("destroy","cavolacci");
+
+        for(Tile t : TileMemoryRep.getInstance().getTiles()) {
+            SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
+            Log.d("fineeeee cancella", "tileid" + t.getId());
+        }
+
+    }
 }
 
 

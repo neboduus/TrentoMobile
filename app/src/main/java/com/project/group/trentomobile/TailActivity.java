@@ -3,6 +3,7 @@ package com.project.group.trentomobile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.project.group.trentomobile.Classi.*;
@@ -22,7 +25,7 @@ import com.project.group.trentomobile.context.MyApplication;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.Locale;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,11 +36,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TailActivity extends FragmentActivity implements OnMapReadyCallback{
 
+    private TextToSpeech t1;
     private TextView titolo;
     private TextView descrizione;
     private ImageView immagine;
     private TextView URL;
     private GoogleMap mMap;
+    private Button btn_speacher;
     Tile data;
 
 
@@ -50,7 +55,7 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
         descrizione = (TextView) findViewById(R.id.txtDescrizione);
         immagine = (ImageView) findViewById(R.id.imgT);
         URL = (TextView) findViewById(R.id.txtURL);
-
+        btn_speacher=(Button)findViewById(R.id.btn_speacher);
         Bundle bundle = getIntent().getExtras();
         data = (Tile) bundle.getSerializable("data");
 
@@ -58,6 +63,25 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
         descrizione.setText(data.getDescrizione());
         URL.setText("SITO WEB");
         final String stringURL = data.getURL();
+
+
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.ITALIAN);
+                }
+            }
+        });
+
+        btn_speacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String toSpeak = descrizione.getText().toString();
+
+                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
 
         URL.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -72,7 +96,7 @@ public class TailActivity extends FragmentActivity implements OnMapReadyCallback
         DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
 
 
-        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
+        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(),"tileid"+data.getId());
 
         if(data instanceof Luogo){
             ((TextView) findViewById(R.id.txtIndirizzo)).setText("Indirizzo: "+((Luogo)data).getIndirizzo().getVia());

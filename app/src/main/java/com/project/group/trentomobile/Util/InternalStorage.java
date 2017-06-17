@@ -1,6 +1,7 @@
 package com.project.group.trentomobile.Util;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
