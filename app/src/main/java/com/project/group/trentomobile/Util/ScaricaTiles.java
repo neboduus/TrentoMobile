@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.project.group.trentomobile.Classi.*;
 import com.project.group.trentomobile.R;
@@ -246,6 +248,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
      //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
 
 
+
         for(Tile t : result.getTiles()){
             Log.d("id->", String.valueOf(t.getId())+ "  "+t.getTitolo());
 
@@ -253,7 +256,9 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         }
         fragmentTransaction.commit();
 
+        View namebar = myActivity.findViewById(R.id.loadingPanel);
 
+        ((ViewGroup) namebar.getParent()).removeView(namebar);
 
     }
 
