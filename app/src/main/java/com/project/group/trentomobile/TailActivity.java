@@ -8,12 +8,15 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +58,12 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tail);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+
 
         titolo = (TextView) findViewById(R.id.txtTitolo);
         descrizione = (TextView) findViewById(R.id.txtDescrizione);
@@ -183,9 +192,130 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_tile, menu);
+        menu.add(data.getId(),1,0,"Condividi");
+        menu.add(data.getId(),2,0,"Non mi interessa");
+        menu.add(data.getId(),3,0,"Aggiungi ai preferiti");
+        menu.add(data.getId(),4,0,"Invia feed-back");
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int idd = item.getGroupId();
+        Preferenze myPreference = null;
+
+        //now we are modifying the preferences with respect on the item menu selected in the tile
+
+        switch (item.getItemId()) {
+            case 1: //CONDIVIDI
+
+                Tile t = TileMemoryRep.getInstance().getTileById(idd);
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, t.getTitolo()+"---"+t.getDescrizione()+"---"+t.getPatterImmagine());
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                return true;
+
+            case 2: //NON MI INTERESSA
+
+                try {
+                    myPreference = (Preferenze) InternalStorage.readObject(MyApplication.getAppContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                Tile d = TileMemoryRep.getInstance().getTileById(idd);
+
+                Log.d("ttitolooooo->", d.getTitolo());
+
+                if(d instanceof Notizia){
+                    Genere_Notizia gn = ((Notizia) d).getGenere();
+                    myPreference.getPref_Notizie().put(gn.getTipo(),0);
+                }else
+                if(d instanceof Luogo){
+                    Genere_Luogo gn = ((Luogo) d).getGenere();
+                    myPreference.getPref_Luoghi().put(gn.getTipo(),0);
+                }else
+                if(d instanceof Evento){
+                    Genere_Evento gn = ((Evento) d).getGenere();
+                    myPreference.getPref_Eventi().put(gn.getTipo(),0);
+                }else{
+                    Log.d("ERRORACCIO","ritorna la superclasse");
+                }
+
+                try {
+                    InternalStorage.writeObject(MyApplication.getAppContext(),myPreference);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                Log.d("tagid->", String.valueOf(data.getId())+ "    "+data.getTitolo()+ "     "+ idd);
+
+                FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+
+                ft.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
+
+                ft.hide(getFragmentManager().findFragmentByTag(String.valueOf(idd)))
+                        .addToBackStack(null)
+                        .commit();
+
+
+                return true;
+
+            case 3 : //AGGIUNGI A PREFERITI
+
+                myPreference = null;
+                try {
+                    myPreference = (Preferenze) InternalStorage.readObject(MyApplication.getAppContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+                myPreference.addPreferiti(idd);
+
+                for(int i:myPreference.getIdsPreferiti()){
+                    Log.d("pref", String.valueOf(i));
+                }
+
+
+
+                try {
+                    InternalStorage.writeObject(MyApplication.getAppContext(),myPreference);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+
+            case 4: //FEEDBACK
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"sptanco@gmail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Feed-back for tile with id:"+ idd);
+                i.putExtra(Intent.EXTRA_TEXT   , "Good morning, this is my feed-back about the tile whith id:" + idd +".\n");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MyApplication.getAppContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     /**
@@ -209,6 +339,13 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

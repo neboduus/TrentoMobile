@@ -39,6 +39,7 @@
             tools:layout_editor_absoluteX="-55dp"
             tools:layout_editor_absoluteY="35dp"
             android:weightSum="1"
+            android:gravity="top"
             >
 
             <Button

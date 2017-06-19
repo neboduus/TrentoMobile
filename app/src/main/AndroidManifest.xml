@@ -30,8 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         </activity>
         <activity
             android:name=".CategorieActivity"
@@ -43,11 +41,11 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".CercaActivity"
-            android:label="Ce"
+            android:label="Cerca"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".TailActivity"
-            android:label="" />
+            android:label="Trento Mobile" />
         <activity
             android:name=".PorvaTrasporti"
             android:exported="true"
