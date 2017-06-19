@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.group.trentomobile.Classi.Autore;
-import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
@@ -144,6 +143,33 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
                 tiles.addFermata(new Fermata(s.getId(),s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
             }
+
+            /*
+            //TEST WEATHER
+            new WeatherManager("97afef6a27b88c8138c824865619ff56").getCurrentWeatherByCoordinates(
+                    46.1421242, // latitude
+                    11.1006433, // longitude
+                    new WeatherManager.CurrentWeatherHandler() {
+                        @Override
+                        public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
+                            // Handle current weather information
+                            Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
+                                    .getValue(TemperatureUnit.CELCIUS)+" gradi C");
+                            Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
+                            Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                            Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
+                            Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
+
+                        }
+
+                        @Override
+                        public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
+                            // Handle error
+                        }
+                    }
+
+            );
+            */
 
 
 
