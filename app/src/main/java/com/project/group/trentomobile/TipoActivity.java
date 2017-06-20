@@ -50,6 +50,9 @@ public class TipoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mTextMessage = (TextView) findViewById(R.id.message);
 
         Bundle bundle = getIntent().getExtras();
@@ -98,6 +101,12 @@ public class TipoActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

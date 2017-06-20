@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "evento");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
-        } else if (id == R.id.nav_notizzie) {
+        } else if (id == R.id.nav_notizie) {
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "notizia");  //Optional parameters
             MainActivity.this.startActivity(myIntent);

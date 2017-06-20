@@ -131,6 +131,19 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
         setupActionBar();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
@@ -241,7 +254,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
