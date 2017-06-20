@@ -2,8 +2,10 @@ package com.project.group.trentomobile.TilePK;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -90,8 +92,9 @@ public class TileFragment extends Fragment {
         titolo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent myIntent = new Intent(getActivity(), TailActivity.class);
 
+               // Log.d("daiii----------------", String.valueOf(event.getAction()));
+                Intent myIntent = new Intent(getActivity(), TailActivity.class);
                 //the name of optional parameters must include a package prefix (Ex. 'com.project.group.trentomobile.TilePK.TileData')
                 myIntent.putExtra("data", data); //Optional parameters
                 getActivity().startActivity(myIntent);
@@ -126,6 +129,7 @@ public class TileFragment extends Fragment {
         }else
         if(data instanceof Fermata){
             //SETTA PIEDI
+
         }
 
         titolo.setText(data.getTitolo());
@@ -170,6 +174,8 @@ public class TileFragment extends Fragment {
 
                 Tile t = TileMemoryRep.getInstance().getTileById(idd);
 
+                Log.d("iddddd", String.valueOf(idd));
+
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, t.getTitolo()+"---"+t.getDescrizione()+"---"+t.getPatterImmagine());
@@ -202,6 +208,8 @@ public class TileFragment extends Fragment {
                     if(d instanceof Evento){
                         Genere_Evento gn = ((Evento) d).getGenere();
                         myPreference.getPref_Eventi().put(gn.getTipo(),0);
+                    }if(d instanceof Fermata){
+                        myPreference.setPref_Trasporti_False();
                     }else{
                         Log.d("ERRORACCIO","ritorna la superclasse");
                     }
@@ -237,6 +245,7 @@ public class TileFragment extends Fragment {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
 
 
                 myPreference.addPreferiti(idd);

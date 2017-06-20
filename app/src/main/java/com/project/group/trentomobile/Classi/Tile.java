@@ -89,5 +89,21 @@ public class Tile implements Serializable{
     public void setURL(String URL) {
         this.URL = URL;
     }
+
+
+
+    public String getShortDescription(){
+        String strings[] = descrizione.split(" ");
+        String sho = "";
+        int count = 10;
+        for(String s : strings){
+            sho+=s+" ";
+            if(count<0)
+                break;
+            count--;
+        }
+
+        return sho;
+    }
     
 }

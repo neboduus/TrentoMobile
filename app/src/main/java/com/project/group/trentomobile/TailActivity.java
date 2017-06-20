@@ -3,8 +3,10 @@ package com.project.group.trentomobile;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +56,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
     Tile data;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +64,6 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-
 
         titolo = (TextView) findViewById(R.id.txtTitolo);
         descrizione = (TextView) findViewById(R.id.txtDescrizione);
@@ -74,9 +74,10 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
         data = (Tile) bundle.getSerializable("data");
 
         titolo.setText(data.getTitolo());
-        descrizione.setText(data.getDescrizione());
+        descrizione.setText(data.getShortDescription());
         URL.setText("SITO WEB");
         final String stringURL = data.getURL();
+
 
         LinearLayout main = (LinearLayout) findViewById(R.id.mainLinearTile);
 
@@ -104,6 +105,14 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onTouch(View v, MotionEvent event) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stringURL));
                 startActivity(browserIntent);
+                return false;
+            }
+        });
+
+        findViewById(R.id.btn_extend).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                descrizione.setText(data.getDescrizione());
                 return false;
             }
         });

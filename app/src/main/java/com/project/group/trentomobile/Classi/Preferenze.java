@@ -77,6 +77,10 @@ public class Preferenze implements Serializable {
         this.Pref_Trasporti=10;
     }
 
+    public void setPref_Trasporti_False() {
+        this.Pref_Trasporti=0;
+    }
+
     public Integer getPref_Trasporti(){return Pref_Trasporti;}
 
     public void addPref_Notizie_Ture(String Pref_Notizie) {
