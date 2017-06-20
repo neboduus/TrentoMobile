@@ -2,8 +2,10 @@ package com.project.group.trentomobile.TilePK;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -34,6 +36,8 @@ import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by postal on 25/04/17.
@@ -88,8 +92,9 @@ public class TileFragment extends Fragment {
         titolo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent myIntent = new Intent(getActivity(), TailActivity.class);
 
+               // Log.d("daiii----------------", String.valueOf(event.getAction()));
+                Intent myIntent = new Intent(getActivity(), TailActivity.class);
                 //the name of optional parameters must include a package prefix (Ex. 'com.project.group.trentomobile.TilePK.TileData')
                 myIntent.putExtra("data", data); //Optional parameters
                 getActivity().startActivity(myIntent);
@@ -105,11 +110,13 @@ public class TileFragment extends Fragment {
         });
         */
 
+
         //setting the footer with respect to the kind of the data contained in the tile
         String sPiedi ="";
         if(data instanceof Notizia){
             Notizia n = (Notizia) data;
-            sPiedi += "" + n.getAutore().getNome() + " - " + n.getData().getTime();
+            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+            sPiedi += "" + n.getAutore().getNome() + " - " + formatter.format(n.getData().getTimeInMillis());
         }else
         if(data instanceof Luogo){
             Luogo l = (Luogo) data;
@@ -117,16 +124,21 @@ public class TileFragment extends Fragment {
         }else
         if(data instanceof Evento){
             Evento e = (Evento) data;
-            sPiedi += e.getIndirizzo().getVia() +" - "+e.getData().getTime();
+            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd hh:mm");
+            sPiedi += e.getIndirizzo().getVia() +" - "+formatter.format(e.getData().getTimeInMillis());
         }else
         if(data instanceof Fermata){
             //SETTA PIEDI
+
         }
 
         titolo.setText(data.getTitolo());
         corpo.setText(data.getDescrizione());
         piedi.setText(sPiedi);
-        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
+        String nomeImg = "tileid"+data.getId();
+        if(data instanceof Fermata)
+                nomeImg ="bus2";
+        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
         return r;
     }
 
@@ -158,9 +170,11 @@ public class TileFragment extends Fragment {
         //now we are modifying the preferences with respect on the item menu selected in the tile
 
         switch (item.getItemId()) {
-            case 1:
+            case 1: //CONDIVIDI
 
                 Tile t = TileMemoryRep.getInstance().getTileById(idd);
+
+                Log.d("iddddd", String.valueOf(idd));
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -169,7 +183,7 @@ public class TileFragment extends Fragment {
                 startActivity(sendIntent);
             return true;
 
-            case 2:
+            case 2: //NON MI INTERESSA
 
                 try {
                     myPreference = (Preferenze) InternalStorage.readObject(getActivity());
@@ -194,6 +208,8 @@ public class TileFragment extends Fragment {
                     if(d instanceof Evento){
                         Genere_Evento gn = ((Evento) d).getGenere();
                         myPreference.getPref_Eventi().put(gn.getTipo(),0);
+                    }if(d instanceof Fermata){
+                        myPreference.setPref_Trasporti_False();
                     }else{
                         Log.d("ERRORACCIO","ritorna la superclasse");
                     }
@@ -219,7 +235,7 @@ public class TileFragment extends Fragment {
 
                 return true;
 
-            case 3 :
+            case 3 : //AGGIUNGI A PREFERITI
 
                 myPreference = null;
                 try {
@@ -229,6 +245,7 @@ public class TileFragment extends Fragment {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
 
 
                 myPreference.addPreferiti(idd);
@@ -248,7 +265,7 @@ public class TileFragment extends Fragment {
 
             return true;
 
-            case 4:
+            case 4: //FEEDBACK
 
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");

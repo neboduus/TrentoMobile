@@ -1,11 +1,19 @@
 package com.project.group.trentomobile.Util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.project.group.trentomobile.context.MyApplication;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 
 /**
@@ -14,12 +22,36 @@ import java.net.URL;
 
 public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
+    Bitmap busImg;
 
     public ScaricaImmagine(ImageView bmImage) {
         this.bmImage = bmImage;
     }
 
     protected Bitmap doInBackground(String... urls) {
+
+
+        //CONTROLLO IMMAGINE GIA' SCARICATA
+        //SE UEGLI URLS E? PRESENTE UN NOME PER SALVARE L'IMMAGINE
+
+        SaveLoadImg sli = SaveLoadImg.getIstance();
+
+        if(urls.length == 2) {
+
+            if(urls[1].equals("bus2")) {
+                if(busImg != null)
+                    return busImg;
+            }
+
+            Bitmap b = sli.loadImageFromStorage(urls[1]);
+            if (b != null) {
+                Log.d("immagine", "in memoria");
+                return b;
+            }
+        }
+
+
+
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
         URL url;
@@ -28,6 +60,10 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
 
             url = new URL(urldisplay);
             mIcon11 = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            if(urls.length==2){
+                sli.saveToInternalStorage(mIcon11,urls[1]);
+            }
+
             return mIcon11;
 
         } catch (Exception e) {
@@ -43,4 +79,5 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
         bmImage.setImageBitmap(result);
 
     }
+
 }

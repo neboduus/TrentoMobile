@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.project.group.trentomobile.Classi.*;
 import com.project.group.trentomobile.R;
@@ -14,8 +16,13 @@ import com.project.group.trentomobile.TilePK.TileFragment;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
 import com.project.group.trentomobile.transport.Linea;
+import com.project.group.trentomobile.transport.Orario;
 import com.project.group.trentomobile.transport.Stop;
+import com.project.group.trentomobile.transport.Trip;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+import com.visuality.f32.temperature.TemperatureUnit;
+import com.visuality.f32.weather.data.entity.Weather;
+import com.visuality.f32.weather.manager.WeatherManager;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
@@ -35,6 +42,10 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
     @Override
     protected TileMemoryRep doInBackground(Preferenze... params) {
+
+        //PRENDI LA TUA POSIZIONE
+        GetMyPosition pos = GetMyPosition.getIstanceAndUpdate(myActivity);
+
 
         TileMemoryRep tiles = TileMemoryRep.getInstance();
 
@@ -80,7 +91,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "Alla fine ho trovato un gatto incima alla mia casa con del pelo molto bello che non mi dispiace anche perchè è bello morbido al tatto.",
                     "http://www.solegemello.net/gatto.jpg", "http://www.google.com", a, gn_ludico, d));
 
-            Indirizzo ind = new Indirizzo(1.f, 1.f, "Piazza Dante");
+            Indirizzo ind = new Indirizzo(46.071537d, 11.120346d, "Piazza Dante");
             tiles.addLuogo(new Luogo(ind, gl_Monumenti, "Monumento di dante", "sdjilhcu hudshad uashdjh asjkdhsj hdjsf hfjkhsd jkfhjksd hjksd hjksdfhjk hadjksh jksdh jkhdk fhjksdf",
                     "http://www.meteotrentino.it/images/hp/img-32.gif?27052017", "http://www.google.com"));
 
@@ -96,15 +107,68 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //FILTRAGGIO FERMATE BUS
 
-            Float lat = 46.1421242f;
-            Float lon = 11.1006433f;
+            GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
 
-            SQLAssetHelper_DB  sqla = new SQLAssetHelper_DB(MyApplication.getAppContext());
-            List<Stop> nearestStops = sqla.getNearestStops(5, lat, lon);
+            while(myPosition.lat == null); //ASPETTA FINCHE NON HA LA POSIZIONE
 
-            for(Stop stop : nearestStops){
-                tiles.addFermata(new Fermata(stop.getName(),stop.getDesc(),"lol","lol"));
+            SQLAssetHelper_DB  sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
+
+            Log.d("aAAAAAAAAAAAAA", String.valueOf(myPosition.lat));
+
+            List<Stop> ls = sqlDB.getNearestStops(3, myPosition.lat, myPosition.lng);
+
+            for(Stop s : ls){
+
+                List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
+                String corpo="";
+                Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
+
+                int count = 1;
+
+                for(Orario o : lo){
+                    o.getArrival_time();
+                    Trip t = sqlDB.getTripById(o.getTrip_id());
+                    Linea l = sqlDB.getLineaById(t.getRoute_id());
+
+                    corpo+="Bus:"+l.getShort_name()+"\n\tpartenza:"+o.getArrival_time()+"\n\t"+"direzione:"+(t.getDirection_id() ? "andata" :"ritorno")+"\n";
+
+                    if(count==0) break;
+                    count--;
+                }
+
+                tiles.addFermata(new Fermata(s.getId()*-1,s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
             }
+
+
+            //TEST WEATHER
+            /*
+            new WeatherManager("97afef6a27b88c8138c824865619ff56").getCurrentWeatherByCoordinates(
+                    46.1421242, // latitude
+                    11.1006433, // longitude
+                    new WeatherManager.CurrentWeatherHandler() {
+                        @Override
+                        public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
+                            // Handle current weather information
+                            Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
+                                    .getValue(TemperatureUnit.CELCIUS)+" gradi C");
+                            Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
+                            Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                            Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
+                            Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
+
+                        }
+
+                        @Override
+                        public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
+                            // Handle error
+                        }
+                    }
+
+
+            );
+
+  */
+
 
 
             //AGGIUNGO GENERI
@@ -143,10 +207,21 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             for (Linea l:autobus){
                 Log.e("bus", l.getShort_name()+" ");
 
-                gr.Autobus.add(new Bus(l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(), l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16)));
+                if(l.getColor()!="none"){
+                    Bus b = new Bus( l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(),
+                            l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16) );
+                    gr.Autobus.add(b);
+                }
             }
 
-            Log.d("ce","12122222222222222222222222");
+            /*
+            String test = "brennero nord";
+            List<Stop> tester = dbHelperTransport.getStopsByName(test);
+            for (Stop t: tester){
+                Log.e("aa", "AAAAAAAAAAA "+t.getName());
+            }
+            */
+
         }else{
             Log.d("ce","jdsdfhdfhjhdfh");
         }
@@ -175,6 +250,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                 myPreference.addPref_Eventi_Ture(g.getTipo());
             }
 
+            myPreference.setPref_Trasporti_Ture();
+
             Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
 
             try {
@@ -189,11 +266,18 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         }
 
 
+        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
+
+        myPreference.setMylat(myPosition.lat);
+        myPreference.setMyLng(myPosition.lng);
+
         tiles.Filtra(myPreference);
 
         //tiles.TuttiTiles();
         return tiles;
     }
+
+
 
     protected void onPostExecute(TileMemoryRep result) {
 
@@ -206,6 +290,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
      //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
 
 
+
         for(Tile t : result.getTiles()){
             Log.d("id->", String.valueOf(t.getId())+ "  "+t.getTitolo());
 
@@ -213,7 +298,9 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         }
         fragmentTransaction.commit();
 
+        View namebar = myActivity.findViewById(R.id.loadingPanel);
 
+        ((ViewGroup) namebar.getParent()).removeView(namebar);
 
     }
 

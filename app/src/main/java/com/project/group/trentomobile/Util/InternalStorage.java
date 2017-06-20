@@ -1,6 +1,7 @@
 package com.project.group.trentomobile.Util;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +14,7 @@ import java.io.ObjectOutputStream;
  */
 public final class InternalStorage{
 
-    public static String path ="myPreferenze7";
+    public static String path ="myPreferenze8";
 
     private InternalStorage() {}
 

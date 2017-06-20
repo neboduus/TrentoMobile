@@ -11,13 +11,14 @@
 
         <ScrollView
             android:id="@+id/scroll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="-1dp"
             android:layout_marginEnd="1dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginStart="1dp"
+            android:background="#05050505"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:id="@+id/mainLinearTile"
             android:paddingTop="20dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -48,50 +50,89 @@
                 app:srcCompat="@color/contrast"
                 android:layout_marginBottom="10dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:elevation="1mm"
+                android:layout_marginBottom="20dp"
+                android:gravity="center|center">
+
+                <TextView
+                    android:id="@+id/txtDescrizione"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_marginTop="5dp">
+
+
+                    <Button
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_volume_up_black_24dp"
+                        android:id="@+id/btn_speacher"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="100dp"/>
+
+                    <Button
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ic_expand_more_black_24dp"
+                        android:id="@+id/btn_extend"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txtGenere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:id="@+id/txtDescrizione"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/txtIndirizzo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/txtData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/txtAutore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/txtURL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
-
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="150pt" />
 
         </LinearLayout>
 

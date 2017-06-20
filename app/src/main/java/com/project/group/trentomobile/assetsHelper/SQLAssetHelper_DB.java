@@ -23,12 +23,53 @@ import java.util.List;
 public class SQLAssetHelper_DB extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "trasportiTrento_new.db";
     private static final int DATABASE_VERSION = 1;
+    private Stop stopsById;
 
     public SQLAssetHelper_DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+<<<<<<< HEAD
     //public List <Orario> getOrariByStopLinea
+=======
+
+    private String createWhereClauseForSearchByName(String name){
+        String[] splited = name.split("\\s+");
+        String clause = "where";
+
+        for (String s: splited){
+            clause += " stop.stop_name like \"%"+s+"%\" or";
+        }
+        clause = clause.substring(0, clause.length() - 2);
+
+        return clause;
+    }
+
+    public List<Stop> getStopsByName(String name){
+        Log.d("getStopsByLineaID", "getStopsByName( stop_name="+name+" )");
+
+        List<Stop> stops= new ArrayList<>();
+        String where_clause = createWhereClauseForSearchByName(name);
+
+        SQLiteDatabase db = getReadableDatabase();
+        String selectStatement = "select * " +
+                " from stop " + where_clause;
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
+            stop.setDirection_id(cursor.getInt(6));
+            stop.setTrip_id(cursor.getDouble(6));
+            stops.add(stop);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return stops;
+    }
+
+
+>>>>>>> da55c1cb87dc161e6dc8bd4fd81c6a00d44518ed
 
     public List<Orario> getOrariByStopLinea(Integer stop_id, Integer route_id, Integer direction){
         Log.d("getOrariByStopLinea", "getOrariByStopLinea( stop_id="+stop_id+" route_id="+route_id+" direction_id="+direction+" )");
@@ -86,13 +127,14 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stop.setDirection_id(cursor.getInt(6));
             stop.setTrip_id(cursor.getDouble(6));
             stops_andata.add(stop);
             cursor.moveToNext();
         }
 
+        /*
         String selectStatement2 = "select S._id, S.stop_code, S.stop_name, S.stop_desc, S.stop_lat, S.stop_lon, T.trip_id " +
                 "from trips as T, stop_times as ST, stop as S " +
                 "where ST.stop_id=S._id"+
@@ -103,16 +145,16 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stop.setTrip_id(cursor.getDouble(6));
             stops_ritorno.add(stop);
             cursor.moveToNext();
-        }
+        }*/
 
         cursor.close();
 
         liste.add(stops_andata);
-        liste.add(stops_ritorno);
+        //liste.add(stops_ritorno);
         return liste;
     }
 
@@ -215,7 +257,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
     }
 
-    public List<Stop> getNearestStops(int many, Float userLat, Float userLon){
+    public List<Stop> getNearestStops(int many, Double userLat, Double userLon){
         Log.d("DB", "getting nearest stops");
         List<Stop> stops = new ArrayList<>();
 
@@ -226,7 +268,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getFloat(5));
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
             stops.add(stop);
             cursor.moveToNext();
         }
@@ -267,8 +309,8 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         String code = cursor.getString(1);
         String name = cursor.getString(2);
         String desc = cursor.getString(3);
-        Float lat = cursor.getFloat(4);
-        Float lon = cursor.getFloat(5);
+        Double lat = cursor.getDouble(4);
+        Double lon = cursor.getDouble(5);
 
         Stop s = new Stop(id, code, name, desc, lat, lon);
 
@@ -284,5 +326,27 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         values.put("stop_lon", stop.getLon());
         values.put("stop_name", stop.getName());
         return values;
+    }
+
+    public Stop getStopsById(Integer id) {
+        Log.d("DB", "stops");
+        Stop stop = null;
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+
+        String selectStatement = "SELECT _id, stop_code, stop_name, stop_desc, stop_lat, stop_lon FROM Stop WHERE _id="+id;
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()) {
+            stop = this.cursorToStop(cursor);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return stop;
     }
 }

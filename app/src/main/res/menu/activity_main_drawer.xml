@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_event_black_24dp"
             android:title="Eventi" />
         <item
-            android:id="@+id/nav_notizzie"
+            android:id="@+id/nav_notizie"
             android:icon="@drawable/ic_library_books_black_24dp"
-            android:title="Notizzie" />
+            android:title="Notizie" />
         <item
             android:id="@+id/nav_trasporti"
             android:icon="@drawable/ic_directions_bus_black_24dp"

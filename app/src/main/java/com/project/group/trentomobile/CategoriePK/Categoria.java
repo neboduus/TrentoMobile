@@ -19,6 +19,7 @@ public class Categoria extends RelativeLayout {
 
     String nome;
     SquareImageView immagine;
+    public String img = "";
     TextView txtNome;
     RelativeLayout.LayoutParams params;
 
@@ -64,8 +65,10 @@ public class Categoria extends RelativeLayout {
     }
 
     public void setImmagine(String img){
-        if(!img.isEmpty())
-            new ScaricaImmagine(immagine).execute(img);
+        if(!img.isEmpty()) {
+            new ScaricaImmagine(immagine).execute(img, nome);
+            this.img = img;
+        }
     }
 
     public void setImmagineColor(Integer color){

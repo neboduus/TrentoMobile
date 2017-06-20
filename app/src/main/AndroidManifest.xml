@@ -3,45 +3,53 @@
     package="com.project.group.trentomobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".context.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_iconaaa"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_iconaaa"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".context.MyApplication">
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB1BgTpG8PYzFz8auHhvniO5JFqS0VKqkM" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
         </activity>
         <activity
             android:name=".CategorieActivity"
             android:label="@string/title_activity_categorie"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity$TileActivity"
-            android:label="@string/title_activity_tile" />
+            android:name=".PreferitiActivity"
+            android:label="Preferiti"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CercaActivity"
+            android:label="Cerca"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".TailActivity"
-            android:label="@string/title_activity_tail" />
+            android:label="Trento Mobile" />
         <activity
             android:name=".PorvaTrasporti"
-            android:label="ProvaTrasporti"
-            android:exported="true">
+            android:exported="true"
+            android:label="ProvaTrasporti">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -51,7 +59,11 @@
             android:label="@string/title_activity_preference" />
         <activity
             android:name=".TipoActivity"
-            android:label="@string/title_activity_tipo"></activity>
+            android:label="@string/title_activity_tipo" />
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

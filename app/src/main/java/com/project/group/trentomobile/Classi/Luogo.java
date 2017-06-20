@@ -6,22 +6,25 @@
 package com.project.group.trentomobile.Classi;
 
 import java.io.Serializable;
+import android.text.format.Time;
 import java.util.ArrayList;
 
 /**
  *
  * @author User
  */
-public class Luogo extends Tile implements Serializable {
+public class Luogo extends Tile implements Serializable,Indirizzabile {
     
     private Indirizzo indirizzo;
     private ArrayList<Luogo> vicini=new ArrayList<Luogo>();
     private Genere_Luogo genere;
+    private AperturaChiusura orario;
 
     public Luogo(Indirizzo indirizzo, Genere_Luogo genere, String titolo, String descrizione, String patterImmagine,String Url) {
         super(titolo, descrizione, patterImmagine,Url);
         this.indirizzo = indirizzo;
         this.genere = genere;
+        this.orario = null;
     }
 
     
@@ -65,5 +68,14 @@ public class Luogo extends Tile implements Serializable {
      */
     public void setGenere(Genere_Luogo genere) {
         this.genere = genere;
+    }
+
+
+    public AperturaChiusura getOrario() {
+        return orario;
+    }
+
+    public void setOrario(Time a, Time c) {
+        this.orario = new AperturaChiusura(a,c);
     }
 }

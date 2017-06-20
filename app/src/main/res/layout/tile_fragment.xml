@@ -11,6 +11,7 @@
     android:background="@drawable/drawable_tail"
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
+    android:elevation="1mm"
     android:paddingRight="10dp"
     android:paddingLeft="10dp">
 
@@ -26,15 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:layout_weight="1"
+            android:layout_weight="20"
             android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/opt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
             android:gravity="center"
             android:background="@drawable/ic_more_vert_black_24dp"

@@ -5,13 +5,18 @@
  */
 package com.project.group.trentomobile.Repository;
 
+import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Evento;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+import com.project.group.trentomobile.Util.GetMyPosition;
+import com.project.group.trentomobile.context.MyApplication;
 
+import android.text.format.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -75,38 +80,58 @@ public class TileMemoryRep implements Interface_Rep{
     @Override
     public void Filtra(Preferenze p) {
 
-        tiles = new ArrayList<Tile>();
+        //Get actual tima
+        Time actualTime = new Time();
+        actualTime.setToNow();
+
 
         tiles =new ArrayList<Tile>();
         Map<String,Integer> pref_tipi_eventi=p.getPref_Eventi();
         Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
         Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
-   
+
         for(Notizia t:getNotizie())
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
                 getTiles().add(t);
-            } 
+            }
         }
 
         for(Evento t:getEventi())
         {
-            
+
                if(pref_tipi_eventi.containsKey(t.getGenere().getTipo()) && (pref_tipi_eventi.get(t.getGenere().getTipo()) > 9)) {
                    t.peso = pref_tipi_eventi.get(t.getGenere().getTipo());
                    getTiles().add(t);
-                } 
-            
+                }
+
         }
-        
+
         for(Luogo t:getLuoghi())
         {
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
-                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo());
+                t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
+                if(t.getOrario()!=null){
+                    if(actualTime.after(t.getOrario().apre) && actualTime.before(t.getOrario().chiude)){
+                        t.peso -= 10;
+                    }
+                }
+
                 getTiles().add(t);
-            } 
+            }
         }
+
+        if(p.getPref_Trasporti()>9)
+            for(Fermata t:getFermate())
+            {
+                if(true) { //CONTROLLO PREFERENZE
+                    t.peso = p.getPref_Trasporti()+ (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Fermata)t).getIndirizzo().getLat(),((Fermata)t).getIndirizzo().getLng()));;
+                    //if(t.peso>0)
+                        getTiles().add(t);
+                }
+            }
+
 
         class ComparatorTiles implements Comparator<Tile> {
             @Override
@@ -130,10 +155,12 @@ public class TileMemoryRep implements Interface_Rep{
         Map<String,Integer> pref_tipi_luoghi=p.getPref_Luoghi();
         Map<String,Integer> pref_tipi_notizie=p.getPref_Notizie();
 
+
         for(Notizia t:getNotizie())
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
+
                 ts.add(t);
             }
         }
@@ -156,9 +183,12 @@ public class TileMemoryRep implements Interface_Rep{
             }
         }
 
+        if(p.getPref_Trasporti()>9)
         for(Fermata t:getFermate())
         {
-            ts.add(t);
+            if(true) { //CONTROLLO PREFERENZE
+                ts.add(t);
+            }
         }
 
         class ComparatorTiles implements Comparator<Tile> {

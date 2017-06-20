@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.location.LocationManager;
@@ -23,19 +24,25 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Genere_Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
+import com.project.group.trentomobile.Classi.UpdateRequest;
 import com.project.group.trentomobile.Repository.GeneriRepo;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+import com.project.group.trentomobile.Util.GetMyPosition;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.MyLocationListener;
+import com.project.group.trentomobile.Util.SaveLoadImg;
 import com.project.group.trentomobile.Util.ScaricaTiles;
 
 import java.io.IOException;
@@ -61,36 +68,8 @@ public class MainActivity extends AppCompatActivity
             }
         });*/
 
-        //Location service
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        MyLocationListener locationListener = new MyLocationListener();
 
-         /* Checking if has permissions for
-        * ACCESS_COARSE_LOCATION = Allows to access approximate location.
-        * ACCESS_FINE_LOCATION = Allows to access precise location.
-        */
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Log.d("HHHHHH","errore");
-
-
-        }else {
-            //Register for location updates
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-
-            Log.d("LOCATION:", locationListener.location);
-
-        }
-
+        Log.d("distanza prova---------------->", String.valueOf(CoordinateToMetri.disgeod(46.067197, 11.121376, 46.068518, 11.120078)));
 
         final Button btnMenu = (Button) findViewById(R.id.btnMenu);
         //it draws the sliding menu
@@ -143,6 +122,7 @@ public class MainActivity extends AppCompatActivity
         }
         */
 
+
         Preferenze p = new Preferenze();
         //INIZZIALIZZAZIONE TILES
         new ScaricaTiles(this).execute(p);
@@ -168,6 +148,15 @@ public class MainActivity extends AppCompatActivity
         */
 
 
+        findViewById(R.id.btnCerca).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
+                myIntent.putExtra("cerca",((AutoCompleteTextView)findViewById(R.id.txtCerca)).getText().toString());//Optional parameters
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
 
 
     }
@@ -176,54 +165,60 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        //recover all the content of the main activity which is all the Tiles
-        TileMemoryRep tiles = TileMemoryRep.getInstance();
-        //recover the fragment manager and remove all the fragments which are the Tiles
-        FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
-        for(Tile t : TileMemoryRep.getInstance().getTiles()){
-            ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
-        }
-        ft.commit();    //commit changes of the MainActivity
 
-        //recovery of possible new preferences
-        Preferenze myPreference = null;
-        try {
-            //InternalStorage.writeObject(this,"lolk","lolv");
-            myPreference = (Preferenze) InternalStorage.readObject(this);
-        } catch (IOException e) {
-            //manage the possibility of having not setted the preferences
-            //create default preferences
-            myPreference = new Preferenze();
-            for (Genere_Luogo g: GeneriRepo.getIstance().GeneriLuoghi) {
-                myPreference.addPref_Luoghi_Ture(g.getTipo());
+        if(UpdateRequest.getInstance().isRequestUpadte()) {
+            //recover all the content of the main activity which is all the Tiles
+            TileMemoryRep tiles = TileMemoryRep.getInstance();
+            //recover the fragment manager and remove all the fragments which are the Tiles
+            FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
+            for (Tile t : TileMemoryRep.getInstance().getTiles()) {
+                ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
             }
-            for (Genere_Notizia g: GeneriRepo.getIstance().GeneriNotizie) {
-                myPreference.addPref_Notizie_Ture(g.getTipo());
-            }
-            for (Genere_Evento g: GeneriRepo.getIstance().GeneriEventi) {
-                myPreference.addPref_Eventi_Ture(g.getTipo());
-            }
+            ft.commit();    //commit changes of the MainActivity
 
+            //recovery of possible new preferences
+            Preferenze myPreference = null;
             try {
-                InternalStorage.writeObject(this,myPreference);
-            } catch (IOException e1) {
-                e1.printStackTrace();
+                //InternalStorage.writeObject(this,"lolk","lolv");
+                myPreference = (Preferenze) InternalStorage.readObject(this);
+            } catch (IOException e) {
+                //manage the possibility of having not setted the preferences
+                //create default preferences
+                myPreference = new Preferenze();
+                for (Genere_Luogo g : GeneriRepo.getIstance().GeneriLuoghi) {
+                    myPreference.addPref_Luoghi_Ture(g.getTipo());
+                }
+                for (Genere_Notizia g : GeneriRepo.getIstance().GeneriNotizie) {
+                    myPreference.addPref_Notizie_Ture(g.getTipo());
+                }
+                for (Genere_Evento g : GeneriRepo.getIstance().GeneriEventi) {
+                    myPreference.addPref_Eventi_Ture(g.getTipo());
+                }
+
+                try {
+                    InternalStorage.writeObject(this, myPreference);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        //filter the content with respect to Preferences
-        tiles.Filtra(myPreference);
-        FragmentTransaction fragmentTransaction;
-        FragmentManager fragmentManager = getFragmentManager();
-        //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
-        //show the new content
-        for(Tile t : tiles.getTiles()){
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
-            fragmentTransaction.commit();
+            GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(this);
+            myPreference.setMylat(myPosition.lat);
+            myPreference.setMyLng(myPosition.lng);
 
+            //filter the content with respect to Preferences
+            tiles.Filtra(myPreference);
+            FragmentTransaction fragmentTransaction;
+            FragmentManager fragmentManager = getFragmentManager();
+            //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
+            //show the new content
+            for (Tile t : tiles.getTiles()) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
+                fragmentTransaction.commit();
+            }
         }
     }
 
@@ -268,7 +263,7 @@ public class MainActivity extends AppCompatActivity
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "evento");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
-        } else if (id == R.id.nav_notizzie) {
+        } else if (id == R.id.nav_notizie) {
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "notizia");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
@@ -276,16 +271,23 @@ public class MainActivity extends AppCompatActivity
             Intent myIntent = new Intent(MainActivity.this, TipoActivity.class);
             myIntent.putExtra("tipo", "trasporti");  //Optional parameters
             MainActivity.this.startActivity(myIntent);
-        } /*else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_preferiti) {
+            Intent myIntent = new Intent(MainActivity.this, PreferitiActivity.class);
+            MainActivity.this.startActivity(myIntent);
+        }else if (id == R.id.nav_proponi) {
 
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"sptanco@gmail.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "Proposal for tile");
+            i.putExtra(Intent.EXTRA_TEXT   , "Good morning, I have a proposal for a tile:\n");
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
 
-        } else if (id == R.id.nav_share) {
-
-
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -293,9 +295,31 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        Log.d("destroy","cavolacci");
+
+        for(Tile t : TileMemoryRep.getInstance().getTiles()) {
+            SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
+            Log.d("fineeeee cancella", "tileid" + t.getId());
+        }
+
+    }
 }
 
 

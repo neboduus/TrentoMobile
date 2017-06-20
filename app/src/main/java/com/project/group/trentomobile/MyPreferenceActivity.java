@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import com.project.group.trentomobile.Classi.Genere_Luogo;
 import com.project.group.trentomobile.Classi.Preferenze;
+import com.project.group.trentomobile.Classi.UpdateRequest;
 import com.project.group.trentomobile.Repository.GeneriRepo;
 import com.project.group.trentomobile.Util.InternalStorage;
 
@@ -130,6 +131,19 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
         setupActionBar();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
@@ -209,6 +223,8 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
                  @Override
                  public boolean onPreferenceChange(final Preference preference, final Object newValue) {
 
+                     UpdateRequest.getInstance().requestUpdate();
+
                      Boolean newB = (Boolean) newValue;
                      myP.getPref_Luoghi().remove(g.getTipo());
                      myP.getPref_Luoghi().put(g.getTipo(),newB ? 10 : 0);
@@ -232,25 +248,13 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
 
             }
 
-
-
-
-
-
-
-                // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
         }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -263,28 +267,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_notification);
-            setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
     }
 
     /**
@@ -293,27 +276,6 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
-            setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
     }
 }
