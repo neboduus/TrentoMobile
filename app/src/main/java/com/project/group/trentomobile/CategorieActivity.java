@@ -61,18 +61,10 @@ public class CategorieActivity extends AppCompatActivity {
         }
 
         ArrayList<Tile> tiles = TileMemoryRep.getInstance().getTilesFiltrati(p);
-
-
         for(Tile t : tiles){
             fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t));
         }
         fragmentTransaction.commit();
-
-
-
-
-
-
 
     }
 
