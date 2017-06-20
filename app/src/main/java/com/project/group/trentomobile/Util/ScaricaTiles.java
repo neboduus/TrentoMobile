@@ -3,15 +3,24 @@ package com.project.group.trentomobile.Util;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.project.group.trentomobile.Classi.*;
+import com.project.group.trentomobile.Classi.Autore;
+import com.project.group.trentomobile.Classi.Fermata;
+import com.project.group.trentomobile.Classi.Genere_Evento;
+import com.project.group.trentomobile.Classi.Genere_Luogo;
+import com.project.group.trentomobile.Classi.Genere_Notizia;
+import com.project.group.trentomobile.Classi.Indirizzo;
+import com.project.group.trentomobile.Classi.Luogo;
+import com.project.group.trentomobile.Classi.Notizia;
+import com.project.group.trentomobile.Classi.Preferenze;
+import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.R;
-import com.project.group.trentomobile.Repository.*;
+import com.project.group.trentomobile.Repository.GeneriRepo;
+import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TilePK.TileFragment;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
@@ -19,7 +28,6 @@ import com.project.group.trentomobile.transport.Linea;
 import com.project.group.trentomobile.transport.Orario;
 import com.project.group.trentomobile.transport.Stop;
 import com.project.group.trentomobile.transport.Trip;
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
@@ -136,6 +144,33 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                 tiles.addFermata(new Fermata(s.getId()*-1,s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
             }
 
+            /*
+            //TEST WEATHER
+            new WeatherManager("97afef6a27b88c8138c824865619ff56").getCurrentWeatherByCoordinates(
+                    46.1421242, // latitude
+                    11.1006433, // longitude
+                    new WeatherManager.CurrentWeatherHandler() {
+                        @Override
+                        public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
+                            // Handle current weather information
+                            Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
+                                    .getValue(TemperatureUnit.CELCIUS)+" gradi C");
+                            Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
+                            Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                            Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
+                            Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
+
+                        }
+
+                        @Override
+                        public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
+                            // Handle error
+                        }
+                    }
+
+            );
+            */
+
 
 
 
@@ -173,13 +208,23 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             SQLAssetHelper_DB dbHelperTransport = new SQLAssetHelper_DB(MyApplication.getAppContext());
             List<Linea> autobus = dbHelperTransport.getAllLinee();
             for (Linea l:autobus){
-                Log.e("bus", l.getShort_name()+" ");
+                //Log.e("bus", l.getShort_name()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+l.getId());
 
-                if(l.getColor()!="none")
-                    gr.Autobus.add(new Bus(l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(), l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16)));
+                if(l.getColor()!="none"){
+                    Bus b = new Bus( l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(),
+                            l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16) );
+                    gr.Autobus.add(b);
+                }
             }
 
-            Log.d("ce","12122222222222222222222222");
+            /*
+            String test = "brennero nord";
+            List<Stop> tester = dbHelperTransport.getStopsByName(test);
+            for (Stop t: tester){
+                Log.e("aa", "AAAAAAAAAAA "+t.getName());
+            }
+            */
+
         }else{
             Log.d("ce","jdsdfhdfhjhdfh");
         }
