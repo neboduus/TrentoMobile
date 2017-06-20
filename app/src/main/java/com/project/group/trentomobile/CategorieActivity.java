@@ -108,15 +108,21 @@ public class CategorieActivity extends AppCompatActivity {
                     SQLAssetHelper_DB sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
 
                     List<Stop> stops = null;
+                    Bus selectedBus = null;
+
                     for(Bus b: GeneriRepo.getIstance().Autobus) {
-                        if(b.getShort_name().equals(params[0]))
+                        Log.e ("aaa", b.getShort_name()+"AAAAAAAAAAAAAAAAAAAAAAAAAAAA"+b.getIdBus());
+                        if(b.getShort_name().equals(params[0])) {
                             stops = sqlDB.getStopsByLineaId(b.getIdBus()).get(0);
+                            selectedBus = b;
+                            Log.e ("aaa", b.getShort_name()+"BBBBBBBBBBBBBBBBBBBBBBBB"+b.getIdBus()+" "+stops.size());
+                        }
                     }
 
 
                     for(Stop s : stops){
 
-                        List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
+                        List<Orario> lo = sqlDB.getOrariByStopLinea(s.getId(), selectedBus.getIdBus(), 0);
                         String corpo="";
                         Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
 

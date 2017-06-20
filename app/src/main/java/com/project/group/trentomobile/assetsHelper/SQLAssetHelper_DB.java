@@ -30,6 +30,42 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
     }
 
 
+    private String createWhereClauseForSearchByName(String name){
+        String[] splited = name.split("\\s+");
+        String clause = "where";
+
+        for (String s: splited){
+            clause += " stop.stop_name like \"%"+s+"%\" or";
+        }
+        clause = clause.substring(0, clause.length() - 2);
+
+        return clause;
+    }
+
+    public List<Stop> getStopsByName(String name){
+        Log.d("getStopsByLineaID", "getStopsByName( stop_name="+name+" )");
+
+        List<Stop> stops= new ArrayList<>();
+        String where_clause = createWhereClauseForSearchByName(name);
+
+        SQLiteDatabase db = getReadableDatabase();
+        String selectStatement = "select * " +
+                " from stop " + where_clause;
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            Stop stop = new Stop(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
+            stop.setDirection_id(cursor.getInt(6));
+            stop.setTrip_id(cursor.getDouble(6));
+            stops.add(stop);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return stops;
+    }
+
+
 
     public List<Orario> getOrariByStopLinea(Integer stop_id, Integer route_id, Integer direction){
         Log.d("getOrariByStopLinea", "getOrariByStopLinea( stop_id="+stop_id+" route_id="+route_id+" direction_id="+direction+" )");
