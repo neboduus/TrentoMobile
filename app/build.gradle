@@ -34,8 +34,5 @@ dependencies {
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     compile 'junit:junit:4.12'
-
-    compile 'com.visuality.f32forandroid:f32:2.2'
-
     testCompile 'junit:junit:4.12'
 }

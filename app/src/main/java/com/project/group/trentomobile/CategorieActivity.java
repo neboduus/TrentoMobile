@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.project.group.trentomobile.CategoriePK.Categoria;
 import com.project.group.trentomobile.Classi.Bus;
 import com.project.group.trentomobile.Classi.Fermata;
 import com.project.group.trentomobile.Classi.Indirizzo;
@@ -105,21 +108,15 @@ public class CategorieActivity extends AppCompatActivity {
                     SQLAssetHelper_DB sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
 
                     List<Stop> stops = null;
-                    Bus selectedBus = null;
-
                     for(Bus b: GeneriRepo.getIstance().Autobus) {
-                        Log.e ("aaa", b.getShort_name()+"AAAAAAAAAAAAAAAAAAAAAAAAAAAA"+b.getIdBus());
-                        if(b.getShort_name().equals(params[0])) {
+                        if(b.getShort_name().equals(params[0]))
                             stops = sqlDB.getStopsByLineaId(b.getIdBus()).get(0);
-                            selectedBus = b;
-                            Log.e ("aaa", b.getShort_name()+"BBBBBBBBBBBBBBBBBBBBBBBB"+b.getIdBus()+" "+stops.size());
-                        }
                     }
 
 
                     for(Stop s : stops){
-                        ////Log.d("AAAAA", selectedBus.getId()+" "+"AAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                        List<Orario> lo = sqlDB.getOrariByStopLinea(s.getId(), selectedBus.getIdBus(), 0);
+
+                        List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
                         String corpo="";
                         Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
 
