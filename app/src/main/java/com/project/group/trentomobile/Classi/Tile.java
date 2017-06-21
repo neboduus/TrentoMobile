@@ -95,13 +95,17 @@ public class Tile implements Serializable{
     public String getShortDescription(){
         String strings[] = descrizione.split(" ");
         String sho = "";
-        int count = 10;
+        int count = 20;
         for(String s : strings){
-            sho+=s+" ";
-            if(count<0)
+
+            if(count<0){
+                sho+="...";
                 break;
+            }else
+                sho+=s+" ";
             count--;
         }
+        sho+="...";
 
         return sho;
     }

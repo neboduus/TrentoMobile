@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getFragmentManager().beginTransaction(); //had to begin a fragmentTransaction
             for (Tile t : TileMemoryRep.getInstance().getTiles()) {
                 ft.remove(getFragmentManager().findFragmentByTag(String.valueOf(t.getId())));
+
             }
             ft.commit();    //commit changes of the MainActivity
 
@@ -309,8 +310,8 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
         Log.d("destroy","cavolacci");
 

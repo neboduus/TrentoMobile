@@ -133,12 +133,20 @@ public class TileFragment extends Fragment {
         }
 
         titolo.setText(data.getTitolo());
-        corpo.setText(data.getDescrizione());
+        corpo.setText(data.getShortDescription());
         piedi.setText(sPiedi);
         String nomeImg = "tileid"+data.getId();
         if(data instanceof Fermata)
                 nomeImg ="bus3";
-        new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
+
+        if(data instanceof Notizia){
+            if(((Notizia)data).getGenere().equals("Meteo")){
+                new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
+            }else
+                new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
+        }else
+            new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
+
         return r;
     }
 

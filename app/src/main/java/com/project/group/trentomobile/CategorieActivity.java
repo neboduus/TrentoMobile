@@ -95,14 +95,9 @@ public class CategorieActivity extends AppCompatActivity {
             p.setPref_Luoghi(m);
         }
 
-<<<<<<< HEAD
-        ArrayList<Tile> tiles = TileMemoryRep.getInstance().getTilesFiltrati(p);
-        for(Tile t : tiles){
-            fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t));
-        }
-        fragmentTransaction.commit();
 
-=======
+
+
 
         if(tipo.equals("trasporti")){
 
@@ -190,7 +185,6 @@ public class CategorieActivity extends AppCompatActivity {
 
 
 
->>>>>>> da55c1cb87dc161e6dc8bd4fd81c6a00d44518ed
     }
 
     @Override

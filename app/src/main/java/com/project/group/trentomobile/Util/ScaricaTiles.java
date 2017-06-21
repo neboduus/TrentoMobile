@@ -66,6 +66,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             Genere_Notizia gn_sport = new Genere_Notizia("Sport");
             gn_sport.setFoto("http://www.pu24.it/wp/wp-content/uploads/2017/02/16649036_1370588699671463_2148889984841226295_n.jpg");
 
+            Genere_Notizia gn_meteo = new Genere_Notizia("Meteo");
+
             Genere_Luogo gl_Piazze = new Genere_Luogo("Piazze");
             gl_Piazze.setFoto("http://radionbc.it/wp-content/uploads/2015/09/DANTE.jpg");
             Genere_Luogo gl_Musei = new Genere_Luogo("Musei");
@@ -93,10 +95,63 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             Genere_Evento ge_Uni = new Genere_Evento("Universitario");
 
 
+            //tiles.addNotizia(new Notizia("Caricamento meteo","","","",new Autore("OpenWeatherMap", null, null),gn_meteo,new GregorianCalendar()));
+
+
             Autore a = new Autore("L'Adige", "adige", "adige");
             GregorianCalendar d = new GregorianCalendar(2017, 2, 1);
 
-            for(int i=0; i<100;i++)
+            Autore a1 = new Autore("Provincia di Trento", "tn", "tn");
+            tiles.addNotizia(new Notizia("Dai rifiuti organici combustibile per 64 autobus di Trentino Trasporti",
+                    "L'ambizioso progetto è stato presentato ieri dall'assessore Gilmozzi, l'obiettivo è arrivare a trattare il 100% dell'umido trentino per coprire il fabbisogno dei mezzi pubblici a metano, che passeranno da 42 a 64 entro il 201",
+                    "http://3.citynews-trentotoday.stgy.ovh/~media/original-hi/35778078353010/img-20170504-wa0028-1-2.jpg",
+                    "http://www.trentotoday.it/green/cadino-metano-organico-autobus-trentino.html",
+                    a1, gn_cronaca, d));
+
+            Autore a2 = new Autore("People 4 Soil", "tn", "tn");
+            tiles.addNotizia(new Notizia("SALVA IL SUOLO",
+                    "In Europa, non esiste ancora una legge comune che difenda il suolo.\n" +
+                            "\n" +
+                            "Tutelare il suolo con delle leggi è il primo modo di proteggere uomini, piante, animali. Senza un suolo sano e vivo non c'è futuro. Un suolo sano e vivo ci protegge dai disastri ambientali, dai cambiamenti climatici, dai veleni nel piatto.",
+                    "http://imagestc.trovacasa.net/annunci/LIS/A_24204_28512512_264051876/terreno_agricolo-in-vendita-a-mezzocorona.jpg",
+                    "https://www.people4soil.eu/it",
+                    a2, gn_cronaca, d));
+
+            Autore a3 = new Autore("Consiglio Europeo", "eu", "eu");
+            tiles.addNotizia(new Notizia("Tutto pronto per il roaming gratuito nell'UE a partire da giugno",
+                    "Dal 15 giugno gli utenti di telefonia mobile in viaggio in altri paesi dell'UE potranno effettuare telefonate, inviare messaggi di testo o navigare in " +
+                            "rete senza pagare sovrapprezzi. L'ultimo requisito per l'abolizione delle tariffe di roaming sui dispositivi mobili è stato soddisfatto oggi con l'" +
+                            "adozione, da parte del Consiglio, " +
+                            "dell'atto giuridico che limita l'importo che gli operatori possono addebitarsi l'un l'altro per consentire il roaming in tutta l'Europa.",
+                    "http://www.lentepubblica.it/wp-content/uploads/2014/07/europa.png",
+                    "http://www.consilium.europa.eu/it/press/press-releases/2017/04/25-free-roaming-from-june/",
+                    a3, gn_cronaca, d));
+
+            Autore a4 = new Autore("Provincia di Trento", "tn", "tn");
+            tiles.addNotizia(new Notizia("Spazio Alpino 2014-2020",
+                    "Il 13aprile é stato pubblicato il terzo bando del programma transnazionale di \"Cooperazione Territoriale Europea\" che promuove uno sviluppo " +
+                            "regionale sostenibile nella regione alpina, contribuisce alla Strategia Europa 2020 per una crescita intelligente, " +
+                            "sostenibile e inclusiva e fornisce alle parti interessate un contesto operativo per sviluppare nuove idee.",
+                    "http://www.alpine-space.eu/projects/thefourbees/logos/logo_the4bees_h.png",
+                    "http://www.alpine-space.eu/project-application/project-submission/open-calls-for-project-proposals",
+                    a4, gn_cronaca, d));
+
+            Autore a5 = new Autore("Università di Trento", "tn", "tn");
+            tiles.addNotizia(new Notizia("Borse di studio e assegni",
+                    "L'Università degli Studi di Trento ha mantenuto negli anni una politica di sostegno degli studenti più meritevoli i quali possono garantirsi," +
+                            " con diverse modalità, la necessaria tranquillità finanziaria per conseguire il titolo di studio.",
+                    "https://www.tutored.me/it/wp-content/uploads/sites/13/2016/07/600sociologia-trento-fonte-unitn.jpg",
+                    "http://www.unitn.it/servizi/230/borse-di-studio-e-assegni",
+                    a5, gn_cronaca, d));
+
+            tiles.addNotizia(new Notizia("Dall'Università di Trento la possibilità di tirocini presso le rappresentanze diplomatiche del ministero degli affari esteri",
+                    "Il bando è aperto per la selezioni di 11 studenti. Il tirocinio si potrà svolgere presso le sedi diplomatico-consolari e le Rappresentanze Permanenti " +
+                            "d’Italia a Barcellona, Bruxelles, Dar-Es-Saalam, Ginevra, Pechino, Sofia, Tel Aviv e Vienna",
+                    "http://www.toscanaoggi.it/var/ezdemo_site/storage/images/mondo/ue-e-giovani-concorso-per-le-scuole-diventare-cittadini-europei/2648516-1-ita-IT/Ue-e-giovani-concorso-per-le-scuole-Diventare-cittadini-europei_articleimage.jpg",
+                    "http://www.ildolomiti.it/ricerca-e-universita/dalluniversita-di-trento-la-possibilita-di-tirocini-presso-le-rappresentanze",
+                    new Autore("Il Dolomiti", "tn", "tn"), gn_cronaca, d));
+
+
             tiles.addNotizia(new Notizia("Trovato gatto a Zambana",
                     "Alla fine ho trovato un gatto incima alla mia casa con del pelo molto bello che non mi dispiace anche perchè è bello morbido al tatto.",
                     "http://www.solegemello.net/gatto.jpg", "http://www.google.com", a, gn_ludico, d));
@@ -188,7 +243,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             gr.GeneriNotizie.add(gn_culturale);
             gr.GeneriNotizie.add(gn_ludico);
             gr.GeneriNotizie.add(gn_politico);
-
+            gr.GeneriNotizie.add(gn_meteo);
             gr.GeneriNotizie.add(gn_sport);
             gr.GeneriNotizie.add(gn_traffico);
             gr.GeneriNotizie.add(gn_uni);
@@ -293,6 +348,67 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
 
 
+        //   METEO TEST
+        GetMyPosition myPos = GetMyPosition.getIstanceAndUpdate(myActivity);
+        while(myPos.lat == null);
+        Double lat = myPos.lat;
+        Double lon = myPos.lng;
+
+        String api_key = "97afef6a27b88c8138c824865619ff56";
+        new WeatherManager(api_key).getCurrentWeatherByCoordinates(
+                lat, // latitude
+                lon, // longitude
+                new WeatherManager.CurrentWeatherHandler() {
+                    @Override
+                    public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
+                        // Handle current weather information
+                        Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
+                                .getValue(TemperatureUnit.CELCIUS)+" °C");
+                        Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
+                        Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                        Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
+                        Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
+
+                        String place_temp = weather.getNavigation().getLocationName()+" " + String.format("%.2f", weather.getTemperature().getCurrent()
+                                .getValue(TemperatureUnit.CELCIUS))+" °C";
+                        String clouds = "Percentuale nuvole: "+weather.getCloudiness().getPercentage()+"%";
+                        String rain = "Pioggia ultime 3h: "+weather.getRain().getThreeHoursVolume();
+
+                        FragmentManager fragmentManager = myActivity.getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                        GregorianCalendar d = new GregorianCalendar();
+                        String prevision = place_temp+"\n"+clouds+"\n"+rain;
+
+                        String imgUrl = decideWeatherImg(weather.getCloudiness().getPercentage(),weather.getRain().getThreeHoursVolume() );
+                        Log.d("METEO", imgUrl);
+                        Notizia fictionaryTile = new Notizia("Meteo vicino a te", prevision, imgUrl , imgUrl, new Autore("OpenWeatherMap", null, null),new Genere_Notizia("Meteo") , d);
+
+                        //TileMemoryRep.getInstance().addNotizia(fictionaryTile);
+
+                        fragmentTransaction.add(R.id.MeteoPosition, TileFragment.newInstance(fictionaryTile), String.valueOf(fictionaryTile.getId()));
+                        fragmentTransaction.commit();
+                    }
+
+                    @Override
+                    public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
+                        FragmentManager fragmentManager = myActivity.getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                        GregorianCalendar d = new GregorianCalendar(2017, 2, 1);
+                        Tile fictionaryTile = new Notizia("Meteo vicino a te", "Informazioni sul meteo non disponibili \nControlla i tuoi permessi per la geolocalizzazione", "http://www.solegemello.net/gatto.jpg" , "http://www.solegemello.net/gatto.jpg", new Autore("OpenWeatherMap", null, null),null , d);
+
+                        fragmentTransaction.add(R.id.MeteoPosition, TileFragment.newInstance(fictionaryTile), String.valueOf(fictionaryTile.getId()));
+                        //fragmentTransaction.replace(, TileFragment.newInstance(fictionaryTile));
+
+                        fragmentTransaction.commit();
+                    }
+                }
+
+        );
+
+
+
         FragmentManager fragmentManager = myActivity.getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -312,6 +428,28 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
         ((ViewGroup) namebar.getParent()).removeView(namebar);
 
+    }
+
+
+
+    private String decideWeatherImg(Integer cloud_percentage, Double rain){
+        String imgUrl="";
+
+        if ((cloud_percentage >= 0) && (cloud_percentage <= 35) && rain < 50.0) {
+            imgUrl = "http://skigd.com/wp-content/themes/wp-theme/images/Sunny.png";
+        } else if ((cloud_percentage >= 0) && (cloud_percentage <= 35) && rain > 50.0) {
+            imgUrl = "http://indywx.com/wp-content/uploads/2014/04/Status-weather-showers-day-icon.png";
+        } else if (cloud_percentage > 35 && cloud_percentage < 70 && rain < 50.0) {
+            imgUrl = "http://indywx.com/wp-content/uploads/2014/04/Status-weather-showers-day-icon.png";
+        } else if (cloud_percentage > 35 && cloud_percentage < 70 && rain > 50.0) {
+            imgUrl = "http://icons.iconseeker.com/ico/weather/heavy-rain.ico";
+        } else if ((cloud_percentage > 70 && rain < 50.0)){
+            imgUrl = "http://icons.iconseeker.com/ico/weather/heavy-rain.ico";
+        }else{
+            imgUrl = "https://cdn0.iconfinder.com/data/icons/weather-colored-liner/512/lightning-cloud-rain-2-128.png";
+        }
+
+        return  imgUrl;
     }
 
 }

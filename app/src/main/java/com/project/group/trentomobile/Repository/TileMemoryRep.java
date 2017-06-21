@@ -94,6 +94,8 @@ public class TileMemoryRep implements Interface_Rep{
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
+                if(t.getGenere().getTipo().equals("Meteo"))
+                    t.peso+=100;
                 getTiles().add(t);
             }
         }
@@ -160,7 +162,6 @@ public class TileMemoryRep implements Interface_Rep{
         {
             if(pref_tipi_notizie.containsKey(t.getGenere().getTipo()) && (pref_tipi_notizie.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_notizie.get(t.getGenere().getTipo());
-
                 ts.add(t);
             }
         }

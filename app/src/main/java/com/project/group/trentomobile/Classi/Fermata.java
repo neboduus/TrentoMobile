@@ -11,7 +11,7 @@ public class Fermata extends Tile implements Indirizzabile{
     //ALTRE COSE
     public Fermata(Integer id,String titolo, String descrizione, String patterImmagine, String Url, Indirizzo indirizzo) {
         super(titolo, descrizione, patterImmagine, Url);
-        super.setId(id);
+        super.setId(id*-1);
         this.indirizzo = indirizzo;
     }
 

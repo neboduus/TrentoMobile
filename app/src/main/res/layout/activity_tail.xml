@@ -39,8 +39,10 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:gravity="top|center"
-                android:textSize="30dp"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="20dp"
+                android:elevation="5mm"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"/>
 
             <ImageView
                 android:id="@+id/imgT"
@@ -128,11 +130,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="150pt" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:elevation="3mm"
+                android:layout_marginBottom="20dp">
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150pt" />
+            </LinearLayout>
 
         </LinearLayout>
 
