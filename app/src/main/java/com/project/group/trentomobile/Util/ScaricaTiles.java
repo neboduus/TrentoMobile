@@ -67,13 +67,21 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             gn_sport.setFoto("http://www.pu24.it/wp/wp-content/uploads/2017/02/16649036_1370588699671463_2148889984841226295_n.jpg");
 
             Genere_Luogo gl_Piazze = new Genere_Luogo("Piazze");
+            gl_Piazze.setFoto("http://radionbc.it/wp-content/uploads/2015/09/DANTE.jpg");
             Genere_Luogo gl_Musei = new Genere_Luogo("Musei");
+            gl_Musei.setFoto("http://www.svegliamuseo.com/wp-content/uploads/2014/01/Muse_%C2%AEHufton+Crow_027.jpg");
             Genere_Luogo gl_Monumenti = new Genere_Luogo("Monumenti");
+            gl_Monumenti.setFoto("https://www.lindipendenza.com/wp-content/uploads/TRENTO-FOTO-20-Il-Monumento-di-Dante-02.jpg");
             Genere_Luogo gl_Parchi = new Genere_Luogo("Parchi");
+            gl_Parchi.setFoto("http://www.adnkronos.com/rf/image_size_1280x960/Pub/AdnKronos/Assets/Immagini/molveno2.jpg");
             Genere_Luogo gl_Religioso = new Genere_Luogo("Religioso");
+            gl_Religioso.setFoto("http://www.filmcommission.provincia.tn.it/filesroot/Images/1405_Trento_-_Chiesa_di_S__Pietro__3__jpeg/$650$0$/Trento_-_Chiesa_di_S._Pietro__3_.jpeg");
             Genere_Luogo gl_SempreUtili = new Genere_Luogo("Sempre Utili");
+            gl_SempreUtili.setFoto("http://besport.org/sportmedicina/wp-content/uploads/2010/09/1440267109puertas-de-farmacia.jpg");
             Genere_Luogo gl_Universitari = new Genere_Luogo("Universitari");
+            gl_Universitari.setFoto("http://static-cdn.unitn.it/fileswww/styles/photogallery_full/public/images/2/0012-povo12013collection1.jpg?itok=v41xyZ1l");
             Genere_Luogo gl_Commerciali = new Genere_Luogo("Commerciali");
+            gl_Commerciali.setFoto("http://trentinocorrierealpi.gelocal.it/polopoly_fs/1.13397033!/httpImage/image.jpg_gen/derivatives/gallery_978/image.jpg");
 
             Genere_Evento ge_Sagra = new Genere_Evento("Sagra");
             Genere_Evento ge_Provincia = new Genere_Evento("Provinciali");
@@ -87,6 +95,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             Autore a = new Autore("L'Adige", "adige", "adige");
             GregorianCalendar d = new GregorianCalendar(2017, 2, 1);
+
+            for(int i=0; i<100;i++)
             tiles.addNotizia(new Notizia("Trovato gatto a Zambana",
                     "Alla fine ho trovato un gatto incima alla mia casa con del pelo molto bello che non mi dispiace anche perchè è bello morbido al tatto.",
                     "http://www.solegemello.net/gatto.jpg", "http://www.google.com", a, gn_ludico, d));

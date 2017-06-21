@@ -46,8 +46,9 @@ public class Categoria extends RelativeLayout {
 
 
         txtNome.setLayoutParams(rp);
-        txtNome.setTextSize(50);
-        txtNome.setGravity(Gravity.CENTER | Gravity.TOP);
+        txtNome.setTextSize(20);
+        txtNome.setTextColor(Color.BLUE);
+        txtNome.setGravity(Gravity.CENTER | Gravity.CENTER);
 
 
         this.addView(immagine);

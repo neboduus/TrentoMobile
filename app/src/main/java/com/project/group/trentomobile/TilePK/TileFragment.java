@@ -137,7 +137,7 @@ public class TileFragment extends Fragment {
         piedi.setText(sPiedi);
         String nomeImg = "tileid"+data.getId();
         if(data instanceof Fermata)
-                nomeImg ="bus2";
+                nomeImg ="bus3";
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);
         return r;
     }

@@ -22,7 +22,7 @@ import java.net.URL;
 
 public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
-    Bitmap busImg;
+    static Bitmap busImg = null;
 
     public ScaricaImmagine(ImageView bmImage) {
         this.bmImage = bmImage;
@@ -36,16 +36,29 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
 
         SaveLoadImg sli = SaveLoadImg.getIstance();
 
+        Bitmap mIcon11 = null;
+
+        Log.d("name img", urls[1]);
+
         if(urls.length == 2) {
 
-            if(urls[1].equals("bus2")) {
-                if(busImg != null)
+            Log.d("name img", urls[1]);
+
+            if(urls[1].equals("bus3")) {
+                if(busImg != null) {
+                    Log.d("immagine bus", "in ram");
                     return busImg;
+                }
+                Log.d("immagine bus", "e lei");
             }
 
             Bitmap b = sli.loadImageFromStorage(urls[1]);
             if (b != null) {
                 Log.d("immagine", "in memoria");
+                if(urls[1].equals("bus3")) {
+                    busImg = b;
+                    Log.d("setta", "bus img");
+                }
                 return b;
             }
         }
@@ -53,7 +66,6 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
 
 
         String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
         URL url;
         try {
 
@@ -61,6 +73,13 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
             url = new URL(urldisplay);
             mIcon11 = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             if(urls.length==2){
+
+                if(urls[1].equals("bus3")) {
+                    busImg = mIcon11;
+                    Log.d("setta", "bus img");
+                }
+
+                Log.d("salva", urls[1]);
                 sli.saveToInternalStorage(mIcon11,urls[1]);
             }
 

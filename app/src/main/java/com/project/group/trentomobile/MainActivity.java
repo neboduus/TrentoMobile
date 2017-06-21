@@ -314,7 +314,15 @@ public class MainActivity extends AppCompatActivity
 
         Log.d("destroy","cavolacci");
 
-        for(Tile t : TileMemoryRep.getInstance().getTiles()) {
+        for(Tile t : TileMemoryRep.getInstance().getEventi()) {
+            SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
+            Log.d("fineeeee cancella", "tileid" + t.getId());
+        }
+        for(Tile t : TileMemoryRep.getInstance().getLuoghi()) {
+            SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
+            Log.d("fineeeee cancella", "tileid" + t.getId());
+        }
+        for(Tile t : TileMemoryRep.getInstance().getNotizie()) {
             SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
             Log.d("fineeeee cancella", "tileid" + t.getId());
         }
