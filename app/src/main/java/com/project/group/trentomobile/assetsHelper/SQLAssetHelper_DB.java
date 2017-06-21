@@ -29,6 +29,9 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+<<<<<<< HEAD
+    //public List <Orario> getOrariByStopLinea
+=======
 
     private String createWhereClauseForSearchByName(String name){
         String[] splited = name.split("\\s+");
@@ -66,6 +69,7 @@ public class SQLAssetHelper_DB extends SQLiteAssetHelper {
     }
 
 
+>>>>>>> da55c1cb87dc161e6dc8bd4fd81c6a00d44518ed
 
     public List<Orario> getOrariByStopLinea(Integer stop_id, Integer route_id, Integer direction){
         Log.d("getOrariByStopLinea", "getOrariByStopLinea( stop_id="+stop_id+" route_id="+route_id+" direction_id="+direction+" )");
