@@ -142,14 +142,14 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             " con diverse modalità, la necessaria tranquillità finanziaria per conseguire il titolo di studio.",
                     "https://www.tutored.me/it/wp-content/uploads/sites/13/2016/07/600sociologia-trento-fonte-unitn.jpg",
                     "http://www.unitn.it/servizi/230/borse-di-studio-e-assegni",
-                    a5, gn_cronaca, d));
+                    a5, gn_uni, d));
 
             tiles.addNotizia(new Notizia("Dall'Università di Trento la possibilità di tirocini presso le rappresentanze diplomatiche del ministero degli affari esteri",
                     "Il bando è aperto per la selezioni di 11 studenti. Il tirocinio si potrà svolgere presso le sedi diplomatico-consolari e le Rappresentanze Permanenti " +
                             "d’Italia a Barcellona, Bruxelles, Dar-Es-Saalam, Ginevra, Pechino, Sofia, Tel Aviv e Vienna",
                     "http://www.toscanaoggi.it/var/ezdemo_site/storage/images/mondo/ue-e-giovani-concorso-per-le-scuole-diventare-cittadini-europei/2648516-1-ita-IT/Ue-e-giovani-concorso-per-le-scuole-Diventare-cittadini-europei_articleimage.jpg",
                     "http://www.ildolomiti.it/ricerca-e-universita/dalluniversita-di-trento-la-possibilita-di-tirocini-presso-le-rappresentanze",
-                    new Autore("Il Dolomiti", "tn", "tn"), gn_cronaca, d));
+                    new Autore("Il Dolomiti", "tn", "tn"), gn_uni, d));
 
 
             tiles.addNotizia(new Notizia("Trovato gatto a Zambana",
@@ -201,7 +201,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     count--;
                 }
 
-                tiles.addFermata(new Fermata(s.getId()*-1,s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
+                tiles.addFermata(new Fermata(s.getId(),s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
             }
 
 
