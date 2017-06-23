@@ -39,9 +39,14 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:gravity="top|center"
-                android:textSize="20dp"
+                android:typeface="sans"
+                android:textSize="25dp"
+                android:shadowColor="#25252525"
+                android:shadowDy="7"
+                android:shadowRadius="5"
+                android:shadowDx="0"
                 android:elevation="5mm"
-                android:textStyle="bold"
+                android:textStyle="italic"
                 android:layout_marginBottom="20dp"/>
 
             <ImageView
@@ -128,7 +133,8 @@
                 android:id="@+id/txtURL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

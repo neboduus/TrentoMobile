@@ -38,7 +38,7 @@ public class ScaricaImmagine extends AsyncTask<String, Void, Bitmap> {
 
         Bitmap mIcon11 = null;
 
-        Log.d("name img", urls[1]);
+
 
         if(urls.length == 2) {
 

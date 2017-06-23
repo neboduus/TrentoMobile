@@ -310,8 +310,7 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
 
         Log.d("destroy","cavolacci");
 
@@ -327,6 +326,8 @@ public class MainActivity extends AppCompatActivity
             SaveLoadImg.getIstance().deleatImageFromStorage("tileid" + t.getId());
             Log.d("fineeeee cancella", "tileid" + t.getId());
         }
+
+        super.onDestroy();
 
     }
 }

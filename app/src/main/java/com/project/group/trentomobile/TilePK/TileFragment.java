@@ -140,7 +140,7 @@ public class TileFragment extends Fragment {
                 nomeImg ="bus3";
 
         if(data instanceof Notizia){
-            if(((Notizia)data).getGenere().equals("Meteo")){
+            if(((Notizia)data).getGenere().getTipo().equals("Meteo")){
                 new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine());
             }else
                 new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(), nomeImg);

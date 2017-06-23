@@ -105,7 +105,6 @@ public class Tile implements Serializable{
                 sho+=s+" ";
             count--;
         }
-        sho+="...";
 
         return sho;
     }

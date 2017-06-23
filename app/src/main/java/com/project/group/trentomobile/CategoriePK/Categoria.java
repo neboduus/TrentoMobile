@@ -1,7 +1,16 @@
 package com.project.group.trentomobile.CategoriePK;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -24,6 +33,7 @@ public class Categoria extends RelativeLayout {
     RelativeLayout.LayoutParams params;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public Categoria(Context context) {
 
         super(context);
@@ -47,8 +57,19 @@ public class Categoria extends RelativeLayout {
 
         txtNome.setLayoutParams(rp);
         txtNome.setTextSize(20);
-        txtNome.setTextColor(Color.BLUE);
+        txtNome.setTextColor(Color.WHITE);
         txtNome.setGravity(Gravity.CENTER | Gravity.CENTER);
+
+//        GradientDrawable d = new GradientDrawable();
+  //      d.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+    //    d.setShape(GradientDrawable.RECTANGLE);
+
+
+        txtNome.setShadowLayer(2.1f, 1.5f, 1.3f, Color.BLACK);
+        //d.setColor(Color.WHITE);
+        //d.setStroke(3, Color.RED);
+
+        //txtNome.setBackground(d);
 
 
         this.addView(immagine);
