@@ -33,7 +33,9 @@ import com.project.group.trentomobile.transport.Orario;
 import com.project.group.trentomobile.transport.Stop;
 import com.project.group.trentomobile.transport.Trip;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -88,7 +90,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             SQLAssetHelper_DB sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
             Stop s = sqlDB.getStopsById(tag*-1);
 
-            List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
+            List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,new SimpleDateFormat("HH:mm:ss").format(new Date()));
             String corpo="";
             Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
 

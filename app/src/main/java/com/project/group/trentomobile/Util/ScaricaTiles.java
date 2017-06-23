@@ -25,6 +25,8 @@ import com.visuality.f32.weather.data.entity.Weather;
 import com.visuality.f32.weather.manager.WeatherManager;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -184,7 +186,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             for(Stop s : ls){
 
-                List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,"17:00:00");
+                List<Orario> lo = sqlDB.getNearestOrarioFromStop(s,new SimpleDateFormat("HH:mm:ss").format(new Date()));
                 String corpo="";
                 Indirizzo indirizzo = new Indirizzo(s.getLat(), s.getLon(), null);
 

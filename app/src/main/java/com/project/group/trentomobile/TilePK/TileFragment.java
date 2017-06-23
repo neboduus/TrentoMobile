@@ -32,8 +32,11 @@ import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.R;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.TailActivity;
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+import com.project.group.trentomobile.Util.GetMyPosition;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
+import com.project.group.trentomobile.context.MyApplication;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -121,6 +124,8 @@ public class TileFragment extends Fragment {
         if(data instanceof Luogo){
             Luogo l = (Luogo) data;
             sPiedi += l.getIndirizzo().getVia();
+            GetMyPosition gmp = GetMyPosition.getIstanceAndUpdate(getActivity());
+            sPiedi += " - distanza:"+ CoordinateToMetri.disgeod(gmp.lat,gmp.lng,l.getIndirizzo().getLat(),l.getIndirizzo().getLng())+ "m";
         }else
         if(data instanceof Evento){
             Evento e = (Evento) data;
@@ -129,7 +134,9 @@ public class TileFragment extends Fragment {
         }else
         if(data instanceof Fermata){
             //SETTA PIEDI
-
+            Fermata f = (Fermata) data;
+            GetMyPosition gmp = GetMyPosition.getIstanceAndUpdate(getActivity());
+            sPiedi += "distanza:"+ CoordinateToMetri.disgeod(gmp.lat,gmp.lng,f.getIndirizzo().getLat(),f.getIndirizzo().getLng())+ "m";
         }
 
         titolo.setText(data.getTitolo());

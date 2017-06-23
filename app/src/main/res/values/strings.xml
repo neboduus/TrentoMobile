@@ -177,4 +177,19 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_tipo">TipoActivity</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_setting_preference">SettingPreference</string>
+
+        <string-array name="occupazioni">
+            <item>Turista</item>
+            <item>Studente</item>
+            <item>Lavoratore</item>
+            <item>Altro</item>
+        </string-array>
+
+    <string-array name="range_eta">
+        <item>0-18 anni</item>
+        <item>18-30 anni</item>
+        <item>30-100 anni</item>
+    </string-array>
+
 </resources>

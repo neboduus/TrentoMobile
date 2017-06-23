@@ -19,6 +19,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -46,6 +48,9 @@ import com.project.group.trentomobile.Util.SaveLoadImg;
 import com.project.group.trentomobile.Util.ScaricaTiles;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -156,6 +161,13 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
+
+        Date d = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        Log.d("Tempo attuale", df.format(d));
+
+
 
 
 
