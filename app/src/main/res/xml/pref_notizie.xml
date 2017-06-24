@@ -2,7 +2,7 @@
 
     <PreferenceCategory
         android:key="generi"
-        android:title="PREFERENZE ///">
+        android:title="PREFERENZE NOTIZIE">
 
 
     </PreferenceCategory>

@@ -144,7 +144,7 @@ public class TileFragment extends Fragment {
             d.setStroke(3, Color.RED);
             Evento e = (Evento) data;
             DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
-            //sPiedi += (e.getIndirizzo()!=null ? e.getIndirizzo().getVia() : "" ) +" - "+formatter.format(e.getData().getTimeInMillis());
+            sPiedi += (e.getIndirizzo()!=null ? e.getIndirizzo().getVia() : "" ) +" - "+(e.getData()!=null ?formatter.format(e.getData().getTimeInMillis()) : "");
         }else
         if(data instanceof Fermata){
             d.setStroke(3, Color.GREEN);

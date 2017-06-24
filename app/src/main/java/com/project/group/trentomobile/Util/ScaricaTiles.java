@@ -4,26 +4,34 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.project.group.trentomobile.Classi.*;
-import com.project.group.trentomobile.MainActivity;
+import com.project.group.trentomobile.Classi.Autore;
+import com.project.group.trentomobile.Classi.Bus;
+import com.project.group.trentomobile.Classi.Evento;
+import com.project.group.trentomobile.Classi.Fermata;
+import com.project.group.trentomobile.Classi.Genere_Evento;
+import com.project.group.trentomobile.Classi.Genere_Luogo;
+import com.project.group.trentomobile.Classi.Genere_Notizia;
+import com.project.group.trentomobile.Classi.Indirizzo;
+import com.project.group.trentomobile.Classi.Luogo;
+import com.project.group.trentomobile.Classi.Notizia;
+import com.project.group.trentomobile.Classi.Preferenze;
+import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.R;
-import com.project.group.trentomobile.Repository.*;
+import com.project.group.trentomobile.Repository.GeneriRepo;
+import com.project.group.trentomobile.Repository.TileMemoryRep;
 import com.project.group.trentomobile.SettingPreference;
 import com.project.group.trentomobile.TilePK.TileFragment;
-import com.project.group.trentomobile.TipoActivity;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
 import com.project.group.trentomobile.transport.Linea;
 import com.project.group.trentomobile.transport.Orario;
 import com.project.group.trentomobile.transport.Stop;
 import com.project.group.trentomobile.transport.Trip;
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import com.visuality.f32.temperature.TemperatureUnit;
 import com.visuality.f32.weather.data.entity.Weather;
 import com.visuality.f32.weather.manager.WeatherManager;
@@ -58,26 +66,28 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         if(tiles.getNotizie().isEmpty()) {
 
             //AGGIUNGI COSE
-            Genere_Notizia gn_ludico = new Genere_Notizia("Ludico");
             Genere_Notizia gn_cronaca = new Genere_Notizia("Cronaca");
-            gn_cronaca.setFoto("http://www.ansa.it/webimages/img_457x260/2017/5/26/80836b578212ee55f47e08a2454ff481.jpg");
+            gn_cronaca.setFoto("http://www.guidavalencia.com/images/categorie/guida_valencia/categoria_feed_giornali.jpg");
             Genere_Notizia gn_culturale = new Genere_Notizia("Culturale");
-            gn_culturale.setFoto("https://www.cultura.trentino.it/var/001/storage/images/media/images/la-facciata-sud-occidentale-del-palazzo-della-provincia-gia-imperial-hotel-trento-con-il-loggiato-eretto-tra-il-1898-e-il-1900-dall-architetto-em_opengraph/22254052-1-ita-IT/La-facciata-sud-occidentale-del-Palazzo-della-Provincia-gia-Imperial-Hotel-Trento-con-il-loggiato-eretto-tra-il-1898-e-il-1900-dall-architetto-Em_o_imagefullwide.jpg");
+            gn_culturale.setFoto("http://c2.vgtstatic.com/thumbll/3/1/31057-v3/mausoleo-di-cesare-battisti-1.jpg");
             Genere_Notizia gn_uni = new Genere_Notizia("Universitari");
-            gn_uni.setFoto("http://3.citynews-trentotoday.stgy.ovh/~media/original-hi/44531476459805/cerimonia_lauree-2-2.jpg");
+            gn_uni.setFoto("http://www.corriere.it/Media/Foto/2009/07/24/1972608--180x140.jpg");
             Genere_Notizia gn_traffico = new Genere_Notizia("Traffico");
-            gn_traffico.setFoto("http://notizie.tiscali.it/export/shared/agencies/media/15/12/26/b5648afd12e8624c9c375e48dd8da3cc.jpg_997313609.jpg");
+            gn_traffico.setFoto("http://www.estense.com/wp-content/uploads/2012/05/traffico1.jpg");
             Genere_Notizia gn_politico = new Genere_Notizia("Politico");
-            gn_politico.setFoto("http://www.lavocedeltrentino.it/wp-content/uploads/2017/04/comune_Tn.jpg");
+            gn_politico.setFoto("http://www.datagiovani.it/newsite/wp-content/uploads/2013/01/parlamento-italiano.jpg");
             Genere_Notizia gn_sport = new Genere_Notizia("Sport");
-            gn_sport.setFoto("http://www.pu24.it/wp/wp-content/uploads/2017/02/16649036_1370588699671463_2148889984841226295_n.jpg");
+            gn_sport.setFoto("http://www.alltrainer.it/articoli/guarire-con-lo-sport.jpg");
+            Genere_Notizia gn_ludico = new Genere_Notizia("Ludico");
+            gn_ludico.setFoto("http://images.nymag.com/listings/bar/dakota-bar-main.jpg");
 
             Genere_Notizia gn_meteo = new Genere_Notizia("Meteo");
+            gn_meteo.setFoto("http://www.verdeazzurronotizie.it/wp-content/uploads/2016/06/meteo-icon.png");
 
             Genere_Luogo gl_Piazze = new Genere_Luogo("Piazze");
             gl_Piazze.setFoto("http://radionbc.it/wp-content/uploads/2015/09/DANTE.jpg");
             Genere_Luogo gl_Musei = new Genere_Luogo("Musei");
-            gl_Musei.setFoto("http://www.svegliamuseo.com/wp-content/uploads/2014/01/Muse_%C2%AEHufton+Crow_027.jpg");
+            gl_Musei.setFoto("https://images.placesonline.com/photos/67251_trento_muse_museo_di_scienze_naturali_di_trento.jpg");
             Genere_Luogo gl_Monumenti = new Genere_Luogo("Monumenti");
             gl_Monumenti.setFoto("https://www.lindipendenza.com/wp-content/uploads/TRENTO-FOTO-20-Il-Monumento-di-Dante-02.jpg");
             Genere_Luogo gl_Parchi = new Genere_Luogo("Parchi");
@@ -92,13 +102,23 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             gl_Commerciali.setFoto("http://trentinocorrierealpi.gelocal.it/polopoly_fs/1.13397033!/httpImage/image.jpg_gen/derivatives/gallery_978/image.jpg");
 
             Genere_Evento ge_Sagra = new Genere_Evento("Sagra");
+            ge_Sagra.setFoto("http://image.afcdn.com/dossiers/D20130801/festa-della-castagna-alto-adige-103725_L.jpg");
             Genere_Evento ge_Provincia = new Genere_Evento("Provinciali");
+            ge_Provincia.setFoto("http://eventi.fmach.it/var/ezflow_site/storage/images/future-ipm/organizers/patronage/provincia-autonoma-di-trento/5895-1-eng-GB/Provincia-autonoma-di-Trento_popup.jpg");
             Genere_Evento ge_Ludico = new Genere_Evento("Ludico");
+            ge_Ludico.setFoto("http://25bb7f8ea083f526b4cb-34dd027d44c74b053dd2b880a7326734.r32.cf1.rackcdn.com/responsive/575/25bb7f8ea083f526b4cb-34dd027d44c74b053dd2b880a7326734.r32.cf1.rackcdn.com/lps/assets/u/B-Bar-four-points-by-sheraton-bolzano.jpg");
             Genere_Evento ge_Discoteche = new Genere_Evento("Discoteche");
+            ge_Discoteche.setFoto("https://image.freepik.com/free-vector/disco-background-design_1314-96.jpg");
             Genere_Evento ge_Cinema = new Genere_Evento("Cinema");
+            ge_Cinema.setFoto("http://ilgiornaleoff.ilgiornale.it/wp-content/uploads/2017/03/cinema.jpg");
             Genere_Evento ge_Musicale = new Genere_Evento("Musicale");
+            ge_Musicale.setFoto("https://thumbs.dreamstime.com/x/fondo-musicale-per-progettazione-di-evento-di-musica-42859418.jpg");
             Genere_Evento ge_Teatro = new Genere_Evento("Teatro");
+            ge_Teatro.setFoto("http://giornaledelladanza.com/home/wp-content/uploads/Teatro-alla-Scala-di-Milano-480x263.jpg");
             Genere_Evento ge_Uni = new Genere_Evento("Universitario");
+            ge_Uni.setFoto("https://www.unocero.com/wp-content/uploads/2013/10/Tour-universitario-telcel-2013.jpg");
+
+
 
 
             //tiles.addNotizia(new Notizia("Caricamento meteo","","","",new Autore("OpenWeatherMap", null, null),gn_meteo,new GregorianCalendar()));
@@ -162,19 +182,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "Alla fine ho trovato un gatto incima alla mia casa con del pelo molto bello che non mi dispiace anche perchè è bello morbido al tatto.",
                     "http://www.solegemello.net/gatto.jpg", "http://www.google.com", a, gn_ludico, d));
 
-            Indirizzo ind = new Indirizzo(46.071537d, 11.120346d, "Piazza Dante");
-            tiles.addLuogo(new Luogo(ind, gl_Monumenti, "Monumento di dante", "sdjilhcu hudshad uashdjh asjkdhsj hdjsf hfjkhsd jkfhjksd hjksd hjksdfhjk hadjksh jksdh jkhdk fhjksdf",
-                    "http://www.meteotrentino.it/images/hp/img-32.gif?27052017", "http://www.google.com"));
-
 
             GregorianCalendar d2 = new GregorianCalendar(2017, 5, 12);
-
-            tiles.addNotizia(new Notizia("Bonus per le future mamme. Già mille domande in Trentino",
-                    "Sono già circa 1.000 le domande arrivate dal Trentino per ottenere il premio di 800 euro per la nascita o l’adozione di un minore, previsto dalla legge di bilancio per il 2017.",
-                    "http://www.ladige.it/sites/www.ladige.it/files/styles/798x457/public/beb%C3%A8_0.jpg?itok=sSmZV6GK",
-                    "http://www.ladige.it/news/cronaca/2017/05/13/bonus-future-mamme-gi-mille-domande-trentino",
-                    a, gn_cronaca, d2));
-
 
             //Aggiunto luogo Piazza Dante
             Indirizzo PiazzaDuomo_indirizzo=new Indirizzo(46.0671354,11.1188445,"Piazza Duomo, 38122 Trento");
@@ -188,12 +197,12 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //Aggiunto monumento Fontana del Nettuno
             Indirizzo FontanadelNettuno_indirizzo=new Indirizzo(46.0673885,11.120655,"Piazza Duomo, 38122 Trento");
-            Luogo FontanadelNettuno=new Luogo(FontanadelNettuno_indirizzo,gl_Monumenti,"Fontana del Nettuno","Testimonianza artistica del XVIII secolo è invece la fontana del Nettuno, eseguita tra il 1767 e il 1769  dallarchitetto Francesco Antonio Giongo di Lavarone. Loriginaria statua del Nettuno, in realtà, si trova ora nel cortile del Palazzo Thun, ed è stata sostituita nel 1945 da una copia in bronzo realizzata da Davide Rigatti; ai piedi del Nettuno tritoni, cavalli marini e altre figure -tutte copie bronzee delle sculture originali- decorano la bella fontana di Piazza del Duomo.","http://www.trentoarte.it/wp-content/uploads/2014/02/fontana-nettuno-Trento-2.jpg","");
+            Luogo FontanadelNettuno=new Luogo(FontanadelNettuno_indirizzo,gl_Monumenti,"Fontana del Nettuno","Testimonianza artistica del XVIII secolo è invece la fontana del Nettuno, eseguita tra il 1767 e il 1769  dall'architetto Francesco Antonio Giongo di Lavarone. L'originaria statua del Nettuno, in realtà, si trova ora nel cortile del Palazzo Thun, ed è stata sostituita nel 1945 da una copia in bronzo realizzata da Davide Rigatti; ai piedi del Nettuno tritoni, cavalli marini e altre figure -tutte copie bronzee delle sculture originali- decorano la bella fontana di Piazza del Duomo.","http://www.trentoarte.it/wp-content/uploads/2014/02/fontana-nettuno-Trento-2.jpg","");
             tiles.addLuogo(FontanadelNettuno);
 
             //Aggiunto MOnumento Case
             Indirizzo CaseCasuffiRella_indirizzo=new Indirizzo(46.0677408,11.1194669,"Piazza Duomo, 38122 Trento");
-            Luogo CaseCasuffiRella=new Luogo(CaseCasuffiRella_indirizzo,gl_Monumenti,"Case Cazuffi-Rella","Entrambi palazzi del XVI secolo, le due case sorgono una accanto allaltra e regalano al visitatore che si reca in Piazza del Duomo meravigliosi affreschi dipinti sui muri che affacciano sulla piazza. Probabilmente eseguiti da Marcello Fogolino  pittore italiano vissuto a cavallo tra il XV e il XVI secolo -, gli affreschi che decorano le facciate delle due case raffigurano personaggi e figure pagane e leggendarie, caratteristica pressoché unica se si mettono a confronto con le altre opere pittoriche dipinte a decorazione degli esterni di abitazioni e palazzi presenti nelle valli attorno a Trento, quasi tutte di carattere religioso","https://upload.wikimedia.org/wikipedia/commons/c/cd/Trento-case_Cazuffi-Rella.jpg","");
+            Luogo CaseCasuffiRella=new Luogo(CaseCasuffiRella_indirizzo,gl_Monumenti,"Case Cazuffi-Rella","Entrambi palazzi del XVI secolo, le due case sorgono una accanto all'altra e regalano al visitatore che si reca in Piazza del Duomo meravigliosi affreschi dipinti sui muri che affacciano sulla piazza. Probabilmente eseguiti da Marcello Fogolino, pittore italiano vissuto a cavallo tra il XV e il XVI secolo -, gli affreschi che decorano le facciate delle due case raffigurano personaggi e figure pagane e leggendarie, caratteristica pressoché unica se si mettono a confronto con le altre opere pittoriche dipinte a decorazione degli esterni di abitazioni e palazzi presenti nelle valli attorno a Trento, quasi tutte di carattere religioso","https://upload.wikimedia.org/wikipedia/commons/c/cd/Trento-case_Cazuffi-Rella.jpg","");
             tiles.addLuogo(CaseCasuffiRella);
 
             Luogo dossTrento = new Luogo(new Indirizzo(46.0732339d,11.1098908d, "Via Dòs Trento, 38121 Trento"), gl_Parchi,
@@ -263,6 +272,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //Aggiunto evento universitario
             Evento Convegno=new Evento("Industrial problem solving with physics",ge_Uni,"Industrial Problem Solving with Physics (IPSP) è un evento della durata di una settimana, organizzato dal Dipartimento di Fisica, dalla Scuola di Dottorato in Fisica e dalla Divisione Supporto Ricerca Scientifica e Trasferimento Tecnologico dellUniversità di Trento, in collaborazione con Confindustria Trento e Polo Meccatronica - Trentino Sviluppo. Scopo dell'evento è quello di promuovere la connessione tra il mondo della ricerca in fisica e il mondo delle imprese. I giovani ricercatori avranno lopportunità di mettere alla prova le proprie conoscenze e capacità, mentre le aziende sperimenteranno lopportunità unica di collaborare con cervelli di talento.","https://d2rhekw5qr4gcj.cloudfront.net/img/400sqf/from/uploads/course_photos/3146044000150629230132.jpg","http://events.unitn.it/ipsp2017");
+            Convegno.setData(new GregorianCalendar(2017, 8, 1, 10, 00));
+            Convegno.setIndirizzo(new Indirizzo(46.067783d,11.1147857d,"Via Tommaso Gar, 14, 38122 Trento" ));
             tiles.addEvento(Convegno);
 
             //Aggiunto evento Teatro
@@ -274,15 +285,20 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "Casa de Tábua è un incontro inaspettato tra suono e gesto che rivela il lato comico delluomo nel quotidiano.\n" +
                     "Casa de Tábua è un luogo immaginario ma per noi così reale, che se un giorno riprendessimo quel viaggio lo vorremo portare appresso proprio come le nostre case.",
                     "http://teatrocart.com/wp-content/uploads/2013/04/casa-ita.jpg","http://teatrocart.com/casa-de-tabua/");
+            teatro.setIndirizzo(new Indirizzo(46.0677826d,11.1082196d,"Via Oss Mazzurana, 19, 38122 Trento"));
+            teatro.setData(new GregorianCalendar(2017, 9, 8, 16, 30));
             tiles.addEvento(teatro);
 
             //Aggiunto evento Musicale
-            Evento Concerto=new Evento("Concerto di Zucchero",ge_Musicale,"Concerto musicale di zucchero","https://www.campioniomaggiogratuiti.it/wp-content/uploads/2016/10/Vinci-gratis-concerto-di-Zucchero-e-viaggio-300x157.jpg","");
+            Evento Concerto=new Evento("Concerto di Zucchero",ge_Musicale,"Il grande cantante e cantautore italiano Zucchero arriverà per la prima volta nella città di Trento. L evento si terrà al quartiere delle Albere Trento città. Affrettatevi a comprare i biglietti perché il ricavato andra tutto in beneficenza.","https://www.campioniomaggiogratuiti.it/wp-content/uploads/2016/10/Vinci-gratis-concerto-di-Zucchero-e-viaggio-300x157.jpg","");
             Concerto.setData(new GregorianCalendar(2017,7,25,21,00));
+            Concerto.setIndirizzo(new Indirizzo(46.067782d,11.1082196d,"38121 Trento"));
             tiles.addEvento(Concerto);
 
             //Aggiunto evento Cinema
-            Evento Cinema=new Evento("1° Mercoledì del mese, cinema a 2 euro",ge_Cinema,"Vieni a vedere un film ogni primo Mercoledì del mese e ti costerà solo 2 euro. In tutte le sale dei cinema di Trento!","","");
+            Evento Cinema=new Evento("1° Mercoledì del mese, cinema a 2 euro",ge_Cinema,"Vieni a vedere un film ogni primo Mercoledì del mese e ti costerà solo 2 euro. In tutte le sale dei cinema di Trento!","http://www.trentoblog.it/wp-content/uploads/logo-mediaworld300.jpg","http://www.mymovies.it/cinema/trento/");
+            Cinema.setIndirizzo(new Indirizzo(46.0614078d,11.1227692d,"Corso 3 Novembre 1918, 35, 38122 Trento"));
+            Cinema.setData(new GregorianCalendar(2017, 7, 29));
             tiles.addEvento(Cinema);
 
 
@@ -354,14 +370,11 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             //LuogoCommerciale
             Luogo luogoTopCenter = new Luogo(new Indirizzo(46.0715306d,11.120544d, "Via del Brennero, 320, 38121 Trento"), gl_Commerciali,
                     "Centro Commerciale Top Center",
-                    "La provincia autonoma di Trento , meglio nota come Trentino, è una provincia italiana " +
-                            "del Trentino-Alto Adige di 538 223 abitanti[1], con capoluogo Trento. Confina a " +
-                            "nord con la provincia autonoma di Bolzano, a est e a sud con le province venete " +
-                            "di Belluno, Vicenza e Verona, e a ovest con le province lombarde di Brescia e Sondrio.",
+                    "Grande centro commerciale a Trento nord. Trovi bellissimi negozi ed è il luogo ideale per abbracciare nuovi trendi scoprire i nuovi marchi italiani ma anche prodotti alimentari.",
                     "http://radionbc.it/wp-content/uploads/2016/01/9758809.jpg",
                     "http://topcenter.eu/negozi/");
             luogoProvincia.setOrario("8.00","20.00");
-            tiles.addLuogo(luogoProvincia);
+            tiles.addLuogo(luogoTopCenter);
 
             //NOTIZIA LUDICO
             tiles.addNotizia(new Notizia("Caccia alle onde gravitazionali nello spazio: c'è anche l'Università di Trento",
@@ -428,7 +441,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             SQLAssetHelper_DB  sqlDB = new SQLAssetHelper_DB(MyApplication.getAppContext());
 
-            Log.d("aAAAAAAAAAAAAA", String.valueOf(myPosition.lat));
 
             List<Stop> ls = sqlDB.getNearestStops(3, myPosition.lat, myPosition.lng);
 
@@ -455,35 +467,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             }
 
 
-            //TEST WEATHER
-            /*
-            new WeatherManager("97afef6a27b88c8138c824865619ff56").getCurrentWeatherByCoordinates(
-                    46.1421242, // latitude
-                    11.1006433, // longitude
-                    new WeatherManager.CurrentWeatherHandler() {
-                        @Override
-                        public void onReceivedCurrentWeather(WeatherManager manager, Weather weather) {
-                            // Handle current weather information
-                            Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
-                                    .getValue(TemperatureUnit.CELCIUS)+" gradi C");
-                            Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
-                            Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
-                            Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
-                            Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
-
-                        }
-
-                        @Override
-                        public void onFailedToReceiveCurrentWeather(WeatherManager manager) {
-                            // Handle error
-                        }
-                    }
-
-
-            );
-
-  */
-
 
 
             //AGGIUNGO GENERI
@@ -491,12 +474,12 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             gr.GeneriNotizie.add(gn_cronaca);
             gr.GeneriNotizie.add(gn_culturale);
-            gr.GeneriNotizie.add(gn_ludico);
             gr.GeneriNotizie.add(gn_politico);
-            gr.GeneriNotizie.add(gn_meteo);
+            //gr.GeneriNotizie.add(gn_meteo);
             gr.GeneriNotizie.add(gn_sport);
             gr.GeneriNotizie.add(gn_traffico);
             gr.GeneriNotizie.add(gn_uni);
+            gr.GeneriNotizie.add(gn_ludico);
 
 
             gr.GeneriLuoghi.add(gl_Commerciali);
@@ -510,12 +493,12 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             gr.GeneriEventi.add(ge_Cinema);
             gr.GeneriEventi.add(ge_Discoteche);
-            gr.GeneriEventi.add(ge_Ludico);
             gr.GeneriEventi.add(ge_Musicale);
             gr.GeneriEventi.add(ge_Provincia);
             gr.GeneriEventi.add(ge_Sagra);
             gr.GeneriEventi.add(ge_Teatro);
             gr.GeneriEventi.add(ge_Uni);
+            gr.GeneriEventi.add(ge_Ludico);
 
             SQLAssetHelper_DB dbHelperTransport = new SQLAssetHelper_DB(MyApplication.getAppContext());
             List<Linea> autobus = dbHelperTransport.getAllLinee();
@@ -529,24 +512,15 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                 }
             }
 
-            /*
-            String test = "brennero nord";
-            List<Stop> tester = dbHelperTransport.getStopsByName(test);
-            for (Stop t: tester){
-                Log.e("aa", "AAAAAAAAAAA "+t.getName());
-            }
-            */
 
         }else{
             Log.d("ce","jdsdfhdfhjhdfh");
         }
 
-        //SETTA PREFERENZE
 
         Preferenze myPreference = params[0];
 
         try {
-            //InternalStorage.writeObject(this,"lolk","lolv");
             myPreference = (Preferenze) InternalStorage.readObject(myActivity);
             Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
 
@@ -576,9 +550,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
     protected void onPostExecute(TileMemoryRep result) {
 
-
-
-        //   METEO TEST
         GetMyPosition myPos = GetMyPosition.getIstanceAndUpdate(myActivity);
         while(myPos.lat == null);
         Double lat = myPos.lat;
@@ -595,14 +566,14 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                         Log.d("METEO", weather.getNavigation().getLocationName()+" " + weather.getTemperature().getCurrent()
                                 .getValue(TemperatureUnit.CELCIUS)+" °C");
                         Log.d("METEO", "Percentuale Nuvole: "+weather.getCloudiness().getPercentage()+"%");
-                        Log.d("METEO", "Pioggia nelle ultime 3 h: "+weather.getRain().getThreeHoursVolume());
+                        Log.d("METEO", "Pioggia nelle ultime 3 ore: "+weather.getRain().getThreeHoursVolume());
                         Log.d("METEO", "Velocità del vento: "+weather.getWind().getSpeed());
                         Log.d("METEO", "Direzione del vento: "+weather.getWind().getDirection()+" gradi");
 
                         String place_temp = weather.getNavigation().getLocationName()+" " + String.format("%.2f", weather.getTemperature().getCurrent()
                                 .getValue(TemperatureUnit.CELCIUS))+" °C";
                         String clouds = "Percentuale nuvole: "+weather.getCloudiness().getPercentage()+"%";
-                        String rain = "Pioggia ultime 3h: "+weather.getRain().getThreeHoursVolume();
+                        String rain = "Pioggia ultime 3 ore: "+weather.getRain().getThreeHoursVolume();
 
                         FragmentManager fragmentManager = myActivity.getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -611,7 +582,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                         String prevision = place_temp+"\n"+clouds+"\n"+rain;
 
                         String imgUrl = decideWeatherImg(weather.getCloudiness().getPercentage(),weather.getRain().getThreeHoursVolume() );
-                        Log.d("METEO", imgUrl);
                         Notizia fictionaryTile = new Notizia("Meteo vicino a te", prevision, imgUrl , imgUrl, new Autore("OpenWeatherMap", null, null),new Genere_Notizia("Meteo") , d);
 
                         //TileMemoryRep.getInstance().addNotizia(fictionaryTile);
@@ -643,7 +613,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-     //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
+        //   fragmentTransaction.setCustomAnimations(R.animator.fade_in,R.animator.fade_out);
 
 
 

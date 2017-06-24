@@ -66,7 +66,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Marker m = mMap.addMarker(new MarkerOptions().position(Trento).title(t.getTitolo()));
                 Log.d("iddddd", String.valueOf(t.getId()));
                 if(t instanceof Fermata)
-                    m.setTag(t.getId()*-1);
+                    m.setTag(t.getId());
                 else
                     m.setTag(t.getId());
             }

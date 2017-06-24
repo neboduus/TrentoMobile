@@ -35,6 +35,7 @@ public class SaveLoadImg {
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
+        Log.d("pollo--------------->",directory.getAbsolutePath());
         File mypath=new File(directory,name);
 
         FileOutputStream fos = null;

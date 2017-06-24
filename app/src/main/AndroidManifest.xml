@@ -33,6 +33,7 @@
         <activity
             android:name=".CategorieActivity"
             android:label="@string/title_activity_categorie"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PreferitiActivity"

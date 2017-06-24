@@ -22,7 +22,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.project.group.trentomobile.Classi.Genere_Evento;
 import com.project.group.trentomobile.Classi.Genere_Luogo;
+import com.project.group.trentomobile.Classi.Genere_Notizia;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.UpdateRequest;
 import com.project.group.trentomobile.Repository.GeneriRepo;
@@ -180,6 +182,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
+                || TrasportiPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -192,7 +195,7 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
+            addPreferencesFromResource(R.xml.pref_luoghi);
             setHasOptionsMenu(true);
 
             PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference("generi");
@@ -267,7 +270,76 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_eventi);
+            setHasOptionsMenu(true);
 
+            PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference("generi");
+            Preferenze myPreference = null;
+            try {
+                myPreference = (Preferenze) InternalStorage.readObject(getActivity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            for(final Genere_Evento g : GeneriRepo.getIstance().GeneriEventi){
+
+                final SwitchPreference sw = new SwitchPreference(getActivity());
+                sw.setTitle(g.getTipo());
+                final boolean b = (Boolean)(myPreference.getPref_Eventi().get(g.getTipo()) > 9);
+                sw.setChecked(b);
+                sw.setDefaultValue(b);
+
+
+                Log.d("lollllllll", String.valueOf(b));
+                preferenceGroup.addPreference(sw);
+
+                final Preferenze myP = myPreference;
+
+                sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+
+                        UpdateRequest.getInstance().requestUpdate();
+
+                        Boolean newB = (Boolean) newValue;
+                        myP.getPref_Eventi().remove(g.getTipo());
+                        myP.getPref_Eventi().put(g.getTipo(),newB ? 10 : 0);
+
+                        try {
+                            InternalStorage.writeObject(getActivity(),myP);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        sw.setChecked(newB);
+                        sw.setDefaultValue(newB);
+                        return false;
+                    }
+                });
+
+
+
+
+
+            }
+
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
@@ -276,6 +348,151 @@ public class MyPreferenceActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_notizie);
+            setHasOptionsMenu(true);
+
+            PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference("generi");
+            Preferenze myPreference = null;
+            try {
+                myPreference = (Preferenze) InternalStorage.readObject(getActivity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            for(final Genere_Notizia g : GeneriRepo.getIstance().GeneriNotizie){
+
+                final SwitchPreference sw = new SwitchPreference(getActivity());
+                sw.setTitle(g.getTipo());
+                final boolean b = (Boolean)(myPreference.getPref_Notizie().get(g.getTipo()) > 9);
+                sw.setChecked(b);
+                sw.setDefaultValue(b);
+
+
+                Log.d("lollllllll", String.valueOf(b));
+                preferenceGroup.addPreference(sw);
+
+                final Preferenze myP = myPreference;
+
+                sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+
+                        UpdateRequest.getInstance().requestUpdate();
+
+                        Boolean newB = (Boolean) newValue;
+                        myP.getPref_Notizie().remove(g.getTipo());
+                        myP.getPref_Notizie().put(g.getTipo(),newB ? 10 : 0);
+
+                        try {
+                            InternalStorage.writeObject(getActivity(),myP);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        sw.setChecked(newB);
+                        sw.setDefaultValue(newB);
+                        return false;
+                    }
+                });
+            }
+
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
 
     }
+
+    /**
+     * This fragment shows data and sync preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class TrasportiPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_notizie);
+            setHasOptionsMenu(true);
+
+            PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference("generi");
+            Preferenze myPreference = null;
+            try {
+                myPreference = (Preferenze) InternalStorage.readObject(getActivity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+                final SwitchPreference sw = new SwitchPreference(getActivity());
+                sw.setTitle("Fermate");
+                final boolean b = (Boolean)(myPreference.getPref_Trasporti() > 9);
+                sw.setChecked(b);
+                sw.setDefaultValue(b);
+
+
+                Log.d("lollllllll", String.valueOf(b));
+                preferenceGroup.addPreference(sw);
+
+                final Preferenze myP = myPreference;
+
+                sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+
+                        UpdateRequest.getInstance().requestUpdate();
+
+                        Boolean newB = (Boolean) newValue;
+                        if(newB)
+                            myP.setPref_Trasporti_Ture();
+                        else
+                            myP.setPref_Trasporti_False();
+
+                        try {
+                            InternalStorage.writeObject(getActivity(),myP);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        sw.setChecked(newB);
+                        sw.setDefaultValue(newB);
+                        return false;
+                    }
+                });
+            }
+
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 }
+
+
+
+

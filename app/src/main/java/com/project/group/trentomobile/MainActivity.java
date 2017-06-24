@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity
                 if(cerca.equals("")){
                     Toast.makeText(mActivity, "Il campo è vuoto", Toast.LENGTH_SHORT).show();
                 }else{
+                    ((AutoCompleteTextView)findViewById(R.id.txtCerca)).setText("");
                     Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
                     myIntent.putExtra("cerca", cerca);//Optional parameters
                     MainActivity.this.startActivity(myIntent);

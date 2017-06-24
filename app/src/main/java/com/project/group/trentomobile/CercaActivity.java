@@ -66,7 +66,25 @@ public class CercaActivity extends AppCompatActivity {
         String cerca =  (String) bundle.getString("cerca");
 
 
-        for(Tile tile : TileMemoryRep.getInstance().getTiles()){
+        for(Tile tile : TileMemoryRep.getInstance().getNotizie()){
+            //Cerca nel titolo e in base alla categoria
+            if(tile.getTitolo().contains(cerca))
+            {
+                if(!(tile instanceof Fermata))
+                    tiles.add(tile);
+            }
+        }
+
+        for(Tile tile : TileMemoryRep.getInstance().getLuoghi()){
+            //Cerca nel titolo e in base alla categoria
+            if(tile.getTitolo().contains(cerca))
+            {
+                if(!(tile instanceof Fermata))
+                    tiles.add(tile);
+            }
+        }
+
+        for(Tile tile : TileMemoryRep.getInstance().getEventi()){
             //Cerca nel titolo e in base alla categoria
             if(tile.getTitolo().contains(cerca))
             {
