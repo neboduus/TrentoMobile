@@ -105,18 +105,16 @@ public class TileFragment extends Fragment {
         registerForContextMenu(opt);
 
 
-        titolo.setOnTouchListener(new View.OnTouchListener() {
+        titolo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-               // Log.d("daiii----------------", String.valueOf(event.getAction()));
+            public void onClick(View v) {
                 Intent myIntent = new Intent(getActivity(), TailActivity.class);
                 //the name of optional parameters must include a package prefix (Ex. 'com.project.group.trentomobile.TilePK.TileData')
                 myIntent.putExtra("data", data); //Optional parameters
                 getActivity().startActivity(myIntent);
-                return false;
             }
         });
+
 
  /*       opt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,8 +143,8 @@ public class TileFragment extends Fragment {
         if(data instanceof Evento){
             d.setStroke(3, Color.RED);
             Evento e = (Evento) data;
-            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd hh:mm");
-            sPiedi += e.getIndirizzo().getVia() +" - "+formatter.format(e.getData().getTimeInMillis());
+            DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
+            //sPiedi += (e.getIndirizzo()!=null ? e.getIndirizzo().getVia() : "" ) +" - "+formatter.format(e.getData().getTimeInMillis());
         }else
         if(data instanceof Fermata){
             d.setStroke(3, Color.GREEN);

@@ -93,9 +93,9 @@ public class Categoria extends RelativeLayout {
         }
     }
 
-    public void setImmagineColor(Integer color){
-        Log.d("colore", String.valueOf(color));
-        this.setBackgroundColor(color);
+    public void setImmagineColor(String color){
+        Log.d("colore "+getNome(), String.valueOf(color));
+        this.setBackgroundColor(Color.parseColor("#"+color));
     }
 
 

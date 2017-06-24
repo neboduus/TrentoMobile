@@ -1,6 +1,7 @@
 package com.project.group.trentomobile;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -151,14 +152,20 @@ public class MainActivity extends AppCompatActivity
 
         fragmentTransaction.commit();
         */
-
+        final Activity mActivity = this;
 
         findViewById(R.id.btnCerca).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
-                myIntent.putExtra("cerca",((AutoCompleteTextView)findViewById(R.id.txtCerca)).getText().toString());//Optional parameters
-                MainActivity.this.startActivity(myIntent);
+                String cerca = ((AutoCompleteTextView)findViewById(R.id.txtCerca)).getText().toString();
+
+                if(cerca.equals("")){
+                    Toast.makeText(mActivity, "Il campo è vuoto", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent myIntent = new Intent(MainActivity.this, CercaActivity.class);
+                    myIntent.putExtra("cerca", cerca);//Optional parameters
+                    MainActivity.this.startActivity(myIntent);
+                }
             }
         });
 

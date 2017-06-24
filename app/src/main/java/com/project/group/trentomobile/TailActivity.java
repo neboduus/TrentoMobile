@@ -123,7 +123,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
 
         TextView datatxt =  ((TextView) findViewById(R.id.txtData));
         TextView autoretxt = ((TextView) findViewById(R.id.txtAutore));
@@ -289,6 +289,8 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ft.hide(getFragmentManager().findFragmentByTag(String.valueOf(idd)))
                         .addToBackStack(null)
                         .commit();
+
+                UpdateRequest.getInstance().requestUpdate();
 
 
                 return true;

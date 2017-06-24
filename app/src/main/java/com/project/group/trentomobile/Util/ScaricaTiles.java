@@ -183,7 +183,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //Aggiunto monumento Cattedrale San Vigilio
             Indirizzo CattedraleSanVigilio_indirizzo=new Indirizzo(46.0671354,11.1188445,"Cattedrale di San Vigilio, Piazza del Duomo, 38122 Trento");
-            Luogo CattedraleSanVigilio=new Luogo(CattedraleSanVigilio_indirizzo,gl_Monumenti,"Cattedrale San Vigilio","La cattedrale di San Vigilio è il duomo di Trento, e Piazza del Duomo deve il suo nome proprio alla presenza di questo splendido edificio religioso. Edificata nel XIII secolo e dedicata al santo patrono della città, la cattedrale fungeva anticamente come chiesa cimiteriale: qui sono infatti conservate le spoglie di San Vigilio; col passare dei secoli, comunque, il duomo ha mantenuto questa caratteristica, ed è infatti qui che è sepolta la maggior parte dei vescovi della città. Sotto la cattedrale, inoltre, si trova la basilica paleocristiana, alla quale si accede dallinterno del duomo stesso.","http://www.medioevo.org/artemedievale/Images/TrentinoAltoAdige/Trento/DuomodiTrento/IMG_4673s.jpg","");
+            Luogo CattedraleSanVigilio=new Luogo(CattedraleSanVigilio_indirizzo,gl_Religioso,"Cattedrale San Vigilio","La cattedrale di San Vigilio è il duomo di Trento, e Piazza del Duomo deve il suo nome proprio alla presenza di questo splendido edificio religioso. Edificata nel XIII secolo e dedicata al santo patrono della città, la cattedrale fungeva anticamente come chiesa cimiteriale: qui sono infatti conservate le spoglie di San Vigilio; col passare dei secoli, comunque, il duomo ha mantenuto questa caratteristica, ed è infatti qui che è sepolta la maggior parte dei vescovi della città. Sotto la cattedrale, inoltre, si trova la basilica paleocristiana, alla quale si accede dallinterno del duomo stesso.","http://www.medioevo.org/artemedievale/Images/TrentinoAltoAdige/Trento/DuomodiTrento/IMG_4673s.jpg","");
             tiles.addLuogo(CattedraleSanVigilio);
 
             //Aggiunto monumento Fontana del Nettuno
@@ -247,9 +247,176 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             galleriePiedicastello.setOrario("9.00", "19.00");
             tiles.addLuogo(galleriePiedicastello);
 
+            //Aggiunto Biblioteca UNiversitaria Centrale
+            Indirizzo Buc_indirizzo=new Indirizzo(46.0596899,11.1132797,"Via Adalberto Libera, 38121 Trento");
+            Luogo Buc=new Luogo(Buc_indirizzo,gl_Universitari,"B.U.C.","La Biblioteca Universitaria Centrale (BUC) è al servizio dell'attività didattica e di ricerca dei dipartimenti di area socio-economica, giuridica e umanistica. L'edificio, progettato da Renzo Piano, è di recentissima costruzione ed è articolato in sette piani distribuiti in quattro corpi di fabbrica. La maggior parte dei libri è collocata a scaffale aperto (è cioè accessibile direttamente dagli utenti) in quindici sale, ordinata per disciplina secondo la Classificazione decimale Dewey. ","http://www.luniversitario.it/wp-content/uploads/2016/11/buc.jpg","http://www.biblioteca.unitn.it/biblioteca-universitaria-centrale-buc");
+            Buc.setOrario("8.00","23.45");
+            tiles.addLuogo(Buc);
 
 
+            //Aggiungo Notizie
+            Notizia notiza_traffico=new Notizia("Incidente all'altezza di Levico, un 38enne è rimasto ferito",
+                    "Traffico deviato inseguito a un incidente, questa mattina, sulla Valsugana, in direzione Trento, all'altezza di Levico.",
+                    "http://www.ladige.it/sites/www.ladige.it/files/styles/798x457/public/incidente%20levico.jpg?itok=1kpUSj1J",
+                    "http://www.ladige.it/territori/valsugana-primiero/2017/06/22/incidente-allaltezza-levico-38enne-rimasto-ferito",a,gn_traffico,new GregorianCalendar());
+            tiles.addNotizia(notiza_traffico);
 
+            //Aggiunto evento universitario
+            Evento Convegno=new Evento("Industrial problem solving with physics",ge_Uni,"Industrial Problem Solving with Physics (IPSP) è un evento della durata di una settimana, organizzato dal Dipartimento di Fisica, dalla Scuola di Dottorato in Fisica e dalla Divisione Supporto Ricerca Scientifica e Trasferimento Tecnologico dellUniversità di Trento, in collaborazione con Confindustria Trento e Polo Meccatronica - Trentino Sviluppo. Scopo dell'evento è quello di promuovere la connessione tra il mondo della ricerca in fisica e il mondo delle imprese. I giovani ricercatori avranno lopportunità di mettere alla prova le proprie conoscenze e capacità, mentre le aziende sperimenteranno lopportunità unica di collaborare con cervelli di talento.","https://d2rhekw5qr4gcj.cloudfront.net/img/400sqf/from/uploads/course_photos/3146044000150629230132.jpg","http://events.unitn.it/ipsp2017");
+            tiles.addEvento(Convegno);
+
+            //Aggiunto evento Teatro
+            Evento teatro=new Evento("Casa de Tabau",ge_Teatro,"Chi avrebbe mai detto che quella casa potesse andare cosi lontano. In una giornata iniziata come quella di ieri, non ci si poteva aspettare tanto. La cosa certa è che unincontro importante arriva dopo un lungo viaggio e così è stato.\n" +
+                    "Due Mondi.\n" +
+                    "Lui con la sua casa viaggiante, lei con la sua casa sonora.\n" +
+                    "Lui con il suo silenzio impacciato e morbido, lei con le sue abitudini precise e ritmiche.\n" +
+                    "Il loro incontro davanti allo sguardo del pubblico li rende ancora più assurdi, più fragili a tal punto che i martelli ballano per loro. Vedersi dalla terrazza ma non riuscire a trovarsi davanti alla porta, pulire casa, sognare, far colazione, darsi appuntamento sotto un lampione sopra una sedia e salutarsi.\n" +
+                    "Casa de Tábua è un incontro inaspettato tra suono e gesto che rivela il lato comico delluomo nel quotidiano.\n" +
+                    "Casa de Tábua è un luogo immaginario ma per noi così reale, che se un giorno riprendessimo quel viaggio lo vorremo portare appresso proprio come le nostre case.",
+                    "http://teatrocart.com/wp-content/uploads/2013/04/casa-ita.jpg","http://teatrocart.com/casa-de-tabua/");
+            tiles.addEvento(teatro);
+
+            //Aggiunto evento Musicale
+            Evento Concerto=new Evento("Concerto di Zucchero",ge_Musicale,"Concerto musicale di zucchero","https://www.campioniomaggiogratuiti.it/wp-content/uploads/2016/10/Vinci-gratis-concerto-di-Zucchero-e-viaggio-300x157.jpg","");
+            Concerto.setData(new GregorianCalendar(2017,7,25,21,00));
+            tiles.addEvento(Concerto);
+
+            //Aggiunto evento Cinema
+            Evento Cinema=new Evento("1° Mercoledì del mese, cinema a 2 euro",ge_Cinema,"Vieni a vedere un film ogni primo Mercoledì del mese e ti costerà solo 2 euro. In tutte le sale dei cinema di Trento!","","");
+            tiles.addEvento(Cinema);
+
+
+//EVENTO SAGRA
+            Evento notteBianca = new Evento("Notte Bianca - MAGICA NOTTE - Feste Vigiliane", ge_Sagra,
+                    "Dedicate a San Vigilio, patrono di Trento, le Feste Vigiliane sono giunte alla 34ª " +
+                            "edizione e propongono come ogni anno rievocazioni storiche in costume, eventi " +
+                            "musicali, animazione per bambini e proposte enogastronomiche. Cinque giorni di " +
+                            "festa destinati, ancora una volta, a riversare un fiume di persone lungo le vie cittadine e " +
+                            "ad offrire a residenti e turisti un fitto calendario di spettacoli musicali e teatrali, disfide " +
+                            "in costume, eventi espositivi, golose proposte per il palato. Ecco le \"Feste Vigiliane\" di Trento " +
+                            "che andranno in scena, quest'anno per la 34ª edizione, da giovedì 22 a lunedì 26 giugno.",
+                    "http://trentinocorrierealpi.gelocal.it/polopoly_fs/1.11643835.1434745349!/httpImage/image.jpg_gen/derivatives/detail_558/image.jpg",
+                    "http://festevigiliane.it/");
+            notteBianca.setIndirizzo(new Indirizzo(46.0804401d,11.050316d,"Trento - Centro Storico"));
+            notteBianca.setData(new GregorianCalendar(2017, 6, 24, 0, 0));
+            tiles.addEvento(notteBianca);
+
+//EVENTO PROVINCIA
+            Evento rinascimento = new Evento("Ordine e bizzarria. Il Rinascimento di Marcello Fogolino", ge_Provincia,
+                    "La rassegna sarà inaugurata venerdì 7 luglio al Castello del Buonconsiglio,vuole far conoscere " +
+                            "al grande pubblico un pittore che fu costretto ad una forzata permanenza in Trentino, in " +
+                            "quanto esiliato dalla Repubblica di Venezia con la pesante accusa di assassinio, ma che " +
+                            "riuscì a guadagnarsi, con la sua opera, la fiducia del Principe Vescovo Bernardo Cles fino " +
+                            "a divenirne il pittore di corte.",
+                    "http://www.welcometorome.net/publicimages/full/rinascimento-a-roma(1).jpg",
+                    "https://www.buonconsiglio.it/index.php/Castello-del-Buonconsiglio/mostre/Calendario-mostre/ORDINE-E-BIZZARRIA.-Il-Rinascimento-di-Marcello-Fogolino");
+            notteBianca.setIndirizzo(new Indirizzo(46.070312d,11.1247753d,"Castello del Buonconsiglio"));
+            notteBianca.setData(new GregorianCalendar(2017, 7, 7, 12, 0));
+            tiles.addEvento(rinascimento);
+
+
+//EVENTO LUDICO
+            Evento mercolediUniversitario = new Evento("UNI.MADNESS -IL MERCOLEDÌ UNIVERSITARIO", ge_Ludico,
+                    "A Trento è tornata la festa degli universitari che ha richiamato " +
+                            "tantissimi giovani  per una serata all'insegna del divertimento e della musica.",
+                    "http://www.cosafareintrentino.it/_files/f_media/2017/03/10890.jpg",
+                    "http://www.cosafareintrentino.it/it/evento/uni-madness-il-mercoledi-universitario-5");
+            notteBianca.setIndirizzo(new Indirizzo(46.0701256d,11.1227607d,"La Cantinotta"));
+            notteBianca.setData(new GregorianCalendar(2017, 7, 10, 23, 00));
+            tiles.addEvento(mercolediUniversitario);
+
+//EVENTO DISCO
+            Evento festaElysee = new Evento("The Last Night - Elysee", ge_Discoteche,
+                    "Il grande evento di chiusura di uno dei punti di riferimento della movida trentina.\n" +
+                            "\n" +
+                            "⚫ Special guest ⭐ANDREA DAMANTE⭐\n" +
+                            "⚫ Support dj LA ROCCA BROTHERS\n" +
+                            "⚫ Support dj EMILIANO MARIGNONI from AfterSide\n" +
+                            "⚫ Resident voice SILVER",
+                    "http://www.radioetv.it/newsnet/thumbs/thumb_95964.jpg",
+                    "http://www.discoteca.it/trento/locali/elysee");
+            notteBianca.setIndirizzo(new Indirizzo(46.0641523d,11.0858639d,"Elysee Disco"));
+            notteBianca.setData(new GregorianCalendar(2017, 7, 10, 23, 00));
+            tiles.addEvento(festaElysee);
+
+            // Luogo Sempre Utile
+            Luogo luogoProvincia = new Luogo(new Indirizzo(46.0715306d,11.120544d, "Piazza Dante, 15, 38122 Trento"), gl_SempreUtili,
+                    "Provincia Autonoma di Trento - Sede",
+                    "La provincia autonoma di Trento , meglio nota come Trentino, è una provincia italiana " +
+                            "del Trentino-Alto Adige di 538 223 abitanti[1], con capoluogo Trento. Confina a " +
+                            "nord con la provincia autonoma di Bolzano, a est e a sud con le province venete " +
+                            "di Belluno, Vicenza e Verona, e a ovest con le province lombarde di Brescia e Sondrio.",
+                    "http://www.autonomia.provincia.tn.it/binary/pat_autonomia/stemma_ufficiale/aq_color.1159948281.1236767128.jpg",
+                    "http://www.provincia.tn.it/");
+            luogoProvincia.setOrario("9.00","13.30");
+            tiles.addLuogo(luogoProvincia);
+
+            //LuogoCommerciale
+            Luogo luogoTopCenter = new Luogo(new Indirizzo(46.0715306d,11.120544d, "Via del Brennero, 320, 38121 Trento"), gl_Commerciali,
+                    "Centro Commerciale Top Center",
+                    "La provincia autonoma di Trento , meglio nota come Trentino, è una provincia italiana " +
+                            "del Trentino-Alto Adige di 538 223 abitanti[1], con capoluogo Trento. Confina a " +
+                            "nord con la provincia autonoma di Bolzano, a est e a sud con le province venete " +
+                            "di Belluno, Vicenza e Verona, e a ovest con le province lombarde di Brescia e Sondrio.",
+                    "http://radionbc.it/wp-content/uploads/2016/01/9758809.jpg",
+                    "http://topcenter.eu/negozi/");
+            luogoProvincia.setOrario("8.00","20.00");
+            tiles.addLuogo(luogoProvincia);
+
+            //NOTIZIA LUDICO
+            tiles.addNotizia(new Notizia("Caccia alle onde gravitazionali nello spazio: c'è anche l'Università di Trento",
+                    "Tre sonde saranno lanciate a circa 50 milioni di chilometri dalla Terra. Soddisfazione anche a Trento " +
+                            "dove lavora Stefano Vitale, tra i protagonisti del progetto",
+                    "http://images2.corriereobjects.it/methode_image/2016/02/09/Scienze/Foto%20Scienze%20-%20Trattate/20sci01f2-kciG-U43150714147506vzC-593x443@Corriere-Web-Sezioni.JPG",
+                    "http://www.trentotoday.it/cronaca/onde-gravitazionali-lisa-unitn.html",
+                    new Autore("Trento Today","tn","tn"), gn_ludico, new GregorianCalendar(2017, 7, 24)));
+
+            //NOTIZIA CULTURALE
+            tiles.addNotizia(new Notizia("Festival di Trento. Curare i migranti fa bene all'economia",
+                    "Investire uno per risparmiare 100 fra qualche tempo. È decisamente un buon investimento " +
+                            "garantire cure adeguate agli immigrati che arrivano nel nostro Paese. Le motivazioni " +
+                            "morali dovrebbero essere scontate. Ma in tempi di demagogia imperante, sono utili anche " +
+                            "i calcoli economici. Se n'è parlato in uno degli oltre 100 incontri organizzati nell'ambito del " +
+                            "Festival dell'Economia di Trento, curato da Tito Boeri e promosso da Editori Laterza e Provincia " +
+                            "autonoma di Trento.“Non curare adeguatamente chi arriva nel nostro Paese fuggendo da guerre, " +
+                            "cambiamenti climatici e miseria, è, oltre che un tradimento dei principi della nostra Costituzione, " +
+                            "un pessimo investimento” ha spiegato Loris De Filippi, presidente di Medici Senza Frontiere. " +
+                            "“Infatti si pensa di risparmiare ma in realtà si rinvia il costo a quando patologie di facile " +
+                            "cura peggiorano, richiedendo in un secondo momento interventi ben più complessi e più ingenti”.",
+                    "http://www.educational.rai.it/materiali/immagini_articoli/23733.png",
+                    "https://www.avvenire.it/attualita/pagine/curare-i-migranti-fa-bene-all-economia?utm_content=buffer42433&utm_medium=social&utm_source=facebook.com&utm_campaign=buffer",
+                    new Autore("Trento Today","tn","tn"), gn_culturale, new GregorianCalendar(2017, 7, 7)));
+
+
+            //notizia POLITICA
+            tiles.addNotizia(new Notizia("Mobilità sostenibile, DDL popolare affossato. L'amarezza del Comitato: \"Manca volontà politica\"",
+                    "L'operazione di by-pass compiuta tra ieri e oggi dal Consiglio provinciale, che ha approvato il " +
+                            "DDL sulla mobilità dell'assessore Gilmozzi per poi annullare la discussione su quello di " +
+                            "iniziativa popolare (nonostante la cronologia inversa: il DDL popolare era il  numero 58, " +
+                            "quello giuntale il 177) non va giù al Comitato Mobilità Sostenibile in Trentino.\n" +
+                            "Il Comitato aveva espressamente richiesto che la votazione sul ddl popolare si facesse - " +
+                            "spiegano i rpromotori -. La scelta di evitare la votazione dimostra mancanza di assunzione " +
+                            "di responsabilità da parte dei rappresentanti istituzionali nei confronti dell’azione popolare. " +
+                            "La volontà politica di approvare la linea proposta dall’Assessore è stata nettamente condivisa. " +
+                            "Bisognava quindi avere il coraggio di bocciare in modo esplicito e trasparente il disegno di legge " +
+                            "di iniziativa popolare sottoscritto da circa 3.600 cittadine e cittadini che nel suo complesso " +
+                            "intendeva non solo prefigurare uno scenario di mobilità sostenibile per il Trentino, ma renderlo " +
+                            "effettivo.",
+                    "https://media-cdn.tripadvisor.com/media/photo-s/07/52/0a/71/funivia-trento-sardagna.jpg",
+                    "http://www.trentotoday.it/politica/mobilita-sostenibile-ddl-popolare-gilmozzi.html",
+                    new Autore("Trento Today","tn","tn"), gn_culturale, new GregorianCalendar(2017, 7, 7)));
+
+            // notizia sport
+            Notizia notizia_sport=new Notizia("Partita  importantissima questa sera per l'acquila",
+                    "Possiamo giocarci tutte le nostre carte, perché nulla è già deciso. Quando ieri pomeriggio i " +
+                            "giocatori della Dolomiti Energia si " +
+                            "sono ritrovati al PalaTrento per la consueta sessione video prima di un leggero allenamento " +
+                            "(tiri liberi compresi), Maurizio Buscaglia li ha guardati in volto uno ad uno. E li ha catechizzati: " +
+                            "Trento ha ancora le proprie chance di vincere il titolo. Di questo devono convincersi tutti: squadra, " +
+                            "staff e pubblico.",
+                    "http://www.ladige.it/sites/www.ladige.it/files/styles/798x457/public/gara6bis.png?itok=0cs00DEN",
+                    "http://www.ladige.it/sport/basket/2017/06/20/stasera-tutti-laquila-o-si-vince-o-finita" ,a,gn_sport,new GregorianCalendar(2017,07,5,21,15));
+            tiles.addNotizia(notizia_sport);
 
 
 
@@ -357,7 +524,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
                 if(l.getColor()!="none"){
                     Bus b = new Bus( l.getShort_name(), l.getId(), l.getShort_name(), l.getLong_name(),
-                            l.getColor()=="none" ? null : Integer.parseInt(l.getColor(), 16) );
+                            l.getColor());
                     gr.Autobus.add(b);
                 }
             }

@@ -12,14 +12,14 @@ public class Bus extends Genere {
     private Integer idBus;
     private String short_name;
     private String long_name;
-    private Integer color;
+    private String color;
 
-    public Bus(String tipo, Integer id, String short_name, String long_name, Integer color) {
+    public Bus(String tipo, Integer id, String short_name, String long_name, String color) {
         super(tipo);
         this.setIdBus(id != null ? id : -1);
         this.setShort_name(short_name != null ? short_name : "none");
         this.setLong_name(long_name != null ? long_name : "none");
-        this.setColor(color != null ? color*-1 : Color.BLUE);
+        this.setColor(color);
     }
 
 
@@ -47,11 +47,11 @@ public class Bus extends Genere {
         this.long_name = long_name;
     }
 
-    public Integer getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Integer color) {
+    public void setColor(String color) {
         this.color = color;
     }
 }

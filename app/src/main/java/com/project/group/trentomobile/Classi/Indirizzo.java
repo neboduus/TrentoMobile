@@ -15,7 +15,7 @@ public class Indirizzo implements Serializable {
     private Integer id;    
     private Double lat;
     private Double lng;
-    private String via;
+    private String via ="";
 
     public Indirizzo( Double lat, Double lng, String via) {
         this.id = -1;

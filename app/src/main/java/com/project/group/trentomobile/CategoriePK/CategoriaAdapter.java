@@ -2,6 +2,8 @@ package com.project.group.trentomobile.CategoriePK;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -37,6 +39,7 @@ public class CategoriaAdapter extends BaseAdapter {
         }
 
         // create a new ImageView for each item referenced by the Adapter
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         public View getView(int position, View convertView, ViewGroup parent) {
             Categoria t = new Categoria(mContext);
             t.setNome(generi.get(position).getTipo());
