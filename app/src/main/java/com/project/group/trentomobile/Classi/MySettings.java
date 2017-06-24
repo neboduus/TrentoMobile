@@ -56,6 +56,10 @@ public class MySettings implements Serializable{
             myPreference.getPref_Notizie().put("Opportunità provinciali/comunal",5);
             myPreference.getPref_Notizie().put("Politica",5);
             myPreference.getPref_Notizie().put("Ludico",5);
+            myPreference.getPref_Notizie().put("Cronaca",5);
+            myPreference.getPref_Notizie().put("Culturale",5);
+            myPreference.getPref_Notizie().put("Universitari",5);
+            myPreference.getPref_Notizie().put("Politico",5);
 
 
             myPreference.getPref_Luoghi().put("Sempre Utili",5);
@@ -214,6 +218,7 @@ public class MySettings implements Serializable{
                 myPreference.getPref_Notizie().put("Universitari",5);
                 myPreference.getPref_Notizie().put("Politico",5);
                 myPreference.getPref_Notizie().put("Cronaca",5);
+
 
                 myPreference.getPref_Luoghi().put("Piazze",5);
                 myPreference.getPref_Luoghi().put("Musei",5);
