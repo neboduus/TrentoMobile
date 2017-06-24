@@ -27,6 +27,10 @@ public class Luogo extends Tile implements Serializable,Indirizzabile {
         this.orario = null;
     }
 
+    public void addVicino(Luogo l){
+        vicini.add(l);
+    }
+
     
     /**
      * @return the indirizzo

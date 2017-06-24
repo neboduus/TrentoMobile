@@ -48,51 +48,51 @@ public class MySettings implements Serializable{
         {
             if(occupazione=="lavoratore")
             {
-                HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Cronaca",5));
+
+                myPreference.getPref_Notizie().put("Cronaca",5);
             }else
             {
-                HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Cronaca",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Culturali",5));
+
+                myPreference.getPref_Notizie().put("Cronaca",5);
+                myPreference.getPref_Notizie().put("Culturali",5);
             }
         }
         if(eta<30 && eta>=18){
             if(occupazione=="altro")
             {
-                HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Sport",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Culturali",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Musicale",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Economiche",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Traffico",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Mezzi di trasporto",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Orario edifici",5));
+
+                myPreference.getPref_Notizie().put("Sport",5);
+                myPreference.getPref_Notizie().put("Culturali",5);
+                myPreference.getPref_Notizie().put("Musicale",5);
+                myPreference.getPref_Notizie().put("Economiche",5);
+                myPreference.getPref_Notizie().put("Traffico",5);
+                myPreference.getPref_Notizie().put("Mezzi di trasporto",5);
+                myPreference.getPref_Notizie().put("Orario edifici",5);
             }
             if(occupazione=="lavoratore")
             {
-                HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Sport",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Culturali",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Musicale",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Economiche",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Traffico",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Mezzi di trasporto",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Orario edifici",5));
+
+                myPreference.getPref_Notizie().put("Sport",5);
+                myPreference.getPref_Notizie().put("Culturali",5);
+                myPreference.getPref_Notizie().put("Musicale",5);
+                myPreference.getPref_Notizie().put("Economiche",5);
+                myPreference.getPref_Notizie().put("Traffico",5);
+                myPreference.getPref_Notizie().put("Mezzi di trasporto",5);
+                myPreference.getPref_Notizie().put("Orario edifici",5);
             }
             if(occupazione=="studente")
             {
-                HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Sport",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Culturali",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Musicale",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Economiche",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Traffico",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Mezzi di trasporto",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Orario edifici",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Opportunità provinciali/comunal",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Politica",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Ludico",5));
+
+                myPreference.getPref_Notizie().put("Sport",5);
+                myPreference.getPref_Notizie().put("Culturali",5);
+                myPreference.getPref_Notizie().put("Musicale",5);
+                myPreference.getPref_Notizie().put("Economiche",5);
+                myPreference.getPref_Notizie().put("Traffico",5);
+                myPreference.getPref_Notizie().put("Mezzi di trasporto",5);
+                myPreference.getPref_Notizie().put("Orario edifici",5);
+                myPreference.getPref_Notizie().put("Opportunità provinciali/comunal",5);
+                myPreference.getPref_Notizie().put("Politica",5);
+                myPreference.getPref_Notizie().put("Ludico",5);
 
             }
         }
@@ -100,24 +100,23 @@ public class MySettings implements Serializable{
             if("studente"==occupazione)
             {
                 HashMap mappa=new HashMap();
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Universita",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Culturali",5));
-                myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Mezzi di Trasporto",5));
+                myPreference.getPref_Notizie().put("Universita",5);
+                myPreference.getPref_Notizie().put("Culturali",5);
+                myPreference.getPref_Notizie().put("Mezzi di Trasporto",5);
             }
         }
 
         if(occupazione=="turista")
         {
-            HashMap mappa=new HashMap();
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Sport",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Musicale",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Economiche",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Traffico",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Mezzi di trasporto",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Orario edifici",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Opportunità provinciali/comunal",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Politica",5));
-            myPreference.setPref_Notizie((Map<String, Integer>) mappa.put("Ludico",5));
+
+            myPreference.getPref_Notizie().put("Sport",5);
+            myPreference.getPref_Notizie().put("Musicale",5);
+            myPreference.getPref_Notizie().put("Economiche",5);
+            myPreference.getPref_Notizie().put("Traffico",5);
+            myPreference.getPref_Notizie().put("Mezzi di trasporto",5);
+            myPreference.getPref_Notizie().put("Opportunità provinciali/comunal",5);
+            myPreference.getPref_Notizie().put("Politica",5);
+            myPreference.getPref_Notizie().put("Ludico",5);
 
         }
     }

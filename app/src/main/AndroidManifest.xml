@@ -45,6 +45,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TailActivity"
+            android:configChanges="orientation|screenSize"
             android:label="Trento Mobile" />
         <activity
             android:name=".PorvaTrasporti"

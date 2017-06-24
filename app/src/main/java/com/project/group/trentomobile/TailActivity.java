@@ -1,7 +1,9 @@
 package com.project.group.trentomobile;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.project.group.trentomobile.Classi.*;
 import com.project.group.trentomobile.Repository.TileMemoryRep;
+import com.project.group.trentomobile.TilePK.TileFragment;
 import com.project.group.trentomobile.Util.InternalStorage;
 import com.project.group.trentomobile.Util.ScaricaImmagine;
 import com.project.group.trentomobile.context.MyApplication;
@@ -143,8 +146,8 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         if(data instanceof Evento){
-            insirizzotxt.setText("Indirizzo: "+((Evento)data).getIndirizzo().getVia());
-            datatxt.setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
+            if(((Evento)data).getIndirizzo()!=null) insirizzotxt.setText("Indirizzo: "+((Evento)data).getIndirizzo().getVia());
+            if(((Evento)data).getData()!=null) datatxt.setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
             generetxt.setText("Genere Evento: "+((Evento) data).getGenere().getTipo());
 
             ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
@@ -180,7 +183,8 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(data instanceof Notizia){
             Genere_Notizia gn = ((Notizia) data).getGenere();
-            myPreference.getPref_Notizie().put(gn.getTipo(),myPreference.getPref_Notizie().get(gn.getTipo())+1);
+            if(!gn.getTipo().equals("Meteo"))
+                myPreference.getPref_Notizie().put(gn.getTipo(),myPreference.getPref_Notizie().get(gn.getTipo())+1);
         }else
         if(data instanceof Luogo){
             Genere_Luogo gn = ((Luogo) data).getGenere();
@@ -211,6 +215,28 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+        //CORELLATI
+
+
+
+        if(data instanceof Luogo) {
+
+            Luogo l = (Luogo) data;
+            if(l.getVicini().size()!=0) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                for (Tile t : l.getVicini()) {
+                    Log.d("id->", String.valueOf(t.getId()) + "  " + t.getTitolo());
+                    fragmentTransaction.add(R.id.linearMain, TileFragment.newInstance(t), String.valueOf(t.getId()));
+                }
+                fragmentTransaction.commit();
+            }else{
+                ((TextView) findViewById(R.id.nelleVicinanzeTxt)).setText("");
+            }
+        }else ((TextView) findViewById(R.id.nelleVicinanzeTxt)).setText("");
     }
 
     @Override
@@ -366,6 +392,18 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

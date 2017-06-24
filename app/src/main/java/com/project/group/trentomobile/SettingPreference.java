@@ -60,7 +60,6 @@ public class SettingPreference extends AppCompatActivity {
                 }
 
                 Intent myIntent = new Intent(mActivity, MainActivity.class);
-                myIntent.putExtra("tipo", "trasporti");  //Optional parameters
                 mActivity.startActivity(myIntent);
             }
         });

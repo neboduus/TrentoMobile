@@ -5,8 +5,13 @@
  */
 package com.project.group.trentomobile.Classi;
 
+import android.icu.util.GregorianCalendar;
+
+import com.project.group.trentomobile.Util.CoordinateToMetri;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,6 +29,8 @@ public class Preferenze implements Serializable {
     private ArrayList<Keyword> Keywords;
     private Set<Integer> IdsPreferiti;
     private Integer Pref_Trasporti;
+    private ArrayList<PosizioneData> Cronologia;
+
 
     private Double Mylat;
     private Double MyLng;
@@ -35,6 +42,7 @@ public class Preferenze implements Serializable {
         Pref_Notizie=new HashMap<String, Integer>();
         Pref_Luoghi=new HashMap<String, Integer>();
         IdsPreferiti = new HashSet<>();
+        Cronologia = new ArrayList<>();
         Pref_Trasporti = 5;
     }
     /**
@@ -139,6 +147,28 @@ public class Preferenze implements Serializable {
 
     public void setMyLng(Double myLng) {
         MyLng = myLng;
+    }
+
+    public Integer addPosizioneData(PosizioneData posizioneData){
+
+        Boolean findMarge= false;
+        for(PosizioneData pd : Cronologia){
+
+            Integer distanza = CoordinateToMetri.disgeod(posizioneData.getLat(),posizioneData.getLng(),pd.getLat(),pd.getLng());
+
+            if(distanza<200){
+                pd.setLat((pd.getLat()+posizioneData.getLat())/2);
+                pd.setLng((pd.getLng()+posizioneData.getLng())/2);
+                pd.setData(new Date((posizioneData.getData().getTime()+pd.getData().getTime())/2));
+                pd.setPeso(pd.getPeso()+1);
+                findMarge = true;
+                return pd.getPeso();
+            }
+
+        }
+
+        Cronologia.add(posizioneData);
+        return 0;
     }
 
 }

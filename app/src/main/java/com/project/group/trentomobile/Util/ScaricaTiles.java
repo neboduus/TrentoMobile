@@ -19,6 +19,7 @@ import com.project.group.trentomobile.Classi.Genere_Notizia;
 import com.project.group.trentomobile.Classi.Indirizzo;
 import com.project.group.trentomobile.Classi.Luogo;
 import com.project.group.trentomobile.Classi.Notizia;
+import com.project.group.trentomobile.Classi.PosizioneData;
 import com.project.group.trentomobile.Classi.Preferenze;
 import com.project.group.trentomobile.Classi.Tile;
 import com.project.group.trentomobile.R;
@@ -187,7 +188,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             //Aggiunto luogo Piazza Dante
             Indirizzo PiazzaDuomo_indirizzo=new Indirizzo(46.0671354,11.1188445,"Piazza Duomo, 38122 Trento");
-            Luogo PiazzaDuomo=new Luogo(PiazzaDuomo_indirizzo,gl_Piazze,"Piazza Duomo","Nonostante in origine si trovasse urbanisticamente decentrata rispetto a quella che era la città delimitata dalle mura, con lespandersi della zona urbana Piazza del Duomo si è trovata fisicamente, politicamente e religiosamente nel cuore del centro storico di Trento ed è stata definita una delle piazze urbane più belle e caratteristiche presenti sul territorio italiano.Su Piazza del Duomo, che ha assunto la struttura attuale nel corso del VIII secolo, si affacciano la cattedrale di San Vigilio -duomo della città- e Palazzo Pretorio; ad abbellire ulteriormente la piazza è la settecentesca fontana del Nettuno.","https://www.cultura.trentino.it/var/001/storage/images/media/images/museo-diocesano-tridentino3/16383714-1-ita-IT/Museo-diocesano-tridentino_imagefullwide.jpg","");
+            Luogo PiazzaDuomo=new Luogo(PiazzaDuomo_indirizzo,gl_Piazze,"Piazza Duomo","Nonostante in origine si trovasse urbanisticamente decentrata rispetto a quella che era la città delimitata dalle mura, con l'espandersi della zona urbana Piazza del Duomo si è trovata fisicamente, politicamente e religiosamente nel cuore del centro storico di Trento ed è stata definita una delle piazze urbane più belle e caratteristiche presenti sul territorio italiano.Su Piazza del Duomo, che ha assunto la struttura attuale nel corso del VIII secolo, si affacciano la cattedrale di San Vigilio -duomo della città- e Palazzo Pretorio; ad abbellire ulteriormente la piazza è la settecentesca fontana del Nettuno.","https://www.cultura.trentino.it/var/001/storage/images/media/images/museo-diocesano-tridentino3/16383714-1-ita-IT/Museo-diocesano-tridentino_imagefullwide.jpg","");
             tiles.addLuogo(PiazzaDuomo);
 
             //Aggiunto monumento Cattedrale San Vigilio
@@ -213,7 +214,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             "Assieme al Dosso di San Rocco e al Dosso Sant'Agata formano i \"tre denti\" dell'antica Tridentum romana.",
                     "http://www.catinabib.it/files/TIC511-0913.jpg",
                     "https://it.wikipedia.org/wiki/Doss_Trento");
-            dossTrento.setOrario("9.00", "19.00");
+            dossTrento.setOrario("9:00", "19:00");
             tiles.addLuogo(dossTrento);
 
             Luogo mausoleoCesareBattisti = new Luogo(new Indirizzo(46.0732031d,11.1112507d, "Via Dòs Trento, 38121 Trento"), gl_Monumenti,
@@ -229,7 +230,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             "di Battisti.",
                     "https://lh6.googleusercontent.com/-hcLg67M_LGc/V6b_UC7wLkI/AAAAAAAArrc/uGr1MHVRKdUslx-RCzYAjdpCNrY0vaBGACJkC/w408-h302-k-no/",
                     "http://www.comune.trento.it/Aree-tematiche/Turismo/Visitare/Altri-siti-di-interesse-storico-artistico/Mausoleo-di-Cesare-Battisti");
-            mausoleoCesareBattisti.setOrario("9.00", "19.00");
+            mausoleoCesareBattisti.setOrario("9:00", "19:00");
             tiles.addLuogo(mausoleoCesareBattisti);
 
             Luogo museoAlpini = new Luogo(new Indirizzo(46.0727413d,11.1115806d, "Via Brescia, 1, 38100 Trento"), gl_Musei,
@@ -242,7 +243,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             "dalla sua fondazione ai giorni nostri, mentre trofei, armi e cimeli sono esposti in nicchie e vetrine. ",
                     "https://media-cdn.tripadvisor.com/media/photo-s/0b/56/07/e9/museo-degli-alpini.jpg",
                     "http://www.museonazionalealpini.it/");
-            museoAlpini.setOrario("9.00","16.30");
+            museoAlpini.setOrario("9:00","16:30");
             tiles.addLuogo(museoAlpini);
 
             Luogo galleriePiedicastello = new Luogo(new Indirizzo(46.0719687d,11.110892d, "Piazza di Piedicastello, 38122 Trento"), gl_Musei,
@@ -253,13 +254,13 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             "complessiva di oltre 6000 metri quadri suddivisi nella galleria nera e quella bianca",
                     "http://th.travelblog.it/X1W0WdWdHnu8MYw3Hg90k_pKClg=/fit-in/655x437/http://media.travelblog.it/t/tre/trento-centro-storico-e-gallerie-piedicastello/gallerietrento.jpg",
                     "http://www.centenario1914-1918.it/it/2014/06/18/le-gallerie-di-piedicastello");
-            galleriePiedicastello.setOrario("9.00", "19.00");
+            galleriePiedicastello.setOrario("9:00", "19:00");
             tiles.addLuogo(galleriePiedicastello);
 
             //Aggiunto Biblioteca UNiversitaria Centrale
             Indirizzo Buc_indirizzo=new Indirizzo(46.0596899,11.1132797,"Via Adalberto Libera, 38121 Trento");
             Luogo Buc=new Luogo(Buc_indirizzo,gl_Universitari,"B.U.C.","La Biblioteca Universitaria Centrale (BUC) è al servizio dell'attività didattica e di ricerca dei dipartimenti di area socio-economica, giuridica e umanistica. L'edificio, progettato da Renzo Piano, è di recentissima costruzione ed è articolato in sette piani distribuiti in quattro corpi di fabbrica. La maggior parte dei libri è collocata a scaffale aperto (è cioè accessibile direttamente dagli utenti) in quindici sale, ordinata per disciplina secondo la Classificazione decimale Dewey. ","http://www.luniversitario.it/wp-content/uploads/2016/11/buc.jpg","http://www.biblioteca.unitn.it/biblioteca-universitaria-centrale-buc");
-            Buc.setOrario("8.00","23.45");
+            Buc.setOrario("8:00","23:45");
             tiles.addLuogo(Buc);
 
 
@@ -364,7 +365,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                             "di Belluno, Vicenza e Verona, e a ovest con le province lombarde di Brescia e Sondrio.",
                     "http://www.autonomia.provincia.tn.it/binary/pat_autonomia/stemma_ufficiale/aq_color.1159948281.1236767128.jpg",
                     "http://www.provincia.tn.it/");
-            luogoProvincia.setOrario("9.00","13.30");
+            luogoProvincia.setOrario("9:00","13:30");
             tiles.addLuogo(luogoProvincia);
 
             //LuogoCommerciale
@@ -373,7 +374,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "Grande centro commerciale a Trento nord. Trovi bellissimi negozi ed è il luogo ideale per abbracciare nuovi trendi scoprire i nuovi marchi italiani ma anche prodotti alimentari.",
                     "http://radionbc.it/wp-content/uploads/2016/01/9758809.jpg",
                     "http://topcenter.eu/negozi/");
-            luogoProvincia.setOrario("8.00","20.00");
+            luogoProvincia.setOrario("8:00","20:00");
             tiles.addLuogo(luogoTopCenter);
 
             //NOTIZIA LUDICO
@@ -431,6 +432,15 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     "http://www.ladige.it/sport/basket/2017/06/20/stasera-tutti-laquila-o-si-vince-o-finita" ,a,gn_sport,new GregorianCalendar(2017,07,5,21,15));
             tiles.addNotizia(notizia_sport);
 
+
+
+            //AGGIUNGO VICINI
+
+            dossTrento.addVicino(museoAlpini);
+            dossTrento.addVicino(mausoleoCesareBattisti);
+
+            PiazzaDuomo.addVicino(FontanadelNettuno);
+            PiazzaDuomo.addVicino(CattedraleSanVigilio);
 
 
             //FILTRAGGIO FERMATE BUS
@@ -519,15 +529,22 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
 
         Preferenze myPreference = params[0];
+        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
 
         try {
             myPreference = (Preferenze) InternalStorage.readObject(myActivity);
-            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
+            //Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
+
+//            myPreference.addPosizioneData(new PosizioneData(myPosition.lat, myPosition.lng, new Date()));
+
+
 
         } catch (IOException e) {
 
             Intent myIntent = new Intent(myActivity, SettingPreference.class);
             myActivity.startActivity(myIntent);
+            //myActivity.finish();
+            return null;
 
 
         } catch (ClassNotFoundException e) {
@@ -535,7 +552,12 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         }
 
 
-        GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
+        try {
+            InternalStorage.writeObject(myActivity,myPreference);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         myPreference.setMylat(myPosition.lat);
         myPreference.setMyLng(myPosition.lng);
@@ -549,6 +571,8 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
 
     protected void onPostExecute(TileMemoryRep result) {
+
+        if(result==null) return;
 
         GetMyPosition myPos = GetMyPosition.getIstanceAndUpdate(myActivity);
         while(myPos.lat == null);
