@@ -75,7 +75,7 @@ public class Luogo extends Tile implements Serializable,Indirizzabile {
         return orario;
     }
 
-    public void setOrario(Time a, Time c) {
+    public void setOrario(String a, String c) {
         this.orario = new AperturaChiusura(a,c);
     }
 }

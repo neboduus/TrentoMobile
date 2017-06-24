@@ -4,9 +4,18 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.usage.UsageEvents;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -69,6 +78,7 @@ public class TileFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Nullable
     @Override
     //the fragment creates its view hierarchy
@@ -78,8 +88,11 @@ public class TileFragment extends Fragment {
         //inflate a new view hierarchy from the specified xml resource
         final View r =  inflater.inflate(R.layout.tile_fragment, container, false);
 
+        GradientDrawable d = new GradientDrawable();
+
         //get the construction arguments
         data = (Tile) getArguments().getSerializable(TILE_KEY);
+
 
         //recover the others xml resources which are tchildrens of R.layout.tile_fragment
         titolo = (TextView) r.findViewById(R.id.titolo);
@@ -117,27 +130,37 @@ public class TileFragment extends Fragment {
         //setting the footer with respect to the kind of the data contained in the tile
         String sPiedi ="";
         if(data instanceof Notizia){
+            d.setStroke(3, Color.BLUE);
             Notizia n = (Notizia) data;
             DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
             sPiedi += "" + n.getAutore().getNome() + " - " + formatter.format(n.getData().getTimeInMillis());
         }else
         if(data instanceof Luogo){
+            d.setStroke(3, Color.YELLOW);
             Luogo l = (Luogo) data;
             sPiedi += l.getIndirizzo().getVia();
             GetMyPosition gmp = GetMyPosition.getIstanceAndUpdate(getActivity());
             sPiedi += " - distanza:"+ CoordinateToMetri.disgeod(gmp.lat,gmp.lng,l.getIndirizzo().getLat(),l.getIndirizzo().getLng())+ "m";
         }else
         if(data instanceof Evento){
+            d.setStroke(3, Color.RED);
             Evento e = (Evento) data;
             DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd hh:mm");
             sPiedi += e.getIndirizzo().getVia() +" - "+formatter.format(e.getData().getTimeInMillis());
         }else
         if(data instanceof Fermata){
+            d.setStroke(3, Color.GREEN);
             //SETTA PIEDI
             Fermata f = (Fermata) data;
             GetMyPosition gmp = GetMyPosition.getIstanceAndUpdate(getActivity());
             sPiedi += "distanza:"+ CoordinateToMetri.disgeod(gmp.lat,gmp.lng,f.getIndirizzo().getLat(),f.getIndirizzo().getLng())+ "m";
         }
+
+
+        d.setCornerRadius(10.f);
+        d.setColor(Color.WHITE);
+        r.setBackground(d);
+
 
         titolo.setText(data.getTitolo());
         corpo.setText(data.getShortDescription());

@@ -20,6 +20,7 @@ import android.text.format.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -81,8 +82,7 @@ public class TileMemoryRep implements Interface_Rep{
     public void Filtra(Preferenze p) {
 
         //Get actual tima
-        Time actualTime = new Time();
-        actualTime.setToNow();
+        Date actualTime = new Date();
 
 
         tiles =new ArrayList<Tile>();
@@ -113,9 +113,9 @@ public class TileMemoryRep implements Interface_Rep{
             if(pref_tipi_luoghi.containsKey(t.getGenere().getTipo()) && (pref_tipi_luoghi.get(t.getGenere().getTipo()) > 9)) {
                 t.peso = pref_tipi_luoghi.get(t.getGenere().getTipo())  + (  200 - CoordinateToMetri.disgeod(p.getMylat(), p.getMyLng(), ((Luogo)t).getIndirizzo().getLat(),((Luogo)t).getIndirizzo().getLng()));
                 if(t.getOrario()!=null){
-                    if(actualTime.after(t.getOrario().apre) && actualTime.before(t.getOrario().chiude)){
-                        t.peso -= 10;
-                    }
+//                    if(actualTime.after(t.getOrario().apre) && actualTime.before(t.getOrario().chiude)){
+                        //t.peso -= 10;
+  //                  }
                 }
 
                 getTiles().add(t);

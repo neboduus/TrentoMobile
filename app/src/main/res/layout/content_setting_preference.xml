@@ -29,19 +29,25 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
+            app:srcCompat="@drawable/trentomobile" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:gravity="bottom"
-            android:text="Perchè sei a trento?"
+            android:text="Cosa fai a Trento?"
             android:textAlignment="center"
             android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/spinner_occupazioni"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/occupazioni"
             android:layout_marginBottom="50dp"/>
@@ -58,7 +64,7 @@
 
         <Spinner
             android:id="@+id/spinner_eta"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/range_eta"
             android:layout_marginBottom="50dp"/>

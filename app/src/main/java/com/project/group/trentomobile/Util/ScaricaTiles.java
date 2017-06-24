@@ -3,6 +3,7 @@ package com.project.group.trentomobile.Util;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.group.trentomobile.Classi.*;
+import com.project.group.trentomobile.MainActivity;
 import com.project.group.trentomobile.R;
 import com.project.group.trentomobile.Repository.*;
+import com.project.group.trentomobile.SettingPreference;
 import com.project.group.trentomobile.TilePK.TileFragment;
+import com.project.group.trentomobile.TipoActivity;
 import com.project.group.trentomobile.assetsHelper.SQLAssetHelper_DB;
 import com.project.group.trentomobile.context.MyApplication;
 import com.project.group.trentomobile.transport.Linea;
@@ -172,6 +176,83 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     a, gn_cronaca, d2));
 
 
+            //Aggiunto luogo Piazza Dante
+            Indirizzo PiazzaDuomo_indirizzo=new Indirizzo(46.0671354,11.1188445,"Piazza Duomo, 38122 Trento");
+            Luogo PiazzaDuomo=new Luogo(PiazzaDuomo_indirizzo,gl_Piazze,"Piazza Duomo","Nonostante in origine si trovasse urbanisticamente decentrata rispetto a quella che era la città delimitata dalle mura, con lespandersi della zona urbana Piazza del Duomo si è trovata fisicamente, politicamente e religiosamente nel cuore del centro storico di Trento ed è stata definita una delle piazze urbane più belle e caratteristiche presenti sul territorio italiano.Su Piazza del Duomo, che ha assunto la struttura attuale nel corso del VIII secolo, si affacciano la cattedrale di San Vigilio -duomo della città- e Palazzo Pretorio; ad abbellire ulteriormente la piazza è la settecentesca fontana del Nettuno.","https://www.cultura.trentino.it/var/001/storage/images/media/images/museo-diocesano-tridentino3/16383714-1-ita-IT/Museo-diocesano-tridentino_imagefullwide.jpg","");
+            tiles.addLuogo(PiazzaDuomo);
+
+            //Aggiunto monumento Cattedrale San Vigilio
+            Indirizzo CattedraleSanVigilio_indirizzo=new Indirizzo(46.0671354,11.1188445,"Cattedrale di San Vigilio, Piazza del Duomo, 38122 Trento");
+            Luogo CattedraleSanVigilio=new Luogo(CattedraleSanVigilio_indirizzo,gl_Monumenti,"Cattedrale San Vigilio","La cattedrale di San Vigilio è il duomo di Trento, e Piazza del Duomo deve il suo nome proprio alla presenza di questo splendido edificio religioso. Edificata nel XIII secolo e dedicata al santo patrono della città, la cattedrale fungeva anticamente come chiesa cimiteriale: qui sono infatti conservate le spoglie di San Vigilio; col passare dei secoli, comunque, il duomo ha mantenuto questa caratteristica, ed è infatti qui che è sepolta la maggior parte dei vescovi della città. Sotto la cattedrale, inoltre, si trova la basilica paleocristiana, alla quale si accede dallinterno del duomo stesso.","http://www.medioevo.org/artemedievale/Images/TrentinoAltoAdige/Trento/DuomodiTrento/IMG_4673s.jpg","");
+            tiles.addLuogo(CattedraleSanVigilio);
+
+            //Aggiunto monumento Fontana del Nettuno
+            Indirizzo FontanadelNettuno_indirizzo=new Indirizzo(46.0673885,11.120655,"Piazza Duomo, 38122 Trento");
+            Luogo FontanadelNettuno=new Luogo(FontanadelNettuno_indirizzo,gl_Monumenti,"Fontana del Nettuno","Testimonianza artistica del XVIII secolo è invece la fontana del Nettuno, eseguita tra il 1767 e il 1769  dallarchitetto Francesco Antonio Giongo di Lavarone. Loriginaria statua del Nettuno, in realtà, si trova ora nel cortile del Palazzo Thun, ed è stata sostituita nel 1945 da una copia in bronzo realizzata da Davide Rigatti; ai piedi del Nettuno tritoni, cavalli marini e altre figure -tutte copie bronzee delle sculture originali- decorano la bella fontana di Piazza del Duomo.","http://www.trentoarte.it/wp-content/uploads/2014/02/fontana-nettuno-Trento-2.jpg","");
+            tiles.addLuogo(FontanadelNettuno);
+
+            //Aggiunto MOnumento Case
+            Indirizzo CaseCasuffiRella_indirizzo=new Indirizzo(46.0677408,11.1194669,"Piazza Duomo, 38122 Trento");
+            Luogo CaseCasuffiRella=new Luogo(CaseCasuffiRella_indirizzo,gl_Monumenti,"Case Cazuffi-Rella","Entrambi palazzi del XVI secolo, le due case sorgono una accanto allaltra e regalano al visitatore che si reca in Piazza del Duomo meravigliosi affreschi dipinti sui muri che affacciano sulla piazza. Probabilmente eseguiti da Marcello Fogolino  pittore italiano vissuto a cavallo tra il XV e il XVI secolo -, gli affreschi che decorano le facciate delle due case raffigurano personaggi e figure pagane e leggendarie, caratteristica pressoché unica se si mettono a confronto con le altre opere pittoriche dipinte a decorazione degli esterni di abitazioni e palazzi presenti nelle valli attorno a Trento, quasi tutte di carattere religioso","https://upload.wikimedia.org/wikipedia/commons/c/cd/Trento-case_Cazuffi-Rella.jpg","");
+            tiles.addLuogo(CaseCasuffiRella);
+
+            Luogo dossTrento = new Luogo(new Indirizzo(46.0732339d,11.1098908d, "Via Dòs Trento, 38121 Trento"), gl_Parchi,
+                    "Parco Naturale Doss Trento",
+                    "Il Doss Trento è una piccola collina che sorge sulla riva idrografica destra del fiume Adige nei pressi " +
+                            "del capoluogo trentino.Si tratta di uno sperone che nel suo punto più elevato raggiunge i 309 m s.l.m., " +
+                            "elevandosi di oltre cento metri rispetto al piano del fondovalle, ed è ricoperto da 8 ettari di foresta." +
+                            "Assieme al Dosso di San Rocco e al Dosso Sant'Agata formano i \"tre denti\" dell'antica Tridentum romana.",
+                    "http://www.catinabib.it/files/TIC511-0913.jpg",
+                    "https://it.wikipedia.org/wiki/Doss_Trento");
+            dossTrento.setOrario("9.00", "19.00");
+            tiles.addLuogo(dossTrento);
+
+            Luogo mausoleoCesareBattisti = new Luogo(new Indirizzo(46.0732031d,11.1112507d, "Via Dòs Trento, 38121 Trento"), gl_Monumenti,
+                    "Mausoleo di Cesare Battisti",
+                    "Solenne e di notevole impatto scenografico, il Mausoleo dedicato all'uomo che lottò per" +
+                            " l'italianità di Trento è stato costruito nel 1935 da Ettore Fagioli, architetto veronese." +
+                            "Il Mausoleo, dalla forma circolare mutuata dal mondo classico, si caratterizza per un sapiente" +
+                            " gioco di contrasti: spazi pieni e spazi vuoti, giochi di luce e ombre e per la scelta dei materiali," +
+                            " tutti provenienti dal Trentino. Colpisce il colonnato che si erge sul corpo di fabbrica principale: " +
+                            "sedici colonne, alte più di dieci metri, formano una corona circolare che accoglie, al centro, " +
+                            "l'altare sul quale poggia la grande area tombale commemorativa. Tre grandi aperture conducono " +
+                            "all'interno del monumento, dove nell'ipogeo è posta la cella che custodisce l'arca con le spoglie " +
+                            "di Battisti.",
+                    "https://lh6.googleusercontent.com/-hcLg67M_LGc/V6b_UC7wLkI/AAAAAAAArrc/uGr1MHVRKdUslx-RCzYAjdpCNrY0vaBGACJkC/w408-h302-k-no/",
+                    "http://www.comune.trento.it/Aree-tematiche/Turismo/Visitare/Altri-siti-di-interesse-storico-artistico/Mausoleo-di-Cesare-Battisti");
+            mausoleoCesareBattisti.setOrario("9.00", "19.00");
+            tiles.addLuogo(mausoleoCesareBattisti);
+
+            Luogo museoAlpini = new Luogo(new Indirizzo(46.0727413d,11.1115806d, "Via Brescia, 1, 38100 Trento"), gl_Musei,
+                    "Museo Storico Delle Truppe Alpine",
+                    "L'idea di costruire un complesso in onore del Corpo degli Alpini fu della Legione Trentina, " +
+                            "con il sostegno del Comando Superiore delle Truppe Alpine e dell'Associazione Nazionale " +
+                            "Alpini. La proposta fu accolta nel 1938 dal Governo Italiano che istituì la \"Fondazione " +
+                            "Acropoli Alpina\". La dislocazione era prevista sul Doss Trento. Una scalinata conduce all'entrata, " +
+                            "vegliata da due cannoni da 47/32 e da un pezzo da 100/17. All'interno è raccolta la storia del Corpo degli Alpini, " +
+                            "dalla sua fondazione ai giorni nostri, mentre trofei, armi e cimeli sono esposti in nicchie e vetrine. ",
+                    "https://media-cdn.tripadvisor.com/media/photo-s/0b/56/07/e9/museo-degli-alpini.jpg",
+                    "http://www.museonazionalealpini.it/");
+            museoAlpini.setOrario("9.00","16.30");
+            tiles.addLuogo(museoAlpini);
+
+            Luogo galleriePiedicastello = new Luogo(new Indirizzo(46.0719687d,11.110892d, "Piazza di Piedicastello, 38122 Trento"), gl_Musei,
+                    "Le Gallerie di Piedicastello",
+                    "Le Gallerie facevano parte della tangenziale ovest fino all'ottobre del 2007, ma in seguito alla costruzione" +
+                            " di altre due nuove gallerie, queste sono state convertite nell'agosto 2008 in uno spazio museale " +
+                            "dedicato principalmente alla storia e alla memoria. Entrambe le gallerie offrono una superficie " +
+                            "complessiva di oltre 6000 metri quadri suddivisi nella galleria nera e quella bianca",
+                    "http://th.travelblog.it/X1W0WdWdHnu8MYw3Hg90k_pKClg=/fit-in/655x437/http://media.travelblog.it/t/tre/trento-centro-storico-e-gallerie-piedicastello/gallerietrento.jpg",
+                    "http://www.centenario1914-1918.it/it/2014/06/18/le-gallerie-di-piedicastello");
+            galleriePiedicastello.setOrario("9.00", "19.00");
+            tiles.addLuogo(galleriePiedicastello);
+
+
+
+
+
+
+
             //FILTRAGGIO FERMATE BUS
 
             GetMyPosition myPosition = GetMyPosition.getIstanceAndUpdate(myActivity);
@@ -203,7 +284,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
                     count--;
                 }
 
-                tiles.addFermata(new Fermata(s.getId(),s.getName(),corpo,"https://png.icons8.com/bus/color/50","https://png.icons8.com/bus/color/50",indirizzo));
+                tiles.addFermata(new Fermata(s.getId(),s.getName(),corpo,"https://png.icons8.com/bus/color/50",null,indirizzo));
             }
 
 
@@ -303,29 +384,9 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
 
         } catch (IOException e) {
-            Log.d("poing", "creato2");
-            myPreference = new Preferenze();
 
-
-            for (Genere_Luogo g: GeneriRepo.getIstance().GeneriLuoghi) {
-                myPreference.addPref_Luoghi_Ture(g.getTipo());
-            }
-            for (Genere_Notizia g: GeneriRepo.getIstance().GeneriNotizie) {
-                myPreference.addPref_Notizie_Ture(g.getTipo());
-            }
-            for (Genere_Evento g: GeneriRepo.getIstance().GeneriEventi) {
-                myPreference.addPref_Eventi_Ture(g.getTipo());
-            }
-
-            myPreference.setPref_Trasporti_Ture();
-
-            Log.d("lol", String.valueOf(myPreference.getPref_Notizie().size()));
-
-            try {
-                InternalStorage.writeObject(myActivity,myPreference);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            Intent myIntent = new Intent(myActivity, SettingPreference.class);
+            myActivity.startActivity(myIntent);
 
 
         } catch (ClassNotFoundException e) {

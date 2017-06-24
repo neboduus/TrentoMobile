@@ -104,7 +104,7 @@
     <string name="title_activity_try_actyvity">TryActyvity</string>
     <string name="title_activity_preference">Settings</string>
 
-    <!-- Strings related to Settings -->
+    <!-- Strings related to MySettings -->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -180,10 +180,10 @@
     <string name="title_activity_setting_preference">SettingPreference</string>
 
         <string-array name="occupazioni">
-            <item>Turista</item>
-            <item>Studente</item>
-            <item>Lavoratore</item>
-            <item>Altro</item>
+            <item>turista</item>
+            <item>studente</item>
+            <item>lavoratore</item>
+            <item>altro</item>
         </string-array>
 
     <string-array name="range_eta">

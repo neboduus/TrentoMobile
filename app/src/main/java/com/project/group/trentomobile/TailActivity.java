@@ -75,7 +75,12 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         titolo.setText(data.getTitolo());
         descrizione.setText(data.getShortDescription());
-        URL.setText("SITO WEB");
+
+        if(data.getURL() != null)
+            URL.setText("SITO WEB");
+        else
+            ((ViewGroup) URL.getParent()).removeView(URL);
+
         final String stringURL = data.getURL();
 
 
@@ -120,36 +125,45 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
 
+        TextView datatxt =  ((TextView) findViewById(R.id.txtData));
+        TextView autoretxt = ((TextView) findViewById(R.id.txtAutore));
+        TextView insirizzotxt = ((TextView) findViewById(R.id.txtIndirizzo));
+        TextView generetxt =  ((TextView) findViewById(R.id.txtGenere));
+
 
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(),"tileid"+data.getId());
 
         if(data instanceof Luogo){
-            ((TextView) findViewById(R.id.txtIndirizzo)).setText("Indirizzo: "+((Luogo)data).getIndirizzo().getVia());
-            ((TextView) findViewById(R.id.txtGenere)).setText("Genere Luogo: "+((Luogo) data).getGenere().getTipo());
+            insirizzotxt.setText("Indirizzo: "+((Luogo)data).getIndirizzo().getVia());
+            generetxt.setText("Genere Luogo: "+((Luogo) data).getGenere().getTipo());
 
-            View datatxt = ((TextView) findViewById(R.id.txtData));
             ((ViewGroup) datatxt.getParent()).removeView(datatxt);
-            View autoretxt = ((TextView) findViewById(R.id.txtAutore));
+
             ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
         }
 
         if(data instanceof Evento){
-            ((TextView) findViewById(R.id.txtIndirizzo)).setText("Indirizzo: "+((Evento)data).getIndirizzo().getVia());
-            ((TextView) findViewById(R.id.txtData)).setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
-            ((TextView) findViewById(R.id.txtGenere)).setText("Genere Evento: "+((Evento) data).getGenere().getTipo());
+            insirizzotxt.setText("Indirizzo: "+((Evento)data).getIndirizzo().getVia());
+            datatxt.setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
+            generetxt.setText("Genere Evento: "+((Evento) data).getGenere().getTipo());
+
+            ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
         }
 
         if(data instanceof Notizia){
-            ((TextView) findViewById(R.id.txtGenere)).setText("Genere Notizzia: "+((Notizia) data).getGenere().getTipo());
-            ((TextView) findViewById(R.id.txtData)).setText("Data: "+formatter.format(((Notizia)data).getData().getTimeInMillis()));
-            ((TextView) findViewById(R.id.txtAutore)).setText("Autore: "+((Notizia) data).getAutore().getNome());
-            View namebar = ((TextView) findViewById(R.id.txtIndirizzo));
-            ((ViewGroup) namebar.getParent()).removeView(namebar);
+            generetxt.setText("Genere Notizzia: "+((Notizia) data).getGenere().getTipo());
+            datatxt.setText("Data: "+formatter.format(((Notizia)data).getData().getTimeInMillis()));
+            autoretxt.setText("Autore: "+((Notizia) data).getAutore().getNome());
+
+            ((ViewGroup) insirizzotxt.getParent()).removeView(insirizzotxt);
         }
 
         if (data instanceof Fermata){
-            ((TextView) findViewById(R.id.txtGenere)).setText("Fermata");
-            ((TextView) findViewById(R.id.txtGenere)).setText(" "+data.getTitolo());
+            generetxt.setText("Genere: Fermata");
+
+            ((ViewGroup) insirizzotxt.getParent()).removeView(insirizzotxt);
+            ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
+            ((ViewGroup) datatxt.getParent()).removeView(datatxt);
         }
 
 

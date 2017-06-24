@@ -48,12 +48,12 @@
 
             <Button
                 android:id="@+id/btnMenu"
-                android:layout_width="55dp"
-                android:layout_height="wrap_content"
+                android:layout_width="38dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="20dp"
-                android:text="|||" />
+                android:background="@drawable/ic_menu_black_24dp" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -65,7 +65,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <AutoCompleteTextView
                     android:id="@+id/txtCerca"
@@ -76,12 +77,26 @@
 
                     />
 
-                <Button
-                    android:id="@+id/btnCerca"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Cerca" />
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <Button
+                        android:id="@+id/btnCerca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_btn_cerca"
+                        android:padding="3px"
+                        android:text="Cerca"
+                        android:textAlignment="center"
+                        android:textColor="#FF0000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -98,7 +113,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/MeteoPosition">
