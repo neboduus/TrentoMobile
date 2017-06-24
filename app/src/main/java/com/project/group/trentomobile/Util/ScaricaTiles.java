@@ -81,7 +81,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             gn_sport.setFoto("http://www.alltrainer.it/articoli/guarire-con-lo-sport.jpg");
             Genere_Notizia gn_ludico = new Genere_Notizia("Ludico");
             gn_ludico.setFoto("http://images.nymag.com/listings/bar/dakota-bar-main.jpg");
-
             Genere_Notizia gn_meteo = new Genere_Notizia("Meteo");
             gn_meteo.setFoto("http://www.verdeazzurronotizie.it/wp-content/uploads/2016/06/meteo-icon.png");
 
@@ -543,7 +542,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
             Intent myIntent = new Intent(myActivity, SettingPreference.class);
             myActivity.startActivity(myIntent);
-            //myActivity.finish();
+            myActivity.finish();
             return null;
 
 
@@ -552,11 +551,6 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         }
 
 
-        try {
-            InternalStorage.writeObject(myActivity,myPreference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         myPreference.setMylat(myPosition.lat);

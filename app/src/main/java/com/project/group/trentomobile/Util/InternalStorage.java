@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
  */
 public final class InternalStorage{
 
-    public static String path ="myPreferenze191";
+    public static String path ="myPreferenze1997";
 
     private InternalStorage() {}
 

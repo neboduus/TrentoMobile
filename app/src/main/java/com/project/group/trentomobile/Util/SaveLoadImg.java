@@ -49,7 +49,7 @@ public class SaveLoadImg {
             try {
                 fos.close();
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
         return directory.getAbsolutePath();
@@ -69,7 +69,7 @@ public class SaveLoadImg {
         }
         catch (FileNotFoundException e)
         {
-            e.printStackTrace();
+
         }
 
         return b;
