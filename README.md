@@ -24,9 +24,8 @@ review the code and test the design of the idea along with a fundamental range o
 1. First of all you need to load the folder /TrentoMobile into Android Studio
 
 2.1  For Physical Devices
-Android OS version needed:<return>
-NECESSARY: Jellybean<return>
-OPTIMAL: Lollipop
+
+Android OS version needed---NECESSARY: Jellybean---OPTIMAL: Lollipop
 
 You need to connect the device to the computer and run the app on the selected device.
 During the connection Android will ask you if you want to give permission for Debug and for Transfer data from and to the computer. 
@@ -42,6 +41,9 @@ NB! 1
 We reccomend to use a Physical Device but it could be used also a Virtal Device like the Android Emulator provided along with Android Studio.
 NB! 2
 Do not forget to upgrade Google Services to version 11!!!
+
+# Dependencies from external environment
+It is strongly recommended to test the application around the city so that you notice the dynamism of the application with respect to the user's position.
 
 # Application Name
 TrentoMobile
