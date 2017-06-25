@@ -8,9 +8,6 @@ The Main purpose of this version of the prototype is to illustrate the main feat
 This version has been reached after a first itaration of the design process as a User Centered approach and after its evaluation.
 The next step should be prototype evaluation in order to inspect deeper the idea and introduce more iteration with the user.
 
-# Application Name
-TrentoMobile
-
 # Environment
 Android Studio 2.3.3
 
@@ -27,7 +24,7 @@ review the code and test the design of the idea along with a fundamental range o
 1. First of all you need to load the folder /TrentoMobile into Android Studio
 
 2.1  For Physical Devices
->Android OS version
+>Android OS version needed\m
 -Necessay: Jellybean
 -Optimal: Lollipop
 
@@ -46,3 +43,5 @@ We reccomend to use a Physical Device but it could be used also a Virtal Device 
 NB! 2
 Do not forget to upgrade Google Services to version 11!!!
 
+# Application Name
+TrentoMobile
