@@ -24,7 +24,7 @@ review the code and test the design of the idea along with a fundamental range o
 1. First of all you need to load the folder /TrentoMobile into Android Studio
 
 2.1  For Physical Devices
->Android OS version needed\m
+>Android OS version needed\n
 -Necessay: Jellybean
 -Optimal: Lollipop
 
