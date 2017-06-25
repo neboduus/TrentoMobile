@@ -25,8 +25,8 @@ review the code and test the design of the idea along with a fundamental range o
 
 2.1  For Physical Devices
 Android OS version needed:
-NECESSARY: Jellybean
-OPTIMAL: Lollipop
+*NECESSARY: Jellybean
+*OPTIMAL: Lollipop
 
 You need to connect the device to the computer and run the app on the selected device.
 During the connection Android will ask you if you want to give permission for Debug and for Transfer data from and to the computer. 
