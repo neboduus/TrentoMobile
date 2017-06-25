@@ -12,9 +12,9 @@ The next step should be prototype evaluation in order to inspect deeper the idea
 Android Studio 2.3.3
 
 # Requirements 
--Google Services v11
--MinSdkVersion 15
--TargetSdkVersion 25
+---Google Services v11
+---MinSdkVersion 15
+---TargetSdkVersion 25
 
 # Content
 The folder /Trento mobile contains all the files necessary in order to load the project in Android Studio,
@@ -33,7 +33,7 @@ You have to choose YES.
 
 NB! 0
 In order to a correct use of the application you have to MANUALLY go to the Settings of the device and give NECESSARY PERMISSION to 
-the app to access GEOLOCALIZATION.
+the app to access GEOLOCALIZATION and INTERNET.
 
 2.1  For Virtual Devices 
 
