@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mm_addPref"
+        android:icon="@drawable/ic_star_border_black_24dp"
+        android:title="Aggiungi a preferiti" />
+    <item
+        android:id="@+id/mm_NonInteressa"
+        android:icon="@drawable/ic_do_not_disturb_black_24dp"
+        android:title="Non mi interessa" />
+    <item
+        android:id="@+id/mm_feedback"
+        android:icon="@drawable/ic_feedback_black_24dp"
+        android:title="Invia feedback" />
+    <item
+        android:id="@+id/mm_condividi"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="Condividi" />
+
+</menu>
