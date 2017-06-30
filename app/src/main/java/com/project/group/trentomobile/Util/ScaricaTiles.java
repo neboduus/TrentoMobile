@@ -3,7 +3,11 @@ package com.project.group.trentomobile.Util;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +41,10 @@ import com.visuality.f32.temperature.TemperatureUnit;
 import com.visuality.f32.weather.data.entity.Weather;
 import com.visuality.f32.weather.manager.WeatherManager;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -356,7 +363,7 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
             tiles.addEvento(festaElysee);
 
             // Luogo Sempre Utile
-            Luogo luogoProvincia = new Luogo(new Indirizzo(46.0715306d,11.120544d, "Piazza Dante, 15, 38122 Trento"), gl_SempreUtili,
+            Luogo luogoProvincia = new Luogo(new Indirizzo(46.072186d, 11.121054d, "Piazza Dante, 15, 38122 Trento"), gl_SempreUtili,
                     "Provincia Autonoma di Trento - Sede",
                     "La provincia autonoma di Trento , meglio nota come Trentino, è una provincia italiana " +
                             "del Trentino-Alto Adige di 538 223 abitanti[1], con capoluogo Trento. Confina a " +
@@ -558,6 +565,12 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
         tiles.Filtra(myPreference);
 
+        for(Tile t :tiles.getTiles()){
+
+            GetSizeImgByTile.getInstance().setSizeImg(t);
+
+        }
+
         //tiles.TuttiTiles();
         return tiles;
     }
@@ -601,6 +614,10 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
 
                         String imgUrl = decideWeatherImg(weather.getCloudiness().getPercentage(),weather.getRain().getThreeHoursVolume() );
                         Notizia fictionaryTile = new Notizia("Meteo vicino a te", prevision, imgUrl , imgUrl, new Autore("OpenWeatherMap", null, null),new Genere_Notizia("Meteo") , d);
+
+                        fictionaryTile.dinYImg = 100;
+                        fictionaryTile.dinXImg = 100;
+
 
                         //TileMemoryRep.getInstance().addNotizia(fictionaryTile);
 
@@ -654,17 +671,17 @@ public class ScaricaTiles extends AsyncTask<Preferenze,Void,TileMemoryRep> {
         String imgUrl="";
 
         if ((cloud_percentage >= 0) && (cloud_percentage <= 35) && rain < 50.0) {
-            imgUrl = "http://skigd.com/wp-content/themes/wp-theme/images/Sunny.png";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-27.gif";
         } else if ((cloud_percentage >= 0) && (cloud_percentage <= 35) && rain > 50.0) {
-            imgUrl = "http://indywx.com/wp-content/uploads/2014/04/Status-weather-showers-day-icon.png";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-57.gif";
         } else if (cloud_percentage > 35 && cloud_percentage < 70 && rain < 50.0) {
-            imgUrl = "http://indywx.com/wp-content/uploads/2014/04/Status-weather-showers-day-icon.png";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-55.gif";
         } else if (cloud_percentage > 35 && cloud_percentage < 70 && rain > 50.0) {
-            imgUrl = "http://icons.iconseeker.com/ico/weather/heavy-rain.ico";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-35.gif";
         } else if ((cloud_percentage > 70 && rain < 50.0)){
-            imgUrl = "http://icons.iconseeker.com/ico/weather/heavy-rain.ico";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-43.gif";
         }else{
-            imgUrl = "https://cdn0.iconfinder.com/data/icons/weather-colored-liner/512/lightning-cloud-rain-2-128.png";
+            imgUrl = "http://www.meteotrentino.it/images/hp/img-42.gif";
         }
 
         return  imgUrl;

@@ -19,6 +19,9 @@ public class Tile implements Serializable{
     private String URL;
     public Integer peso;
 
+    public Integer dinXImg = -1;
+    public Integer dinYImg = -1;
+
     private static Integer count = 0;
 
     public Tile( String titolo, String descrizione, String patterImmagine, String Url) {

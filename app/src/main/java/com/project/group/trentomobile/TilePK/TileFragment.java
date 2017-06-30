@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.usage.UsageEvents;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -163,6 +164,16 @@ public class TileFragment extends Fragment {
         titolo.setText(data.getTitolo());
         corpo.setText(data.getShortDescription());
         piedi.setText(sPiedi);
+
+        //SETTA SIZE
+        if((data.dinXImg>0) && (data.dinYImg>0)) {
+            Bitmap rect = Bitmap.createBitmap(data.dinXImg, data.dinYImg, Bitmap.Config.ARGB_8888);
+            rect.eraseColor(Color.GRAY);
+            immagine.setImageBitmap(rect);
+        }
+
+
+        //SETTA IMG
         String nomeImg = "tileid"+data.getId();
         if(data instanceof Fermata)
                 nomeImg ="bus3";

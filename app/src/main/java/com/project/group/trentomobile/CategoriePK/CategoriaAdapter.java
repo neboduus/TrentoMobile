@@ -43,6 +43,10 @@ public class CategoriaAdapter extends BaseAdapter {
         public View getView(int position, View convertView, ViewGroup parent) {
             Categoria t = new Categoria(mContext);
             t.setNome(generi.get(position).getTipo());
+
+
+
+
             t.setImmagine(generi.get(position).getFoto());
 
             if(generi.get(position) instanceof Bus){

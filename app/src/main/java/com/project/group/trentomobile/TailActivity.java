@@ -132,6 +132,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
         TextView autoretxt = ((TextView) findViewById(R.id.txtAutore));
         TextView insirizzotxt = ((TextView) findViewById(R.id.txtIndirizzo));
         TextView generetxt =  ((TextView) findViewById(R.id.txtGenere));
+        TextView orariotxt =((TextView) findViewById(R.id.txtOrario));
 
 
         new ScaricaImmagine((ImageView) immagine).execute(data.getPatterImmagine(),"tileid"+data.getId());
@@ -140,8 +141,15 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
             insirizzotxt.setText("Indirizzo: "+((Luogo)data).getIndirizzo().getVia());
             generetxt.setText("Genere Luogo: "+((Luogo) data).getGenere().getTipo());
 
-            ((ViewGroup) datatxt.getParent()).removeView(datatxt);
+            if(((Luogo)data).getOrario() != null) {
+                DateFormat orarioFormatter = new SimpleDateFormat("HH:mm");
+                orariotxt.setText("Oggi apetro dalle:" +
+                        orarioFormatter.format(((Luogo) data).getOrario().apre) +
+                        " alle:" +
+                        orarioFormatter.format(((Luogo) data).getOrario().chiude));
+            }
 
+            ((ViewGroup) datatxt.getParent()).removeView(datatxt);
             ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
         }
 
@@ -150,6 +158,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(((Evento)data).getData()!=null) datatxt.setText("Data: "+formatter.format(((Evento)data).getData().getTimeInMillis()));
             generetxt.setText("Genere Evento: "+((Evento) data).getGenere().getTipo());
 
+            ((ViewGroup) orariotxt.getParent()).removeView(orariotxt);
             ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
         }
 
@@ -159,6 +168,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
             autoretxt.setText("Autore: "+((Notizia) data).getAutore().getNome());
 
             ((ViewGroup) insirizzotxt.getParent()).removeView(insirizzotxt);
+            ((ViewGroup) orariotxt.getParent()).removeView(orariotxt);
         }
 
         if (data instanceof Fermata){
@@ -167,6 +177,7 @@ public class TailActivity extends AppCompatActivity implements OnMapReadyCallbac
             ((ViewGroup) insirizzotxt.getParent()).removeView(insirizzotxt);
             ((ViewGroup) autoretxt.getParent()).removeView(autoretxt);
             ((ViewGroup) datatxt.getParent()).removeView(datatxt);
+            ((ViewGroup) orariotxt.getParent()).removeView(orariotxt);
         }
 
 
